@@ -1,27 +1,18 @@
 import React, { Component } from 'react';
 import {Motion, spring} from 'react-motion';
 import './App.css';
+import Sortable from './Sortable';
 
 const springConfig = {stiffness: 300, damping: 50};
 
-function clamp(n, min, max) {
-  return Math.max(Math.min(n, max), min);
-}
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      mouseX: 0,
-      mouseY: 0,
-      lastPress: null,
-      isPressed: false,
-      order: [
-        [1, 2, 3, 4, 5, 6],
-        [11, 12, 13, 14, 15, 16],
-        [21, 22, 23, 24, 25, 26]
-      ],
-    };
+    this.sortable = new Sortable();
+    console.log("sortable::", this.sortable.get_state())
+
+    this.state = this.sortable.get_state();
   };
 
   componentDidMount() {
@@ -43,67 +34,28 @@ class App extends Component {
 
   handleMouseMove = ({pageX, pageY}) => {
     // console.log("handleMouseMove", pageX, pageY)
-    const {isPressed, topDeltaY, topDeltaX, order, lastPress} = this.state;
-
-    if (isPressed) {
-      const mouseY = pageY -topDeltaY ;
-      const currentRow = clamp(Math.round(mouseY / 100), 0, 10);
-      console.log("currentRow", currentRow)
-      // let newOrder = order;
-
-      const mouseX = pageX-topDeltaX;
-      const currentCol = clamp(Math.round(mouseX / 100), 0, 10);
-      console.log("currentCol", currentCol)
-      let result = []
-      console.log("order[currentRow][currentCol]", order[currentRow][currentCol])
-      let new_row = []
-      order.forEach((_, key_y) => {
-        if(key_y === currentRow){
-          new_row = []
-          order[key_y].forEach((current, key) => {
-            if(currentCol === key){
-
-              new_row.push(lastPress)
-
-            }else{
-              if(lastPress===current){
-                new_row.push(order[currentRow][currentCol])
-              }else{
-                new_row.push(current)
-              }
-            }
-          })
-          result.push(new_row)
-        }else{
-          new_row = []
-          order[key_y].forEach((current, key) => {
-            if(lastPress===current){
-              new_row.push(order[currentRow][currentCol])
-            }else{
-              new_row.push(current)
-            }
-          })
-          result.push(new_row)
-        }
-      })
-      console.log("result", result)
-      this.setState({mouseY: mouseY, mouseX: mouseX, order: result });
-    }
+    this.sortable.handleMouseMove({pageX, pageY})
+    let st = this.sortable.get_state()
+    this.setState({mouseY: st.mouseY, mouseX: st.mouseX, order: st.order });
   };
 
   handleMouseDown = (pos, [pressX, pressY], {pageX, pageY}) => {
+    this.sortable.handleMouseDown(pos, [pressX, pressY], {pageX, pageY})
+    let st = this.sortable.get_state()
     this.setState({
-      lastPress: pos,
-      isPressed: true,
-      mouseY: pressY,
-      mouseX: pressX,
-      topDeltaY: pageY - pressY,
-      topDeltaX: pageX - pressX,
+      lastPress: st.lastPress,
+      isPressed: st.isPressed,
+      mouseY: st.mouseY,
+      mouseX: st.mouseX
     });
   };
 
   handleMouseUp = () => {
-    this.setState({isPressed: false, topDeltaY: 0, topDeltaX: 0});
+    this.sortable.handleMouseUp()
+    let st = this.sortable.get_state()
+    this.setState({
+      isPressed: st.isPressed,
+    });
   };
 
   render() {
