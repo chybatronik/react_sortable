@@ -1,26 +1,3 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
 * {
   padding: 0;
   margin: 0;
@@ -29,7 +6,7 @@
   user-select: none;
 }
 
-.demo8-outer {
+.demo-outer {
   background-color: #EEE;
   color: #FFF;
   position: absolute;
@@ -37,36 +14,31 @@
   height: 100%;
   font: 28px/1em "Helvetica";
   display: flex;
+  /*flex-wrap: wrap;*/
   justify-content: center;
   align-items: center;
   display: -webkit-flex;
+  /*-webkit-flex-wrap: wrap;*/
   -webkit-justify-content: center;
   -webkit-align-items: center;
 }
 
-.demo2 {
+.demo {
   width: 620px;
   height: 400px;
 }
-.demo2-ball {
+.demo-item {
   position: absolute;
-  width: 90px;
-  height: 90px;
   overflow: visible;
   pointer-events: auto;
   transform-origin: 50% 50% 0px;
   border-radius: 4px;
   color: rgb(153, 153, 153);
-  line-height: 96px;
-  padding-left: 32px;
+  line-height: 45px;
+  padding-left: 15px;
   font-size: 24px;
   font-weight: 400;
   background-color: rgb(255, 255, 255);
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }

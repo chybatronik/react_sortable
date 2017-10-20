@@ -5,11 +5,14 @@ import Sortable from './Sortable';
 
 const springConfig = {stiffness: 300, damping: 50};
 
+let step_y = 90
+let step_x = 90
+let delta = 5
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.sortable = new Sortable();
+    this.sortable = new Sortable(step_x, step_y, delta);
     console.log("sortable::", this.sortable.get_state())
 
     this.state = this.sortable.get_state();
@@ -42,8 +45,9 @@ class App extends Component {
   handleMouseDown = (pos, [pressX, pressY], {pageX, pageY}) => {
     this.sortable.handleMouseDown(pos, [pressX, pressY], {pageX, pageY})
     let st = this.sortable.get_state()
+    console.log("pos", pos, st)
     this.setState({
-      lastPress: st.lastPress,
+      lastPress: pos,
       isPressed: st.isPressed,
       mouseY: st.mouseY,
       mouseX: st.mouseX
@@ -60,48 +64,55 @@ class App extends Component {
 
   render() {
     const {order, lastPress, isPressed, mouseX, mouseY} = this.state;
+    // console.log("lastPress", lastPress)
     let result = []
-    order.forEach((_, key_y) => {
-      order[key_y].forEach((currentValue, key) => {
-        let style;
-        if (currentValue === lastPress && isPressed) {
-          style = {
-            scale: spring(1.3, springConfig),
-            shadow: spring(1.3, springConfig),
-            y: mouseY,
-            x: mouseX,
-          }
-        }else{
-          style = {
-            scale: spring(1, springConfig),
-            shadow: spring(1, springConfig),
-            y: spring(key_y * 100, springConfig),
-            x: spring(key * 100, springConfig),
-          }
+    // let st = this.sortable.get_state()
+    order.forEach((value, key) => {
+      // order[key_y].forEach((currentValue, key) => {
+      let style;
+      if (lastPress && value.id === lastPress.id && isPressed) {
+        style = {
+          scale: spring(1.2, springConfig),
+          shadow: spring(1.2, springConfig),
+          y: mouseY,
+          x: mouseX,
         }
-        result.push((
-          <Motion key={currentValue} style={style}>
-            {({scale, shadow, y, x}) =>
-              <div
-                onMouseDown={this.handleMouseDown.bind(null, currentValue, [x, y])}
-                onTouchStart={this.handleTouchStart.bind(null, currentValue, [x, y])}
-                className="demo2-ball"
-                style={{
-                  boxShadow: `rgba(0, 0, 0, 0.2) 0px ${shadow}px ${2 * shadow}px 0px`,
-                  transform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
-                  WebkitTransform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
-                  zIndex: currentValue === lastPress ? 99 : currentValue,
-                }}>
-                {currentValue}
-              </div>
-            }
-          </Motion>
-        ));
-      })
+      }else{
+        style = {
+          scale: spring(1, springConfig),
+          shadow: spring(1, springConfig),
+          y: spring(value.y, springConfig),
+          x: spring(value.x, springConfig),
+        }
+      }
+      result.push((
+        <Motion key={value.id} style={style}>
+          {({scale, shadow, y, x}) =>
+            <div
+              onMouseDown={this.handleMouseDown.bind(null, value, [x, y])}
+              onTouchStart={this.handleTouchStart.bind(null, value, [x, y])}
+              className="demo-item"
+              style={{
+                // top:45,
+                // left:45,
+                width: value.width,
+                height: value.height,
+                boxShadow: `rgba(0, 0, 0, 0.2) 0px ${shadow}px ${2 * shadow}px 0px`,
+                transform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
+                WebkitTransform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
+                zIndex: lastPress && value.id === lastPress.id ? 99 : value.id,
+                // opacity: lastPress && value.id === lastPress.id ? 0.7 : 1,
+              }}>
+              {value.id}
+            </div>
+          }
+        </Motion>
+      ));
+      // })
     })
     return (
-      <div  className="demo8-outer ">
-        <div className="demo2">
+      <div  className="demo-outer ">
+        <div className="demo">
           {result}
         </div>
       </div>
