@@ -1,6 +1,6 @@
 {
   "name": "react_sortable",
-  "homepage" : "http://chybatronik.github.io/react_sortable",
+  "homepage" : "http://chybatronik.github.io/react_sortable/build",
   "version": "0.2.0",
   "private": true,
   "dependencies": {
