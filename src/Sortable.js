@@ -141,7 +141,7 @@ class Sortable{
             }
             // console.log("ser::", value.id, value.col)
             if(currentCol < this.state.currentCol && value.row >= currentRow && value.row <= (currentRow + (h-1))){
-              if(value.col >= (currentCol) && value.col <= (currentCol+w)){
+              if(value.col >= (currentCol) && value.col <= (currentCol+w-1)){
                 console.log("Col<<<<<<<", value.id)
                 cp_value.col = cp_value.col + (w)
               }
@@ -156,7 +156,7 @@ class Sortable{
             }
 
             if(currentRow < this.state.currentRow && value.col >= currentCol && value.col <= (currentCol + (w-1))){
-              if(value.row >= (currentRow) && value.row < (currentRow+h)){
+              if(value.row >= (currentRow) && value.row < (currentRow+h-1)){
                 console.log("Row--------", value.id)
                 cp_value.row = cp_value.row + (h)
               }
