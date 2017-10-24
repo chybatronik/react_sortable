@@ -95,13 +95,18 @@ class Sortable{
     let copy = Object.assign({}, this.state);
     let count = 0;
     copy.order.forEach((value, key_y) => {
-      console.log("value::::", value.id, "---", value.col, value.col+value.w-1)
+      console.log("(value.col) >= col", (value.col) >= col)
+      console.log("(value.col+value.w) < col", (value.col+value.w) < col)
+      console.log("(value.row) >= rowl", (value.row) >= row)
+      console.log("(value.row + value.h)", (value.row + value.h) < row)
+      console.log("value::row::", value.id,"col:", col, "---", value.col, value.col+value.w)
+      console.log("value::col::", value.id, "row:", row, "---", value.row, value.row+value.h)
       if(
         item_cur.id !== value.id &&
-        value.col > col &&
-        (value.col+value.w-1) <= col &&
-        (value.row) > row &&
-        (value.row + (value.h -1)) <= row
+        (value.col) <= col &&
+        (value.col+value.w) > col &&
+        (value.row) <= row &&
+        (value.row + value.h) > row
       ){
         console.log("available_item:::value::", value)
         count+= 1;
