@@ -14,11 +14,9 @@
   height: 100%;
   font: 28px/1em "Helvetica";
   display: flex;
-  /*flex-wrap: wrap;*/
   justify-content: center;
   align-items: center;
   display: -webkit-flex;
-  /*-webkit-flex-wrap: wrap;*/
   -webkit-justify-content: center;
   -webkit-align-items: center;
 }
