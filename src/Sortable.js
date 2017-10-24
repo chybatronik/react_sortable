@@ -1,6 +1,8 @@
 class Sortable{
   constructor(step_x, step_y, delta){
     this.state = {
+      sortable_mode: "default", // default, left_right
+      size_mode: "default", // default, stick
       delta: delta,
       step_x:step_x,
       step_y:step_y,
@@ -10,21 +12,12 @@ class Sortable{
       isPressed: false,
       currentRow:null,
       currentCol:null,
-      // order: [
-      //   [1, 2, 3, 4, 5, 6],
-      //   [11, 12, 13, 14, 15, 16],
-      //   [21, 22, 23, 24, 25, 26]
-      // ],
       order:[
         {id: 1, w:1, h:1, col:1, row:1},
         {id: 2, w:1, h:1, col:2, row:1},
         {id: 3, w:1, h:1, col:3, row:1},
         {id: 4, w:1, h:1, col:4, row:1},
         {id: 5, w:2, h:2, col:5, row:1},
-        {id: 6, w:1, h:1, col:6, row:1},
-        {id: 7, w:1, h:1, col:7, row:1},
-        {id: 8, w:1, h:1, col:8, row:1},
-        {id: 9, w:1, h:1, col:9, row:1},
 
         {id: 11, w:1, h:1, col:1, row:2},
         {id: 12, w:1, h:1, col:2, row:2},
@@ -58,6 +51,320 @@ class Sortable{
     return copy
   }
 
+  move_item_right(item, width){
+    console.log("move_item_right", item, ">>>", width)
+    this.state.order.forEach((value, key) => {
+      if(item.id === value.id){
+        value.col += width
+      }
+    })
+  }
+
+  move_item_left(item, width){
+    console.log("move_item_right", item, ">>>", width)
+    this.state.order.forEach((value, key) => {
+      if(item.id === value.id){
+        value.col -= width
+      }
+    })
+  }
+
+  move_item_bottom(item, width){
+    console.log("move_item_bottom", item, "-----", width)
+    this.state.order.forEach((value, key) => {
+      if(item.id === value.id){
+        value.row += width
+      }
+    })
+  }
+
+  move_item_top(item, width){
+    console.log("move_item_bottom", item, "-----", width)
+    this.state.order.forEach((value, key) => {
+      if(item.id === value.id){
+        value.row -= width
+      }
+    })
+  }
+
+  available_item(row, col){
+    console.log("------------------")
+    console.log("available_item", col, row)
+    const {lastPress} = this.state;
+    let item_cur = this.get_item_id(lastPress.id)
+    let copy = Object.assign({}, this.state);
+    let count = 0;
+    copy.order.forEach((value, key_y) => {
+      console.log("value::::", value.id, "---", value.col, value.col+value.w-1)
+      if(
+        item_cur.id !== value.id &&
+        value.col > col &&
+        (value.col+value.w-1) <= col &&
+        (value.row) > row &&
+        (value.row + (value.h -1)) <= row
+      ){
+        console.log("available_item:::value::", value)
+        count+= 1;
+      }
+      // if(
+      //   item_cur.id !== value.id &&
+      //   col > (value.col) &&
+      //   col <= (value.col+value.w) &&
+      //   row === (value.row)
+      // ){
+      //   console.log("available_item:::value::", value, item_cur)
+      //   count+= 1;
+      // }
+    })
+    if(count > 0){
+      return false
+    }else{
+      return true
+    }
+  }
+
+  available_item_left(item, width){
+    console.log("available_item_left", item, width)
+    const {lastPress} = this.state;
+    let item_on = this.get_item_id(item.id)
+    console.log("item_onlie", item_on)
+    let copy = Object.assign({}, this.state);
+    let count = 0;
+    copy.order.forEach((value, key_y) => {
+      if(
+        lastPress.id !== value.id &&
+        item.id !== value.id &&
+        value.col >= (item_on.col -1) &&
+        value.col <= (item_on.col+item_on.w-1) &&
+        value.row >= (item_on.row) &&
+        value.row <= (item_on.row + (item_on.h-1))
+      ){
+        count += 1
+      }
+    })
+    if(count > 0){
+      return false
+    }else{
+      return true
+    }
+  }
+
+  available_item_right(item, width){
+    console.log("available_item_right", item, width)
+    const {lastPress} = this.state;
+    let item_on = this.get_item_id(item.id)
+    console.log("item_onlie", item_on)
+    let copy = Object.assign({}, this.state);
+    let count = 0;
+    copy.order.forEach((value, key_y) => {
+      if(
+        lastPress.id !== value.id &&
+        item.id !== value.id &&
+        value.col >= (item_on.col) &&
+        value.col <= (item_on.col+item_on.w-1 + 1) &&
+        value.row >= (item_on.row) &&
+        value.row <= (item_on.row + (item_on.h-1))
+      ){
+        count += 1
+      }
+    })
+    if(count > 0){
+      return false
+    }else{
+      return true
+    }
+  }
+
+  available_item_bottom(item, width){
+    console.log("available_item_bottom", item, width)
+    const {lastPress} = this.state;
+    let item_on = this.get_item_id(item.id)
+    console.log("item_onlie", item_on)
+    let copy = Object.assign({}, this.state);
+    let count = 0;
+    copy.order.forEach((value, key_y) => {
+      if(
+        lastPress.id !== value.id &&
+        item.id !== value.id &&
+        value.col >= (item_on.col) &&
+        value.col <= (item_on.col+item_on.w-1) &&
+        value.row >= (item_on.row) &&
+        value.row <= (item_on.row + (item_on.h-1) + 1)
+      ){
+        count += 1
+      }
+    })
+    if(count > 0){
+      return false
+    }else{
+      return true
+    }
+  }
+
+  available_item_top(item, width){
+    console.log("available_item_top", item, width)
+    const {lastPress} = this.state;
+    let item_on = this.get_item_id(item.id)
+    console.log("item_onlie", item_on)
+    let copy = Object.assign({}, this.state);
+    let count = 0;
+    copy.order.forEach((value, key_y) => {
+      if(
+        lastPress.id !== value.id &&
+        item.id !== value.id &&
+        value.col >= (item_on.col) &&
+        value.col <= (item_on.col+item_on.w-1) &&
+        value.row >= (item_on.row-1) &&
+        value.row <= (item_on.row + (item_on.h-1))
+      ){
+        count += 1
+      }
+    })
+    if(count > 0){
+      return false
+    }else{
+      return true
+    }
+  }
+
+  move_item_on_current_row_col(currentRow, currentCol){
+    const {lastPress} = this.state;
+    this.state.order.forEach((value, key) => {
+      if(lastPress.id === value.id){
+        value.col = currentCol
+        value.row = currentRow
+
+
+      }
+    })
+  }
+
+  get_item_left(currentRow, currentCol){
+    console.log("get_item_left::", currentRow, currentCol)
+    const {lastPress} = this.state;
+    let copy = Object.assign({}, this.state);
+    let result = []
+    copy.order.forEach((value, key_y) => {
+      // let cp_value = Object.assign({}, value);
+      if(lastPress.id!==value.id){
+        if(
+          value.col >= (currentCol) &&
+          value.col <= (currentCol+this.state.w-1) &&
+          value.row >= currentRow &&
+          value.row <= (currentRow + (this.state.h-1))
+        ){
+          console.log("Col<<<<<<<", value.id, this.state.w)
+          // cp_value.col = cp_value.col + (this.state.w)
+          result.push(value)
+        }
+      }
+    })
+    return result
+  }
+
+  get_item_in(currentRow, currentCol){
+    console.log("get_item_in::", currentRow, currentCol)
+  }
+
+  get_item_right(currentRow, currentCol){
+    console.log("get_item_right::", currentRow, currentCol)
+    const {lastPress} = this.state;
+    let copy = Object.assign({}, this.state);
+    let result = []
+    copy.order.forEach((value, key_y) => {
+      // let cp_value = Object.assign({}, value);
+      if(lastPress.id!==value.id){
+        if(
+          value.col >= currentCol &&
+          value.col <= currentCol+(this.state.w-1) &&
+          value.row >= currentRow &&
+          value.row <= (currentRow + (this.state.h-1))
+        ){
+          console.log("Col>>>>>>>>>", value.id, this.state.w)
+          // cp_value.col = cp_value.col + (this.state.w)
+          result.push(value)
+        }
+      }
+    })
+    return result
+  }
+
+  get_item_top(currentRow, currentCol){
+    console.log("get_item_top::", currentRow, currentCol)
+    const {lastPress} = this.state;
+    let copy = Object.assign({}, this.state);
+    let result = []
+    copy.order.forEach((value, key_y) => {
+      // let cp_value = Object.assign({}, value);
+      if(lastPress.id!==value.id){
+        if(
+          value.row >= (currentRow) &&
+          value.row <= (currentRow+this.state.h-1) &&
+          value.col >= currentCol &&
+          value.col <= (currentCol + (this.state.w-1))
+        ){
+          console.log("Row--------", value.id, this.state.h)
+          // cp_value.col = cp_value.col + (this.state.w)
+          result.push(value)
+        }
+      }
+    })
+    return result
+  }
+
+  get_item_bottom(currentRow, currentCol){
+    console.log("get_item_bottom::", currentRow, currentCol)
+    const {lastPress} = this.state;
+    let copy = Object.assign({}, this.state);
+    let result = []
+    copy.order.forEach((value, key_y) => {
+      // let cp_value = Object.assign({}, value);
+      if(lastPress.id!==value.id){
+        if(
+          value.row >= (currentRow) &&
+          value.row <= (currentRow+this.state.h-1) &&
+          value.col >= currentCol &&
+          value.col <= (currentCol + (this.state.w-1))
+        ){
+          console.log("Row++++++++++++++", value.id, this.state.h)
+          // cp_value.col = cp_value.col + (this.state.w)
+          result.push(value)
+        }
+      }
+    })
+    return result
+  }
+
+  get_last(id){
+    const {lastPress} = this.state;
+    let copy = Object.assign({}, this.state);
+    copy.order.forEach((value, key_y) => {
+      if(lastPress.id===value.id){
+        let cp_value = Object.assign({}, value);
+
+        this.state.last_col = cp_value.col
+        this.state.last_row = cp_value.row
+        this.state.w = cp_value.w
+        this.state.h = cp_value.h
+      }
+    })
+  }
+
+  get_item_id(id){
+    // const {lastPress} = this.state;
+    let copy = Object.assign({}, this.state);
+    let result = null
+    copy.order.forEach((value, key_y) => {
+      if(value.id===id){
+        console.log("value", value)
+        result = Object.assign({}, value);
+      }
+    })
+    return result
+
+  }
+
+
   handleMouseMove({pageX, pageY}){
     const {isPressed, topDeltaY, topDeltaX, lastPress} = this.state;
 
@@ -66,131 +373,64 @@ class Sortable{
       const mouseY = pageY - topDeltaY ;
       const currentRow = this.clamp(Math.round(mouseY / this.state.step_y), 1, 10);
 
-      // console.log("currentRow", currentRow)
-      // let newOrder = order;
-
       const mouseX = pageX - topDeltaX;
       const currentCol = this.clamp(Math.round(mouseX / this.state.step_x), 1, 10);
-      // console.log("currentCol", currentCol)
-      // let result = []
-      // console.log("order[currentRow][currentCol]", order[currentRow][currentCol])
+
       let new_row = []
-      let last_col = null
-      let last_row = null
-      let  w = null
-      let h = null
-      copy.order.forEach((value, key_y) => {
-        if(lastPress.id===value.id){
-          let cp_value = Object.assign({}, value);
+      new_row = copy.order
 
-          last_col = cp_value.col
-          last_row = cp_value.row
-          // width = cp_value.w * copy.step_x + (cp_value.w-1)*copy.delta
-          // height = cp_value.h * copy.step_y + (cp_value.h-1)*copy.delta
-          w = cp_value.w
-          h = cp_value.h
-          // console.log("w", w)
-          // console.log("h", h)
+      this.get_last(lastPress.id)
 
-          cp_value.col = currentCol
-          cp_value.row = currentRow
-
-          new_row.push(cp_value)
-        }
-
-      })
-      copy.order.forEach((value, key_y) => {
-        // console.log("value", value
-        if(lastPress.id!==value.id){
-          let cp_value = Object.assign({}, value);
-          if(value.col === currentCol && value.row === currentRow){
-            console.log("========",  value.id)
-            if(currentCol >= this.state.currentCol){
-              console.log("cp_value.col = last_col")
-              cp_value.col = last_col
-              if(currentRow > this.state.currentRow){
-                console.log("cp_value.row = last_row")
-                cp_value.row = last_row
-              }else{
-                cp_value.row = cp_value.row + (h)
-                console.log("cp_value.row = cp_value.row + (h)")
-              }
-            }else{
-              console.log("cp_value.col = cp_value.col + (w)")
-              cp_value.col = cp_value.col + (w)
-              if(currentRow > this.state.currentRow){
-                console.log("cp_value.row = last_row")
-                cp_value.row = last_row
-              }
+      if(this.state.currentCol){
+        //col<<<<<<<<<<<<<<<<<<<<<
+        if(currentCol < this.state.currentCol){
+          console.log("currentCol", currentCol)
+          this.get_item_left(currentRow, currentCol).forEach((value, key_y) => {
+            if(this.available_item_right(value, this.state.w)){
+              this.move_item_right(value, this.state.w)
             }
-
-            // if(currentRow > this.state.currentRow){
-            //   console.log("cp_value.row = last_row")
-            //   cp_value.row = last_row
-            // }else{
-            //   cp_value.row = cp_value.row + (h)
-            //   console.log("cp_value.row = cp_value.row + (h)")
-            // }
-          }else{
-
-            if(currentCol > this.state.currentCol && value.row >= currentRow && value.row <= (currentRow + (h-1))){
-              if(value.col >= currentCol){
-                console.log("Col>>>>>>>",  value.id)
-                cp_value.col = cp_value.col + (w-1)
-              }
-            }
-            // console.log("ser::", value.id, value.col)
-            if(currentCol < this.state.currentCol && value.row >= currentRow && value.row <= (currentRow + (h-1))){
-              if(value.col >= (currentCol) && value.col <= (currentCol+w-1)){
-                console.log("Col<<<<<<<", value.id)
-                cp_value.col = cp_value.col + (w)
-              }
-            }
-            ////////////////////////////////////////////////////////
-            // for rows
-            if(currentRow > this.state.currentRow  && value.col >= currentCol && value.col <= (currentCol + (w-1))){
-              if(value.row >= currentRow){
-                console.log("Row++++++++",  value.id)
-                cp_value.row = cp_value.row + (h-1)
-              }
-            }
-
-            if(currentRow < this.state.currentRow && value.col >= currentCol && value.col <= (currentCol + (w-1))){
-              if(value.row >= (currentRow) && value.row < (currentRow+h-1)){
-                console.log("Row--------", value.id)
-                cp_value.row = cp_value.row + (h)
-              }
-            }
-            // if(value.col >= currentCol && value.col <= (currentCol + (w-1)) && value.row >= currentRow && value.row <= (currentRow + (h-1)) ){
-            //   console.log("currentRow", currentRow)
-            //   console.log("currentCol", currentCol)
-            //   console.log("cp_value", cp_value)
-            //   // console.log("cp_value.row", cp_value.row)
-            //   console.log("width", w)
-            //   console.log("height", h)
-            //   console.log("state", this.state)
-            //   if(currentCol > this.state.currentCol){
-            //     cp_value.col = cp_value.col + (w-1)
-            //   }
-            //   if(currentCol < this.state.currentCol){
-            //     cp_value.col = cp_value.col + (w+1)
-            //   }
-            //   // if(currentRow !== this.state.currentRow){
-            //   //   cp_value.row = cp_value.row + (h-1)
-            //   // }
-            // }
-            // if(value.row > currentRow && value.col >= (currentCol + (w-1))){
-            //   if(currentRow !== this.state.currentRow){
-            //     cp_value.row = cp_value.row + (h-1)
-            //   }
-            //   // cp_value.row = last_row
-            // }
+          })
+          if(this.available_item(currentRow, currentCol)){
+            this.move_item_on_current_row_col(currentRow, currentCol)
           }
-          new_row.push(cp_value)
         }
-
-      })
-      // console.log("result", result)
+        //col>>>>>>>>>>>>>>>>>>>>>
+        if(currentCol > this.state.currentCol){
+          console.log("currentCol", currentCol)
+          this.get_item_right(currentRow, currentCol).forEach((value, key_y) => {
+            if(this.available_item_left(value, this.state.w)){
+              this.move_item_left(value, this.state.w)
+            }
+          })
+          if(this.available_item(currentRow, currentCol)){
+            this.move_item_on_current_row_col(currentRow, currentCol)
+          }
+        }
+      }
+      if(this.state.currentRow){
+        //row---------------------------
+        if(currentRow < this.state.currentRow){
+          this.get_item_top(currentRow, currentCol).forEach((value, key_y) => {
+            if(this.available_item_bottom(value, this.state.w)){
+              this.move_item_bottom(value, this.state.w)
+            }
+          })
+          if(this.available_item(currentRow, currentCol)){
+            this.move_item_on_current_row_col(currentRow, currentCol)
+          }
+        }
+        //row++++++++++++++++++++++++++++
+        if(currentRow > this.state.currentRow){
+          this.get_item_bottom(currentRow, currentCol).forEach((value, key_y) => {
+            if(this.available_item_top(value, this.state.w)){
+              this.move_item_top(value, this.state.w)
+            }
+          })
+          if(this.available_item(currentRow, currentCol)){
+            this.move_item_on_current_row_col(currentRow, currentCol)
+          }
+        }
+      }
       if(currentRow !== this.state.currentRow){
         this.state.currentRow = currentRow
       }
