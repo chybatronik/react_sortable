@@ -1,11 +1,11 @@
 class Sortable{
-  constructor(step_x, step_y, delta){
+  constructor(step_x, step_y, delta, sortable_mode){
     this.state = {
-      sortable_mode: "default", // default, left_right
+      sortable_mode: sortable_mode ? sortable_mode: "default", // default, left_right
       size_mode: "default", // default, stick
-      delta: delta,
-      step_x:step_x,
-      step_y:step_y,
+      delta: delta ? delta: 5,
+      step_x: step_x ? step_x: 90,
+      step_y: step_y ? step_y: 90,
       mouseX: 0,
       mouseY: 0,
       lastPress: null,
@@ -369,9 +369,64 @@ class Sortable{
 
   }
 
+  default_Sortable(currentRow, currentCol){
+    const {lastPress} = this.state;
+    this.get_last(lastPress.id)
+
+    if(this.state.currentCol){
+      //col<<<<<<<<<<<<<<<<<<<<<
+      if(currentCol < this.state.currentCol){
+        console.log("currentCol", currentCol)
+        this.get_item_left(currentRow, currentCol).forEach((value, key_y) => {
+          if(this.available_item_right(value, this.state.w)){
+            this.move_item_right(value, this.state.w)
+          }
+        })
+        if(this.available_item(currentRow, currentCol)){
+          this.move_item_on_current_row_col(currentRow, currentCol)
+        }
+      }
+      //col>>>>>>>>>>>>>>>>>>>>>
+      if(currentCol > this.state.currentCol){
+        console.log("currentCol", currentCol)
+        this.get_item_right(currentRow, currentCol).forEach((value, key_y) => {
+          if(this.available_item_left(value, this.state.w)){
+            this.move_item_left(value, this.state.w)
+          }
+        })
+        if(this.available_item(currentRow, currentCol)){
+          this.move_item_on_current_row_col(currentRow, currentCol)
+        }
+      }
+    }
+    if(this.state.currentRow){
+      //row---------------------------
+      if(currentRow < this.state.currentRow){
+        this.get_item_top(currentRow, currentCol).forEach((value, key_y) => {
+          if(this.available_item_bottom(value, this.state.w)){
+            this.move_item_bottom(value, this.state.w)
+          }
+        })
+        if(this.available_item(currentRow, currentCol)){
+          this.move_item_on_current_row_col(currentRow, currentCol)
+        }
+      }
+      //row++++++++++++++++++++++++++++
+      if(currentRow > this.state.currentRow){
+        this.get_item_bottom(currentRow, currentCol).forEach((value, key_y) => {
+          if(this.available_item_top(value, this.state.w)){
+            this.move_item_top(value, this.state.w)
+          }
+        })
+        if(this.available_item(currentRow, currentCol)){
+          this.move_item_on_current_row_col(currentRow, currentCol)
+        }
+      }
+    }
+  }
 
   handleMouseMove({pageX, pageY}){
-    const {isPressed, topDeltaY, topDeltaX, lastPress} = this.state;
+    const {isPressed, topDeltaY, topDeltaX} = this.state;
 
     if (isPressed) {
       let copy = Object.assign({}, this.state);
@@ -384,58 +439,10 @@ class Sortable{
       let new_row = []
       new_row = copy.order
 
-      this.get_last(lastPress.id)
+      if(this.state.sortable_mode === "default"){
+        this.default_Sortable(currentRow, currentCol)
+      }
 
-      if(this.state.currentCol){
-        //col<<<<<<<<<<<<<<<<<<<<<
-        if(currentCol < this.state.currentCol){
-          console.log("currentCol", currentCol)
-          this.get_item_left(currentRow, currentCol).forEach((value, key_y) => {
-            if(this.available_item_right(value, this.state.w)){
-              this.move_item_right(value, this.state.w)
-            }
-          })
-          if(this.available_item(currentRow, currentCol)){
-            this.move_item_on_current_row_col(currentRow, currentCol)
-          }
-        }
-        //col>>>>>>>>>>>>>>>>>>>>>
-        if(currentCol > this.state.currentCol){
-          console.log("currentCol", currentCol)
-          this.get_item_right(currentRow, currentCol).forEach((value, key_y) => {
-            if(this.available_item_left(value, this.state.w)){
-              this.move_item_left(value, this.state.w)
-            }
-          })
-          if(this.available_item(currentRow, currentCol)){
-            this.move_item_on_current_row_col(currentRow, currentCol)
-          }
-        }
-      }
-      if(this.state.currentRow){
-        //row---------------------------
-        if(currentRow < this.state.currentRow){
-          this.get_item_top(currentRow, currentCol).forEach((value, key_y) => {
-            if(this.available_item_bottom(value, this.state.w)){
-              this.move_item_bottom(value, this.state.w)
-            }
-          })
-          if(this.available_item(currentRow, currentCol)){
-            this.move_item_on_current_row_col(currentRow, currentCol)
-          }
-        }
-        //row++++++++++++++++++++++++++++
-        if(currentRow > this.state.currentRow){
-          this.get_item_bottom(currentRow, currentCol).forEach((value, key_y) => {
-            if(this.available_item_top(value, this.state.w)){
-              this.move_item_top(value, this.state.w)
-            }
-          })
-          if(this.available_item(currentRow, currentCol)){
-            this.move_item_on_current_row_col(currentRow, currentCol)
-          }
-        }
-      }
       if(currentRow !== this.state.currentRow){
         this.state.currentRow = currentRow
       }

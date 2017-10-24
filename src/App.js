@@ -13,6 +13,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.sortable = new Sortable(step_x, step_y, delta);
+    // this.sortable = new Sortable();
     console.log("sortable::", this.sortable.get_state())
 
     this.state = this.sortable.get_state();
