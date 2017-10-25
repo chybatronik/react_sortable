@@ -17,7 +17,7 @@ class App extends Component {
     // console.log("sortable::", this.sortable.get_state())
 
     this.state = this.sortable.get_state();
-    this.setState({step_x: step_x, step_y: step_y, delta: delta});
+    // this.setState({step_x: step_x, step_y: step_y, delta: delta});
   };
 
   componentDidMount() {
