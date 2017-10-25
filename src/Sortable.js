@@ -54,13 +54,18 @@ class Sortable{
 
   get_right_column(row){
     let max_column = 0;
-    this.state.order.forEach((value, key) => {
+    let copy = Object.assign({}, this.state);
+    console.log("copy.order:::::::::::::", copy.order)
+    copy.order.forEach((value, key_y) => {
       if(row === value.row){
-        if(value.col > max_column){
+        if(value.col >= max_column){
+          // console.log("value_max", value.col, value)
           max_column = value.col
         }
       }
     })
+    console.log("max_right_column::::___________________________")
+    console.log("max_right_column::::", row, "-----", max_column)
     return max_column
   }
 
@@ -68,7 +73,13 @@ class Sortable{
     console.log("move_item_right", item, ">>>", width)
     this.state.order.forEach((value, key) => {
       if(item.id === value.id){
-        value.col += width
+        const max_column = this.get_right_column(value.row)
+        if(max_column === value.col){
+          value.col = 1
+          value.row += 1
+        }else{
+          value.col += width
+        }
       }
     })
   }
@@ -361,8 +372,8 @@ class Sortable{
 
   }
 
-  get_item_between(currentRow, currentCol){
-    console.log("get_item_between", currentRow, currentCol)
+  get_item_between_forward(currentRow, currentCol){
+    console.log("get_item_between_forward", currentRow, currentCol)
     let {lastPress} = this.state;
     let lastPress_row, lastPress_col;
     console.log("lastPress", lastPress)
@@ -395,20 +406,15 @@ class Sortable{
               result.push(value)
             }
             if(
-              // value.col >= 1 &&
               value.row > lastPress_row &&
               value.row < currentRow
-              // value.col <= (currentCol) &&
             ){
               console.log("between2::>>>>>>>>>>>>", value.id)
               result.push(value)
             }
             if(
               value.col <= currentCol &&
-              // value.col > lastPress_col &&
               value.row === currentRow
-              // value.row > lastPress_row &&
-              // value.col <= (currentCol) &&
             ){
               console.log("between3::>>>>>>>>>>>>", value.id)
               result.push(value)
@@ -426,7 +432,107 @@ class Sortable{
         }
       }
     })
-    return result
+
+    return result.sort(this.compare_forward)
+  }
+
+  compare_forward(a, b) {
+    if(a.row === b.row){
+      if(a.col === b.col){
+        return 0
+      }
+      if(a.col > b.col){
+        return 1
+      }else{
+        return -1
+      }
+    }
+    if(a.row > b.row){
+      return 1
+    }else{
+      return -1
+    }
+  }
+
+  compare_back(a, b) {
+    if(a.row === b.row){
+      if(a.col === b.col){
+        return 0
+      }
+      if(a.col > b.col){
+        return -1
+      }else{
+        return 1
+      }
+    }
+    if(a.row > b.row){
+      return -1
+    }else{
+      return 1
+    }
+  }
+
+  get_item_between_back(currentRow, currentCol){
+    console.log("get_item_between_back", currentRow, currentCol)
+    let {lastPress} = this.state;
+    let lastPress_row, lastPress_col;
+    console.log("lastPress", lastPress)
+    if(this.state.currentRow && this.state.currentCol){
+      lastPress_row = this.state.currentRow
+      lastPress_col = this.state.currentCol
+    }else{
+      lastPress_row = lastPress.row
+      lastPress_col = lastPress.col
+    }
+    // lastPress_row = lastPress.row
+    console.log("lastPress_row:",lastPress_row)
+    console.log("lastPress_col:",lastPress_col)
+    // lastPress = this.get_item_id(lastPress.id)
+    let copy = Object.assign({}, this.state);
+    let result = []
+    copy.order.forEach((value, key_y) => {
+      if(lastPress.id!==value.id){
+        if(
+          value.row <= lastPress_row &&
+          value.row >= (currentRow)
+        ){
+          if(currentRow !== lastPress_row){
+            if(
+              value.col < lastPress_col &&
+              value.row === lastPress_row &&
+              value.row >= currentRow
+            ){
+              console.log("between1::<<<<<<<<<", value.id)
+              result.push(value)
+            }
+            if(
+              value.row < lastPress_row &&
+              value.row > currentRow
+            ){
+              console.log("between2::<<<<<<<<<", value.id)
+              result.push(value)
+            }
+            if(
+              value.col >= currentCol &&
+              value.row === currentRow
+            ){
+              console.log("between3::<<<<<<<<<", value.id)
+              result.push(value)
+            }
+          }else{
+            if(
+              value.col < lastPress_col &&
+              value.col >= currentCol &&
+              value.row >= currentRow
+            ){
+              console.log("between000::<<<<<<<<<<", value.id)
+              result.push(value)
+            }
+          }
+        }
+      }
+    })
+    return result.sort(this.compare_forward)
   }
 
   default_Sortable(currentRow, currentCol){
@@ -488,21 +594,20 @@ class Sortable{
   left_right_Sortable(currentRow, currentCol){
     console.log("mode::left_right_Sortable:::", currentRow, currentCol)
 
-
     if(currentCol > this.state.currentCol || currentRow > this.state.currentRow){
-      console.log("COl:>>>>>>>>>>>>>>>>")
-      this.get_item_between(currentRow, currentCol).forEach((value, key_y) => {
+      console.log("COl:>>>>>>>>>>>>>>>>", Object.assign({}, this.state.order))
+      this.get_item_between_forward(currentRow, currentCol).forEach((value, key_y) => {
         this.move_item_left(value, 1)
       })
       this.move_item_on_current_row_col(currentRow, currentCol)
     }
-    // if(currentRow > this.state.currentRow){
-    //   console.log("ROW:++++++++++++++++++")
-    //   this.get_item_between(currentRow, currentCol).forEach((value, key_y) => {
-    //     // this.move_item_left(value, 1)
-    //   })
-    //   // this.move_item_on_current_row_col(currentRow, currentCol)
-    // }
+    if(currentCol < this.state.currentCol || currentRow < this.state.currentRow){
+      console.log("back:<<<<<<<<<<<<<<<", Object.assign({}, this.state.order))
+      this.get_item_between_back(currentRow, currentCol).forEach((value, key_y) => {
+        this.move_item_right(value, 1)
+      })
+      this.move_item_on_current_row_col(currentRow, currentCol)
+    }
   }
 
   handleMouseMove({pageX, pageY}){
@@ -514,7 +619,7 @@ class Sortable{
       const currentRow = this.clamp(Math.round(mouseY / this.state.step_y), 1, 10);
 
       const mouseX = pageX - topDeltaX;
-      const currentCol = this.clamp(Math.round(mouseX / this.state.step_x), 1, 10);
+      const currentCol = this.clamp(Math.round(mouseX / this.state.step_x), 1, this.get_right_column(currentRow));
 
       let new_row = []
       new_row = copy.order
@@ -553,6 +658,8 @@ class Sortable{
     this.state.isPressed = false
     this.state.topDeltaY = 0
     this.state.topDeltaX = 0
+    this.state.currentCol = null
+    this.state.currentRow = null
   }
 }
 

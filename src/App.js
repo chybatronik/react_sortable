@@ -7,16 +7,17 @@ const springConfig = {stiffness: 300, damping: 50};
 
 let step_y = 90
 let step_x = 90
-let delta = 5
+let delta = 10
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.sortable = new Sortable(step_x, step_y, delta, "left_right");
+    this.sortable = new Sortable(step_x, step_y, delta, "default");
     // this.sortable = new Sortable();
-    console.log("sortable::", this.sortable.get_state())
+    // console.log("sortable::", this.sortable.get_state())
 
     this.state = this.sortable.get_state();
+    this.setState({step_x: step_x, step_y: step_y, delta: delta});
   };
 
   componentDidMount() {
@@ -63,6 +64,34 @@ class App extends Component {
     });
   };
 
+  onMode(event){
+    console.log("onMode", event.target.value)
+    this.setState({mode: event.target.value});
+    this.sortable = new Sortable(this.state.step_x, this.state.step_y, this.state.delta, event.target.value);
+    this.setState(this.sortable.get_state());
+  }
+
+  onDelta(event){
+    const delta = parseInt(event.target.value);
+    this.setState({delta: delta});
+    this.sortable = new Sortable(this.state.step_x, this.state.step_y, delta, this.state.mode);
+    this.setState(this.sortable.get_state());
+  }
+
+  onWidth(event){
+    const step_x = parseInt(event.target.value);
+    this.setState({step_x: step_x});
+    this.sortable = new Sortable(step_x, this.state.step_y, this.state.delta, this.state.mode);
+    this.setState(this.sortable.get_state());
+  }
+
+  onHeight(event){
+    const step_y = parseInt(event.target.value)
+    this.setState({step_y: step_y});
+    this.sortable = new Sortable(this.state.step_x, step_y, this.state.delta, this.state.mode);
+    this.setState(this.sortable.get_state());
+  }
+
   render() {
     const {order, lastPress, isPressed, mouseX, mouseY} = this.state;
     // console.log("lastPress", lastPress)
@@ -94,15 +123,12 @@ class App extends Component {
               onTouchStart={this.handleTouchStart.bind(null, value, [x, y])}
               className="demo-item"
               style={{
-                // top:45,
-                // left:45,
                 width: value.width,
                 height: value.height,
                 boxShadow: `rgba(0, 0, 0, 0.2) 0px ${shadow}px ${2 * shadow}px 0px`,
                 transform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
                 WebkitTransform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
-                zIndex: lastPress && value.id === lastPress.id ? 99 : value.id,
-                // opacity: lastPress && value.id === lastPress.id ? 0.7 : 1,
+                zIndex: lastPress && value.id === lastPress.id ? 99 : value.id
               }}>
               {value.id}
             </div>
@@ -112,9 +138,36 @@ class App extends Component {
       // })
     })
     return (
-      <div  className="demo-outer ">
-        <div className="demo">
-          {result}
+      <div>
+        <div className="navigate">
+          <div className="col">
+            <div className="group">
+              <label>Mode sortable</label>
+              <select onChange={this.onMode.bind(this)}>
+                <option>default</option>
+                <option>left_right</option>
+              </select>
+            </div>
+            <div className="group">
+              <label>Delta</label>
+            <input onChange={this.onDelta.bind(this)} type="number" value={this.state.delta}></input>
+            </div>
+          </div>
+          <div className="col">
+            <div className="group">
+              <label>Width</label>
+            <input onChange={this.onWidth.bind(this)}  type="number" value={this.state.step_x}></input>
+            </div>
+            <div className="group">
+              <label>Height</label>
+            <input onChange={this.onHeight.bind(this)}  type="number" value={this.state.step_y}></input>
+            </div>
+          </div>
+        </div>
+        <div  className="demo-outer ">
+          <div className="demo">
+            {result}
+          </div>
         </div>
       </div>
     );
