@@ -1,5 +1,22 @@
+const default_order = [
+  {id: 1, w:1, h:1, col:1, row:1},
+  {id: 2, w:1, h:1, col:2, row:1},
+  {id: 3, w:1, h:1, col:3, row:1},
+  {id: 4, w:1, h:1, col:4, row:1},
+  // {id: 5, w:2, h:2, col:5, row:1},
+
+  {id: 11, w:1, h:1, col:1, row:2},
+  {id: 12, w:1, h:1, col:2, row:2},
+  {id: 13, w:1, h:1, col:3, row:2},
+  {id: 14, w:1, h:1, col:4, row:2},
+
+  {id: 21, w:1, h:1, col:1, row:3},
+  {id: 22, w:1, h:1, col:2, row:3},
+  {id: 23, w:1, h:1, col:3, row:3},
+]
+
 class Sortable{
-  constructor(step_x, step_y, delta, sortable_mode){
+  constructor(step_x, step_y, delta, sortable_mode, order){
     this.state = {
       sortable_mode: sortable_mode ? sortable_mode: "default", // default, left_right
       size_mode: "default", // default, stick
@@ -12,22 +29,7 @@ class Sortable{
       isPressed: false,
       currentRow:null,
       currentCol:null,
-      order:[
-        {id: 1, w:1, h:1, col:1, row:1},
-        {id: 2, w:1, h:1, col:2, row:1},
-        {id: 3, w:1, h:1, col:3, row:1},
-        {id: 4, w:1, h:1, col:4, row:1},
-        // {id: 5, w:2, h:2, col:5, row:1},
-
-        {id: 11, w:1, h:1, col:1, row:2},
-        {id: 12, w:1, h:1, col:2, row:2},
-        {id: 13, w:1, h:1, col:3, row:2},
-        {id: 14, w:1, h:1, col:4, row:2},
-
-        {id: 21, w:1, h:1, col:1, row:3},
-        {id: 22, w:1, h:1, col:2, row:3},
-        {id: 23, w:1, h:1, col:3, row:3},
-      ]
+      order: order ? order : default_order
     };
   }
 
@@ -55,7 +57,7 @@ class Sortable{
   get_right_column(row){
     let max_column = 0;
     let copy = Object.assign({}, this.state);
-    console.log("copy.order:::::::::::::", copy.order)
+    // console.log("copy.order:::::::::::::", copy.order)
     copy.order.forEach((value, key_y) => {
       if(row === value.row){
         if(value.col >= max_column){
@@ -64,8 +66,8 @@ class Sortable{
         }
       }
     })
-    console.log("max_right_column::::___________________________")
-    console.log("max_right_column::::", row, "-----", max_column)
+    // console.log("max_right_column::::___________________________")
+    // console.log("max_right_column::::", row, "-----", max_column)
     return max_column
   }
 
@@ -73,10 +75,14 @@ class Sortable{
     console.log("move_item_right", item, ">>>", width)
     this.state.order.forEach((value, key) => {
       if(item.id === value.id){
-        const max_column = this.get_right_column(value.row)
-        if(max_column === value.col){
-          value.col = 1
-          value.row += 1
+        if(this.state.sortable_mode === "left_right"){
+          const max_column = this.get_right_column(value.row)
+          if(max_column === value.col){
+            value.col = 1
+            value.row += 1
+          }else{
+            value.col += width
+          }
         }else{
           value.col += width
         }
@@ -88,9 +94,13 @@ class Sortable{
     console.log("move_item_right", item, ">>>", width)
     this.state.order.forEach((value, key) => {
       if(item.id === value.id){
-        if(value.col === 1){
-          value.row -= 1
-          value.col = (this.get_right_column(value.row) + 1)
+        if(this.state.sortable_mode === "left_right"){
+          if(value.col === 1){
+            value.row -= 1
+            value.col = (this.get_right_column(value.row) + 1)
+          }else{
+            value.col -= width
+          }
         }else{
           value.col -= width
         }

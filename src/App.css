@@ -22,7 +22,8 @@
 }
 
 .demo {
-  width: 620px;
+  width: 60%;
+  /*width: 620px;*/
   height: 400px;
 }
 .demo-item {
@@ -45,12 +46,26 @@
 
 .navigate{
   background-color: rgba(238, 238, 238, 0.55);
-  height: 100px;
+  height: 120px;
   display: -webkit-flex;
 	display: flex;
 	-webkit-flex-direction: row;
 	flex-direction: row;
+  padding-left: 150px;
 }
+
+.edit{
+  background-color: rgba(238, 238, 238, 0.55);
+  height: 300px;
+  width: 20%;
+  display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: row;
+	flex-direction: row;
+  margin-top: 100px;
+  padding-right: 30px;
+}
+
 .col{
   /*-webkit-flex: auto;*/
 	/*flex: auto;*/

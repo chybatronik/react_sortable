@@ -67,28 +67,36 @@ class App extends Component {
   onMode(event){
     console.log("onMode", event.target.value)
     this.setState({mode: event.target.value});
-    this.sortable = new Sortable(this.state.step_x, this.state.step_y, this.state.delta, event.target.value);
+    this.sortable = new Sortable(this.state.step_x, this.state.step_y, this.state.delta, event.target.value, this.state.order);
     this.setState(this.sortable.get_state());
   }
 
   onDelta(event){
-    const delta = parseInt(event.target.value);
+    const delta = event.target.value;
     this.setState({delta: delta});
-    this.sortable = new Sortable(this.state.step_x, this.state.step_y, delta, this.state.mode);
+    this.sortable = new Sortable(this.state.step_x, this.state.step_y, delta, this.state.mode,  this.state.order);
     this.setState(this.sortable.get_state());
   }
 
   onWidth(event){
-    const step_x = parseInt(event.target.value);
+    const step_x = event.target.value;
     this.setState({step_x: step_x});
-    this.sortable = new Sortable(step_x, this.state.step_y, this.state.delta, this.state.mode);
+    this.sortable = new Sortable(step_x, this.state.step_y, this.state.delta, this.state.mode, this.state.order);
     this.setState(this.sortable.get_state());
   }
 
   onHeight(event){
-    const step_y = parseInt(event.target.value)
+    const step_y = event.target.value;
     this.setState({step_y: step_y});
-    this.sortable = new Sortable(this.state.step_x, step_y, this.state.delta, this.state.mode);
+    this.sortable = new Sortable(this.state.step_x, step_y, this.state.delta, this.state.mode, this.state.order);
+    this.setState(this.sortable.get_state());
+  }
+
+  onTextArea(event){
+    console.log("onTextArea", JSON.parse(event.target.value))
+    const new_order = JSON.parse(event.target.value);
+    this.setState({order: new_order});
+    this.sortable = new Sortable(this.state.step_x, this.state.step_y, this.state.delta, this.state.mode, new_order);
     this.setState(this.sortable.get_state());
   }
 
@@ -137,6 +145,7 @@ class App extends Component {
       ));
       // })
     })
+    const json_order = JSON.stringify(this.state.order, "", 4)
     return (
       <div>
         <div className="navigate">
@@ -164,9 +173,13 @@ class App extends Component {
             </div>
           </div>
         </div>
-        <div  className="demo-outer ">
+        <div className="demo-outer ">
           <div className="demo">
             {result}
+          </div>
+          <div className="edit">
+            <textarea name="Text1" cols="80" rows="5" value={json_order} onChange={this.onTextArea.bind(this)}>
+            </textarea>
           </div>
         </div>
       </div>
