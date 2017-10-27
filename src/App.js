@@ -72,32 +72,38 @@ class App extends Component {
   }
 
   onDelta(event){
-    const delta = event.target.value;
+    const delta = parseInt(event.target.value);
     this.setState({delta: delta});
     this.sortable = new Sortable(this.state.step_x, this.state.step_y, delta, this.state.mode,  this.state.order);
     this.setState(this.sortable.get_state());
   }
 
   onWidth(event){
-    const step_x = event.target.value;
+    const step_x = parseInt(event.target.value);
     this.setState({step_x: step_x});
     this.sortable = new Sortable(step_x, this.state.step_y, this.state.delta, this.state.mode, this.state.order);
     this.setState(this.sortable.get_state());
   }
 
   onHeight(event){
-    const step_y = event.target.value;
+    const step_y = parseInt(event.target.value);
     this.setState({step_y: step_y});
     this.sortable = new Sortable(this.state.step_x, step_y, this.state.delta, this.state.mode, this.state.order);
     this.setState(this.sortable.get_state());
   }
 
   onTextArea(event){
-    console.log("onTextArea", JSON.parse(event.target.value))
-    const new_order = JSON.parse(event.target.value);
-    this.setState({order: new_order});
-    this.sortable = new Sortable(this.state.step_x, this.state.step_y, this.state.delta, this.state.mode, new_order);
-    this.setState(this.sortable.get_state());
+    // console.log("onTextArea", JSON.parse(event.target.value))
+    try {
+      this.setState({str_order: event.target.value});
+      const new_order = JSON.parse(event.target.value);
+      this.setState({order: new_order});
+      this.sortable = new Sortable(this.state.step_x, this.state.step_y, this.state.delta, this.state.mode, new_order);
+      this.setState(this.sortable.get_state());
+    }catch(err) {
+      // this.setState({order: event.target.value});
+
+    }
   }
 
   render() {
@@ -145,7 +151,12 @@ class App extends Component {
       ));
       // })
     })
-    const json_order = JSON.stringify(this.state.order, "", 4)
+    let json_order;
+    if(this.state.str_order){
+      json_order = this.state.str_order
+    }else{
+      json_order = JSON.stringify(this.state.order, "", 4)
+    }
     return (
       <div>
         <div className="navigate">
