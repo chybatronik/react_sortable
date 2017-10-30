@@ -54,20 +54,43 @@ class Sortable{
     return copy
   }
 
-  get_right_column(row){
+  get_right_column_without_cur(row){
     let max_column = 0;
+    const {lastPress} = this.state;
     let copy = Object.assign({}, this.state);
-    // console.log("copy.order:::::::::::::", copy.order)
+    console.log("lastPress:::::::::::::", lastPress.id)
     copy.order.forEach((value, key_y) => {
-      if(row === value.row){
+      if(row === value.row ){
         if(value.col >= max_column){
-          // console.log("value_max", value.col, value)
-          max_column = value.col
+          console.log("value_max", value.col, value.id, lastPress.id)
+          if(lastPress.id !== value.id){
+            max_column = value.col
+          }
         }
       }
     })
     // console.log("max_right_column::::___________________________")
-    // console.log("max_right_column::::", row, "-----", max_column)
+    console.log("max_right_column::::", row, "-----", max_column)
+    return max_column
+  }
+
+  get_right_column(row){
+    let max_column = 0;
+    const {lastPress} = this.state;
+    let copy = Object.assign({}, this.state);
+    console.log("lastPress:::::::::::::", lastPress.id)
+    copy.order.forEach((value, key_y) => {
+      if(row === value.row ){
+        if(value.col >= max_column){
+          // console.log("value_max", value.col, value.id, lastPress.id)
+          max_column = value.col
+          // if(lastPress.id !== value.id){
+          // }
+        }
+      }
+    })
+    // console.log("max_right_column::::___________________________")
+    console.log("max_right_column::::", row, "-----", max_column)
     return max_column
   }
 
@@ -97,7 +120,7 @@ class Sortable{
         if(this.state.sortable_mode === "left_right"){
           if(value.col === 1){
             value.row -= 1
-            value.col = (this.get_right_column(value.row) + 1)
+            value.col = (this.get_right_column_without_cur(value.row) + 1)
           }else{
             value.col -= width
           }
@@ -146,6 +169,32 @@ class Sortable{
       }
     })
     if(count > 0){
+      return false
+    }else{
+      return true
+    }
+  }
+
+  available_item_left_right(row, col){
+    console.log("available_item_left_right", col, row)
+    const {lastPress} = this.state;
+    let item_cur = this.get_item_id(lastPress.id)
+    let copy = Object.assign({}, this.state);
+    let count = 0;
+    copy.order.forEach((value, key_y) => {
+      if(
+        item_cur.id !== value.id &&
+        (value.col) <= col &&
+        (value.col+value.w) > col &&
+        (value.row) <= row &&
+        (value.row + value.h) > row
+      ){
+        // console.log("available_item:::value::", value)
+        count+= 1;
+      }
+    })
+    const max_column = this.get_right_column(row);
+    if(max_column === 0 || count > 0){
       return false
     }else{
       return true
@@ -609,14 +658,18 @@ class Sortable{
       this.get_item_between_forward(currentRow, currentCol).forEach((value, key_y) => {
         this.move_item_left(value, 1)
       })
-      this.move_item_on_current_row_col(currentRow, currentCol)
+      if(this.available_item_left_right(currentRow, currentCol)){
+        this.move_item_on_current_row_col(currentRow, currentCol)
+      }
     }
     if(currentCol < this.state.currentCol || currentRow < this.state.currentRow){
       console.log("back:<<<<<<<<<<<<<<<", Object.assign({}, this.state.order))
       this.get_item_between_back(currentRow, currentCol).forEach((value, key_y) => {
         this.move_item_right(value, 1)
       })
-      this.move_item_on_current_row_col(currentRow, currentCol)
+      if(this.available_item_left_right(currentRow, currentCol)){
+        this.move_item_on_current_row_col(currentRow, currentCol)
+      }
     }
   }
 
