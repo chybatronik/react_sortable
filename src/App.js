@@ -72,21 +72,21 @@ class App extends Component {
   }
 
   onDelta(event){
-    const delta = parseInt(event.target.value);
+    const delta = parseInt(event.target.value, 10);
     this.setState({delta: delta});
     this.sortable = new Sortable(this.state.step_x, this.state.step_y, delta, this.state.mode,  this.state.order);
     this.setState(this.sortable.get_state());
   }
 
   onWidth(event){
-    const step_x = parseInt(event.target.value);
+    const step_x = parseInt(event.target.value, 10);
     this.setState({step_x: step_x});
     this.sortable = new Sortable(step_x, this.state.step_y, this.state.delta, this.state.mode, this.state.order);
     this.setState(this.sortable.get_state());
   }
 
   onHeight(event){
-    const step_y = parseInt(event.target.value);
+    const step_y = parseInt(event.target.value, 10);
     this.setState({step_y: step_y});
     this.sortable = new Sortable(this.state.step_x, step_y, this.state.delta, this.state.mode, this.state.order);
     this.setState(this.sortable.get_state());
@@ -170,17 +170,20 @@ class App extends Component {
             </div>
             <div className="group">
               <label>Delta</label>
-            <input onChange={this.onDelta.bind(this)} type="number" value={this.state.delta}></input>
+              <input onChange={this.onDelta.bind(this)} type="range" value={this.state.delta}  min="0" max="100">
+              </input>
             </div>
           </div>
           <div className="col">
             <div className="group">
               <label>Width</label>
-            <input onChange={this.onWidth.bind(this)}  type="number" value={this.state.step_x}></input>
+              <input onChange={this.onWidth.bind(this)}  type="range" value={this.state.step_x}   min="0" max="300">
+              </input>
             </div>
             <div className="group">
               <label>Height</label>
-            <input onChange={this.onHeight.bind(this)}  type="number" value={this.state.step_y}></input>
+              <input onChange={this.onHeight.bind(this)}  type="range" value={this.state.step_y}    min="0" max="300">
+              </input>
             </div>
           </div>
         </div>

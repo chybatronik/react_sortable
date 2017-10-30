@@ -679,10 +679,10 @@ class Sortable{
     if (isPressed) {
       let copy = Object.assign({}, this.state);
       const mouseY = pageY - topDeltaY ;
-      const currentRow = this.clamp(Math.round(mouseY / this.state.step_y), 1, 10);
+      const currentRow = this.clamp(Math.round(mouseY / (this.state.step_y+this.state.delta)), 1, 10);
 
       const mouseX = pageX - topDeltaX;
-      const currentCol = this.clamp(Math.round(mouseX / this.state.step_x), 1, this.get_right_column(currentRow));
+      const currentCol = this.clamp(Math.round(mouseX / (this.state.step_x+this.state.delta)), 1, this.get_right_column(currentRow));
 
       let new_row = []
       new_row = copy.order
