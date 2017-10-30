@@ -169,19 +169,19 @@ class App extends Component {
               </select>
             </div>
             <div className="group">
-              <label>Delta</label>
+              <label>Delta: {this.state.delta} px</label>
               <input onChange={this.onDelta.bind(this)} type="range" value={this.state.delta}  min="0" max="100">
               </input>
             </div>
           </div>
           <div className="col">
             <div className="group">
-              <label>Width</label>
+              <label>Width: {this.state.step_x} px</label>
               <input onChange={this.onWidth.bind(this)}  type="range" value={this.state.step_x}   min="0" max="300">
               </input>
             </div>
             <div className="group">
-              <label>Height</label>
+              <label>Height: {this.state.step_y} px</label>
               <input onChange={this.onHeight.bind(this)}  type="range" value={this.state.step_y}    min="0" max="300">
               </input>
             </div>
