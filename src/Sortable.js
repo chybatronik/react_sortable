@@ -143,6 +143,24 @@ class Sortable{
           }
           value.w = 1
           value.h = 1
+          let size, is_not_move;
+          if(this.state.init_size[`${value.row}_${value.col-1}`]){
+            size = this.state.init_size[`${value.row}_${value.col-1}`]
+            is_not_move = false
+          }
+          if(this.state.init_size[`${value.row}_${value.col}`]){
+            size = this.state.init_size[`${value.row}_${value.col}`]
+            is_not_move = true
+          }
+          if(size){
+            value.h = size.h
+            value.w = size.w
+            value.width = value.w * this.state.step_x + (value.w-1)*this.state.delta
+            value.height = value.h * this.state.step_y + (value.h-1)*this.state.delta
+            if(!is_not_move){
+              this.move_item_left(value, 1)
+            }
+          }
         }else{
           value.col -= width
         }
