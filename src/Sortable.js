@@ -1,14 +1,14 @@
 const default_order = [
   {id: 1, w:1, h:1, col:1, row:1},
   {id: 2, w:1, h:1, col:2, row:1},
-  {id: 3, w:1, h:1, col:3, row:1},
-  {id: 4, w:1, h:1, col:4, row:1},
-  // {id: 5, w:2, h:2, col:5, row:1},
+  {id: 3, w:2, h:2, col:3, row:1},
+  {id: 4, w:1, h:1, col:5, row:1},
+  {id: 5, w:1, h:1, col:6, row:1},
 
   {id: 11, w:1, h:1, col:1, row:2},
   {id: 12, w:1, h:1, col:2, row:2},
-  {id: 13, w:1, h:1, col:3, row:2},
-  {id: 14, w:1, h:1, col:4, row:2},
+  {id: 13, w:1, h:1, col:5, row:2},
+  {id: 14, w:1, h:1, col:6, row:2},
 
   {id: 21, w:1, h:1, col:1, row:3},
   {id: 22, w:1, h:1, col:2, row:3},
@@ -17,6 +17,7 @@ const default_order = [
 
 class Sortable{
   constructor(step_x, step_y, delta, sortable_mode, order){
+    order = order ? order : default_order
     this.state = {
       sortable_mode: sortable_mode ? sortable_mode: "default", // default, left_right
       size_mode: "default", // default, stick
@@ -29,8 +30,21 @@ class Sortable{
       isPressed: false,
       currentRow:null,
       currentCol:null,
-      order: order ? order : default_order
+      order: order,
+      init_size: this.get_init_size(order)
     };
+  }
+
+  get_init_size(order){
+    let result = {}
+    const copy_order = Object.assign([], order);
+    copy_order.forEach((value, key) => {
+      if(value.h > 1 || value.w > 1){
+        result[`${value.row}_${value.col}`] = {w: value.w, h: value.h};
+      }
+    })
+    console.log("get_init_size::", result)
+    return result
   }
 
   clamp(n, min, max) {
@@ -50,7 +64,6 @@ class Sortable{
       res_order.push(ttm)
     })
     copy.order = res_order
-
     return copy
   }
 
@@ -108,6 +121,8 @@ class Sortable{
           }else{
             value.col += width
           }
+          value.w = 1
+          value.h = 1
         }else{
           value.col += width
         }
@@ -126,6 +141,8 @@ class Sortable{
           }else{
             value.col -= width
           }
+          value.w = 1
+          value.h = 1
         }else{
           value.col -= width
         }
@@ -192,7 +209,6 @@ class Sortable{
         (value.row) <= row &&
         (value.row + value.h) > row
       ){
-        // console.log("available_item:::value::", value)
         count+= 1;
       }
     })
@@ -659,6 +675,8 @@ class Sortable{
   }
 
   left_right_Sortable(currentRow, currentCol){
+    const {lastPress} = this.state;
+    this.get_last(lastPress.id);
     console.log("mode::left_right_Sortable:::", currentRow, currentCol)
 
     if(currentCol > this.state.currentCol || currentRow > this.state.currentRow){
