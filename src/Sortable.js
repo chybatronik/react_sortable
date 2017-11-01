@@ -40,7 +40,7 @@ class Sortable{
     const copy_order = Object.assign([], order);
     copy_order.forEach((value, key) => {
       if(value.h > 1 || value.w > 1){
-        result[`${value.row}_${value.col}`] = {w: value.w, h: value.h};
+        result[`${value.row}_${value.col}`] = {w: value.w, h: value.h, col: value.col, row: value.row};
       }
     })
     console.log("get_init_size::", result)
@@ -109,8 +109,61 @@ class Sortable{
     return max_column
   }
 
+  item_in_init_size_right(item){
+    let result = null
+    let value;
+    console.log("Object.keys(this.state.init_size)", Object.keys(this.state.init_size))
+    Object.keys(this.state.init_size).forEach((str_key, key) => {
+      value = this.state.init_size[str_key]
+      console.log("valuevaluevalue", value, item)
+      if(
+        item.row > value.row &&
+        item.row < (value.row+value.h)
+      ){
+        console.log("row is ok", item.col, value.col, item.col < (value.col+value.w))
+        if(
+          (item.col+1) >= value.col &&
+          (item.col+1) < (value.col+value.w)
+        ){
+          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!::::", value)
+          console.log("item_in_init_size::::", value)
+          result =  value
+        }
+
+      }
+    })
+    return result
+  }
+
+  item_in_init_size_left(item){
+    let result = null
+    let value;
+    console.log("Object.keys(this.state.init_size)", Object.keys(this.state.init_size))
+    Object.keys(this.state.init_size).forEach((str_key, key) => {
+      value = this.state.init_size[str_key]
+      console.log("valuevaluevalue", value, item)
+      if(
+        item.row > value.row &&
+        item.row < (value.row+value.h)
+      ){
+        console.log("row is ok", item.col, value.col, item.col < (value.col+value.w))
+        if(
+          (item.col-1) >= value.col &&
+          (item.col-1) < (value.col+value.w)
+        ){
+          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!::::", value)
+          console.log("item_in_init_size::::", value)
+          result =  value
+        }
+
+      }
+    })
+    return result
+  }
+
   move_item_right(item, width){
     console.log("move_item_right", item, ">>>", width)
+    let check_ava;
     this.state.order.forEach((value, key) => {
       if(item.id === value.id){
         if(this.state.sortable_mode === "left_right"){
@@ -119,10 +172,37 @@ class Sortable{
             value.col = 1
             value.row += 1
           }else{
-            value.col += width
+            check_ava = this.item_in_init_size_right(value)
+            console.log("==================")
+            console.log("check_ava:::", check_ava)
+            if(check_ava){
+              value.col += check_ava.w + 1
+            }else{
+              value.col += width
+            }
           }
+          // value.w = 1
+          // value.h = 1
           value.w = 1
           value.h = 1
+          let size, is_not_move;
+          if(this.state.init_size[`${value.row}_${value.col-1}`]){
+            size = this.state.init_size[`${value.row}_${value.col-1}`]
+            is_not_move = false
+          }
+          if(this.state.init_size[`${value.row}_${value.col}`]){
+            size = this.state.init_size[`${value.row}_${value.col}`]
+            is_not_move = true
+          }
+          if(size){
+            value.h = size.h
+            value.w = size.w
+            value.width = value.w * this.state.step_x + (value.w-1)*this.state.delta
+            value.height = value.h * this.state.step_y + (value.h-1)*this.state.delta
+            if(!is_not_move){
+              this.move_item_right(value, 1)
+            }
+          }
         }else{
           value.col += width
         }
@@ -132,6 +212,7 @@ class Sortable{
 
   move_item_left(item, width){
     console.log("move_item_right", item, ">>>", width)
+    let check_ava;
     this.state.order.forEach((value, key) => {
       if(item.id === value.id){
         if(this.state.sortable_mode === "left_right"){
@@ -139,7 +220,14 @@ class Sortable{
             value.row -= 1
             value.col = (this.get_right_column_without_cur(value.row) + 1)
           }else{
-            value.col -= width
+            check_ava = this.item_in_init_size_left(value)
+            console.log("==================")
+            console.log("check_ava:::", check_ava)
+            if(check_ava){
+              value.col -= check_ava.w + 1
+            }else{
+              value.col -= width
+            }
           }
           value.w = 1
           value.h = 1

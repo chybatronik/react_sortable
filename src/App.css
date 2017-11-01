@@ -29,12 +29,12 @@
 .demo-item {
   position: absolute;
   overflow: visible;
-  pointer-events: auto;
+  /*pointer-events: auto;*/
   transform-origin: 50% 50% 0px;
   border-radius: 4px;
   color: rgb(153, 153, 153);
   line-height: 45px;
-  padding-left: 15px;
+  padding-left: 20px;
   font-size: 24px;
   font-weight: 400;
   background-color: rgb(255, 255, 255);
