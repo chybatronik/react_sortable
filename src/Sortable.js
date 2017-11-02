@@ -762,7 +762,7 @@ class Sortable{
         }
       }
       // col>>>>>>>>>>>>>>>>>>>>>
-      if(currentCol >= this.state.currentCol){
+      if(currentCol > this.state.currentCol){
         console.log("currentCol", currentCol)
         this.get_item_right(currentRow, currentCol).forEach((value, key_y) => {
           if(this.available_item_left(value, this.state.w)){
