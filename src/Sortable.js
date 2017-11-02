@@ -2,17 +2,19 @@ const default_order = [
   {id: 1, w:1, h:1, col:1, row:1},
   {id: 2, w:1, h:1, col:2, row:1},
   {id: 3, w:2, h:2, col:3, row:1},
-  {id: 4, w:1, h:1, col:5, row:1},
-  {id: 5, w:1, h:1, col:6, row:1},
+  // {id: 4, w:2, h:2, col:5, row:1},
+  // {id: 5, w:1, h:1, col:6, row:1},
 
   {id: 11, w:1, h:1, col:1, row:2},
   {id: 12, w:1, h:1, col:2, row:2},
-  {id: 13, w:1, h:1, col:5, row:2},
-  {id: 14, w:1, h:1, col:6, row:2},
+  // {id: 13, w:1, h:1, col:5, row:2},
+  // {id: 14, w:1, h:1, col:6, row:2},
 
   {id: 21, w:1, h:1, col:1, row:3},
   {id: 22, w:1, h:1, col:2, row:3},
-  // {id: 23, w:1, h:1, col:3, row:3},
+  {id: 23, w:1, h:1, col:3, row:3},
+  {id: 24, w:1, h:1, col:4, row:3},
+  {id: 25, w:1, h:1, col:5, row:3},
 ]
 
 class Sortable{
@@ -75,11 +77,12 @@ class Sortable{
       if(row === value.row ){
         if(value.col >= max_column){
           if(lastPress.id !== value.id){
-            max_column = value.col
+            max_column = value.col + (value.w-1)
           }
         }
       }
     })
+    console.log("get_right_column_without_cur::::", max_column)
     return max_column
   }
 
@@ -112,21 +115,21 @@ class Sortable{
   item_in_init_size_right(item){
     let result = null
     let value;
-    console.log("Object.keys(this.state.init_size)", Object.keys(this.state.init_size))
+    // console.log("Object.keys(this.state.init_size)", Object.keys(this.state.init_size))
     Object.keys(this.state.init_size).forEach((str_key, key) => {
       value = this.state.init_size[str_key]
-      console.log("valuevaluevalue", value, item)
+      // console.log("valuevaluevalue", value, item)
       if(
         item.row > value.row &&
         item.row < (value.row+value.h)
       ){
-        console.log("row is ok", item.col, value.col, item.col < (value.col+value.w))
+        // console.log("row is ok", item.col, value.col, item.col < (value.col+value.w))
         if(
           (item.col+1) >= value.col &&
           (item.col+1) < (value.col+value.w)
         ){
-          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!::::", value)
-          console.log("item_in_init_size::::", value)
+          // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!::::", value)
+          // console.log("item_in_init_size::::", value)
           result =  value
         }
 
@@ -138,21 +141,21 @@ class Sortable{
   item_in_init_size_left(item){
     let result = null
     let value;
-    console.log("Object.keys(this.state.init_size)", Object.keys(this.state.init_size))
+    // console.log("Object.keys(this.state.init_size)", Object.keys(this.state.init_size))
     Object.keys(this.state.init_size).forEach((str_key, key) => {
       value = this.state.init_size[str_key]
-      console.log("valuevaluevalue", value, item)
+      // console.log("valuevaluevalue", value, item)
       if(
         item.row > value.row &&
         item.row < (value.row+value.h)
       ){
-        console.log("row is ok", item.col, value.col, item.col < (value.col+value.w))
+        // console.log("row is ok", item.col, value.col, item.col < (value.col+value.w))
         if(
           (item.col-1) >= value.col &&
           (item.col-1) < (value.col+value.w)
         ){
-          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!::::", value)
-          console.log("item_in_init_size::::", value)
+          // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!::::", value)
+          // console.log("item_in_init_size::::", value)
           result =  value
         }
 
@@ -168,6 +171,8 @@ class Sortable{
       if(item.id === value.id){
         if(this.state.sortable_mode === "left_right"){
           const max_column = this.get_right_column(value.row)
+          console.log("..........................................")
+          console.log("max_column::::::::::::::::::::", max_column)
           if(max_column === value.col){
             value.col = 1
             value.row += 1
@@ -439,8 +444,24 @@ class Sortable{
     const {lastPress} = this.state;
     this.state.order.forEach((value, key) => {
       if(lastPress.id === value.id){
+
         value.col = currentCol
         value.row = currentRow
+        if(this.state.sortable_mode === "left_right"){
+          value.h = 1
+          value.w = 1
+          let size;
+          if(this.state.init_size[`${value.row}_${value.col}`]){
+            size = this.state.init_size[`${value.row}_${value.col}`]
+            // is_not_move = true
+          }
+          if(size){
+            value.h = size.h
+            value.w = size.w
+            value.width = value.w * this.state.step_x + (value.w-1)*this.state.delta
+            value.height = value.h * this.state.step_y + (value.h-1)*this.state.delta
+          }
+        }
       }
     })
   }
