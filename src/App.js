@@ -13,11 +13,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.sortable = new Sortable(step_x, step_y, delta, "default");
-    // this.sortable = new Sortable();
-    // console.log("sortable::", this.sortable.get_state())
-
     this.state = this.sortable.get_state();
-    // this.setState({step_x: step_x, step_y: step_y, delta: delta});
+
   };
 
   componentDidMount() {
@@ -67,28 +64,28 @@ class App extends Component {
   onMode(event){
     console.log("onMode", event.target.value)
     this.setState({mode: event.target.value});
-    this.sortable = new Sortable(this.state.step_x, this.state.step_y, this.state.delta, event.target.value, this.state.order);
+    this.sortable = new Sortable(this.state.step_x, this.state.step_y, this.state.delta, event.target.value, this.state.order, this.state.allow_use_empty);
     this.setState(this.sortable.get_state());
   }
 
   onDelta(event){
     const delta = parseInt(event.target.value, 10);
     this.setState({delta: delta});
-    this.sortable = new Sortable(this.state.step_x, this.state.step_y, delta, this.state.mode,  this.state.order);
+    this.sortable = new Sortable(this.state.step_x, this.state.step_y, delta, this.state.mode,  this.state.order, this.state.allow_use_empty);
     this.setState(this.sortable.get_state());
   }
 
   onWidth(event){
     const step_x = parseInt(event.target.value, 10);
     this.setState({step_x: step_x});
-    this.sortable = new Sortable(step_x, this.state.step_y, this.state.delta, this.state.mode, this.state.order);
+    this.sortable = new Sortable(step_x, this.state.step_y, this.state.delta, this.state.mode, this.state.order, this.state.allow_use_empty);
     this.setState(this.sortable.get_state());
   }
 
   onHeight(event){
     const step_y = parseInt(event.target.value, 10);
     this.setState({step_y: step_y});
-    this.sortable = new Sortable(this.state.step_x, step_y, this.state.delta, this.state.mode, this.state.order);
+    this.sortable = new Sortable(this.state.step_x, step_y, this.state.delta, this.state.mode, this.state.order, this.state.allow_use_empty);
     this.setState(this.sortable.get_state());
   }
 
@@ -98,11 +95,30 @@ class App extends Component {
       this.setState({str_order: event.target.value});
       const new_order = JSON.parse(event.target.value);
       this.setState({order: new_order});
-      this.sortable = new Sortable(this.state.step_x, this.state.step_y, this.state.delta, this.state.mode, new_order);
+      this.sortable = new Sortable(this.state.step_x, this.state.step_y, this.state.delta, this.state.mode, new_order, this.state.allow_use_empty);
       this.setState(this.sortable.get_state());
     }catch(err) {
 
     }
+  }
+
+  onAddItemRight(){
+    console.log("onItemRight")
+  }
+
+  onAddItemEnd(){
+    console.log("onAddItemEnd")
+  }
+
+  onAllowEmpty(event){
+    console.log("onAllowEmpty::", event.target.value)
+    this.setState({
+      allow_use_empty: !this.state.allow_use_empty,
+    });
+
+    this.sortable = new Sortable(this.state.step_x, step_y, this.state.delta, this.state.mode, this.state.order, !this.state.allow_use_empty);
+    this.setState(this.sortable.get_state());
+
   }
 
   render() {
@@ -183,6 +199,23 @@ class App extends Component {
               <label>Height: {this.state.step_y} px</label>
               <input onChange={this.onHeight.bind(this)}  type="range" value={this.state.step_y}    min="0" max="300">
               </input>
+            </div>
+          </div>
+          <div className="col">
+            <div className="group">
+              <label>Allow empty cell: {String(this.state.allow_use_empty)} </label>
+              <input onChange={this.onAllowEmpty.bind(this)} checked={this.state.allow_use_empty} type="checkbox" value={this.state.allow_use_empty}>
+              </input>
+            </div>
+            <div className="group">
+              <button onClick={this.onAddItemRight.bind(this)} style={{width:120}}>
+                Add item right
+              </button>
+            </div>
+            <div className="group">
+              <button onClick={this.onAddItemEnd.bind(this)} style={{width:120}}>
+                Add on end page
+              </button>
             </div>
           </div>
         </div>

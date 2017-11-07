@@ -18,7 +18,7 @@ const default_order = [
 ]
 
 class Sortable{
-  constructor(step_x, step_y, delta, sortable_mode, order){
+  constructor(step_x, step_y, delta, sortable_mode, order, allow_use_empty){
     order = order ? order : default_order
     this.state = {
       sortable_mode: sortable_mode ? sortable_mode: "default", // default, left_right
@@ -33,7 +33,8 @@ class Sortable{
       currentRow:null,
       currentCol:null,
       order: order,
-      init_size: this.get_init_size(order)
+      init_size: this.get_init_size(order),
+      allow_use_empty: allow_use_empty ? allow_use_empty : false
     };
   }
 
