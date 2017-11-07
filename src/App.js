@@ -101,7 +101,6 @@ class App extends Component {
       this.sortable = new Sortable(this.state.step_x, this.state.step_y, this.state.delta, this.state.mode, new_order);
       this.setState(this.sortable.get_state());
     }catch(err) {
-      // this.setState({order: event.target.value});
 
     }
   }
