@@ -287,7 +287,7 @@ class Sortable{
       }
     })
     console.log("count::::", count)
-    if(count > 0){
+    if(count > 0 ){
       return false
     }else{
       return true
@@ -371,16 +371,6 @@ class Sortable{
           }
         })
       })
-      // if(
-      //   lastPress.id !== value.id &&
-      //   item.id !== value.id &&
-      //   value.col >= (item_on.col -1) &&
-      //   value.col <= (item_on.col+item_on.w-1) &&
-      //   value.row >= (item_on.row) &&
-      //   value.row <= (item_on.row + (item_on.h-1))
-      // ){
-      //   count += 1
-      // }
     })
     if(count > 0){
       return false
@@ -397,12 +387,6 @@ class Sortable{
     let copy = Object.assign({}, this.state);
     let count = 0;
     copy.order.forEach((value, key_y) => {
-      console.log("value::", value, lastPress.id !== value.id, item.id !== value.id )
-      console.log("value.col >= (item_on.col) ::", value.col >= (item_on.col) )
-      console.log("value.col <= (item_on.col+item_on.w-1)::", value.col <= (item_on.col+item_on.w-1))
-      console.log("value.row >= (item_on.row) ::", value.row >= (item_on.row) )
-      console.log("value.row <= (item_on.row + (item_on.h-1))::", value.row <= (item_on.row + (item_on.h-1)))
-
       Array.from(Array(value.h).keys()).forEach((h, key_h) => {
         console.log("......", h+1)
         Array.from(Array(value.w).keys()).forEach((w, key_w) => {
@@ -415,37 +399,10 @@ class Sortable{
             (value.row+h) >= (item_on.row) &&
             (value.row+h) <= (item_on.row + (item_on.h-1))
           ){
-            console.log("value::find::____________", value)
             count += 1
           }
         })
       })
-
-      // if(
-      //   lastPress.id !== value.id &&
-      //   item.id !== value.id &&
-      //   value.col >= (item_on.col) &&
-      //   value.col <= (item_on.col+item_on.w) &&
-      //   value.row >= (item_on.row) &&
-      //   value.row <= (item_on.row + (item_on.h-1))
-      // ){
-      //   console.log("value::find::____________", value)
-      //   count += 1
-      // }
-      // if(
-      //   lastPress.id !== value.id &&
-      //   item.id == value.id &&
-      //   value.col > (item_on.col) &&
-      //   value.col < (item_on.col+item_on.w) &&
-      //   value.row > (item_on.row) &&
-      //   value.row < (item_on.row + item_on.h)
-      // ){
-      //   console.log("_________", value, this.available_item(value.row, value.col + width))
-      //   // if(this.available_item(value.row, value.col + width)){
-      //   count += 1
-      //   // }
-      //
-      // }
     })
     if(count > 0){
       return false
@@ -478,16 +435,6 @@ class Sortable{
 
         })
       })
-      // if(
-      //   lastPress.id !== value.id &&
-      //   item.id !== value.id &&
-      //   value.col >= (item_on.col) &&
-      //   value.col <= (item_on.col+item_on.w-1) &&
-      //   value.row >= (item_on.row) &&
-      //   value.row <= (item_on.row + (item_on.h-1) + 1)
-      // ){
-      //   count += 1
-      // }
     })
     if(count > 0){
       return false
@@ -518,16 +465,6 @@ class Sortable{
           }
         })
       })
-      // if(
-      //   lastPress.id !== value.id &&
-      //   item.id !== value.id &&
-      //   value.col >= (item_on.col) &&
-      //   value.col <= (item_on.col+item_on.w-1) &&
-      //   value.row >= (item_on.row-1) &&
-      //   value.row <= (item_on.row + (item_on.h-1))
-      // ){
-      //   count += 1
-      // }
     })
     if(count > 0){
       return false
@@ -694,11 +631,7 @@ class Sortable{
       lastPress_row = lastPress.row
       lastPress_col = lastPress.col
     }
-    console.log("res_is_owner::::", res_is_owner)
-    // lastPress_row = lastPress.row
-    // console.log("lastPress_row:",lastPress_row)
-    // console.log("lastPress_col:",lastPress_col)
-    // lastPress = this.get_item_id(lastPress.id)
+
     let copy = Object.assign({}, this.state);
     let result = []
     if(!res_is_owner){
@@ -806,9 +739,6 @@ class Sortable{
       lastPress_row = lastPress.row
       lastPress_col = lastPress.col
     }
-    console.log("lastPress_row:",lastPress_row)
-    console.log("lastPress_col:",lastPress_col)
-    console.log("res_is_owner:",res_is_owner)
     let result = []
     if(!res_is_owner){
       let copy = Object.assign({}, this.state);
@@ -921,8 +851,8 @@ class Sortable{
     console.log("mode::left_right_Sortable:::", currentRow, currentCol)
 
     if(currentCol > this.state.currentCol || currentRow > this.state.currentRow){
-      console.log("COl:>>>>>>>>>>>>>>>>", Object.assign({}, this.state.order))
-      console.log("available::", this.available_item_left_right(currentRow, currentCol))
+      // console.log("COl:>>>>>>>>>>>>>>>>", Object.assign({}, this.state.order))
+      // console.log("available::", this.available_item_left_right(currentRow, currentCol))
       let value_to_left = []
       this.get_item_between_forward(currentRow, currentCol).forEach((value, key_y) => {
         console.log("value::", value)
