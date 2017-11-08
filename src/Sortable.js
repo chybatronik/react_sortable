@@ -808,6 +808,7 @@ class Sortable{
     }
     console.log("lastPress_row:",lastPress_row)
     console.log("lastPress_col:",lastPress_col)
+    console.log("res_is_owner:",res_is_owner)
     let result = []
     if(!res_is_owner){
       let copy = Object.assign({}, this.state);
@@ -921,28 +922,46 @@ class Sortable{
 
     if(currentCol > this.state.currentCol || currentRow > this.state.currentRow){
       console.log("COl:>>>>>>>>>>>>>>>>", Object.assign({}, this.state.order))
+      console.log("available::", this.available_item_left_right(currentRow, currentCol))
+      let value_to_left = []
       this.get_item_between_forward(currentRow, currentCol).forEach((value, key_y) => {
         console.log("value::", value)
         this.move_item_left(value, 1)
         count_change += 1
+        value_to_left.push(value)
       })
-      console.log("available::", this.available_item_left_right(currentRow, currentCol))
       if(this.available_item_left_right(currentRow, currentCol)){
         this.move_item_on_current_row_col(currentRow, currentCol)
         count_change += 1
+      }else{
+        value_to_left.forEach((value, key_y) => {
+          // console.log("value::", value)
+          this.move_item_right(value, 1)
+          count_change -= 1
+          // value_to_left.push(value)
+        })
       }
     }
     if(currentCol < this.state.currentCol || currentRow < this.state.currentRow){
       console.log("back:<<<<<<<<<<<<<<<", Object.assign({}, this.state.order))
+      console.log("available::", this.available_item_left_right(currentRow, currentCol))
+      let value_to_right = []
       this.get_item_between_back(currentRow, currentCol).forEach((value, key_y) => {
         console.log("value::", value)
         this.move_item_right(value, 1)
         count_change += 1
+        value_to_right.push(value)
       })
-      console.log("available::", this.available_item_left_right(currentRow, currentCol))
       if(this.available_item_left_right(currentRow, currentCol)){
         this.move_item_on_current_row_col(currentRow, currentCol)
         count_change += 1
+      }else{
+        value_to_right.forEach((value, key_y) => {
+          // console.log("value::", value)
+          this.move_item_left(value, 1)
+          count_change -= 1
+          // value_to_left.push(value)
+        })
       }
     }
     return count_change
