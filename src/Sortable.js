@@ -95,7 +95,7 @@ class Sortable{
     let copy = Object.assign({}, this.state);
     copy.order.forEach((value, key_y) => {
       if(row === value.row ){
-        if(value.col >= max_column){
+        if((value.col) >= max_column){
           max_column = value.col
         }
       }
@@ -108,8 +108,8 @@ class Sortable{
     let copy = Object.assign({}, this.state);
     copy.order.forEach((value, key_y) => {
       if(row >= value.row ){
-        if(value.col >= max_column){
-          max_column = value.col
+        if((value.col + value.w-1) >= max_column){
+          max_column = value.col + value.w-1
         }
       }
     })
@@ -374,8 +374,19 @@ class Sortable{
         count+= 1;
       }
     })
+
     const max_column = this.get_right_column_without_cur(row);
     if(max_column === 0 || count > 0){
+      if(max_column === 0){
+        console.log("available_item_left_right:::", this.available_item_on_old_order(row, col), this.state.allow_use_empty)
+        if(this.state.allow_use_empty){
+          if(this.available_item_on_old_order(row, col)){
+            return true
+          }else{
+            return false
+          }
+        }
+      }
       return false
     }else{
       const max_column_average = this.get_right_column_average(row);
@@ -897,12 +908,14 @@ class Sortable{
       // console.log("COl:>>>>>>>>>>>>>>>>", Object.assign({}, this.state.order))
       // console.log("available::", this.available_item_left_right(currentRow, currentCol))
       let value_to_left = []
-      this.get_item_between_forward(currentRow, currentCol).forEach((value, key_y) => {
-        console.log("value::", value)
-        this.move_item_left(value, 1)
-        count_change += 1
-        value_to_left.push(value)
-      })
+      if(!this.available_item_on_old_order(currentRow, currentCol)){
+        this.get_item_between_forward(currentRow, currentCol).forEach((value, key_y) => {
+          console.log("value::", value)
+          this.move_item_left(value, 1)
+          count_change += 1
+          value_to_left.push(value)
+        })
+      }
       if(this.available_item_left_right(currentRow, currentCol)){
         this.move_item_on_current_row_col(currentRow, currentCol)
         count_change += 1
@@ -919,12 +932,14 @@ class Sortable{
       console.log("back:<<<<<<<<<<<<<<<", Object.assign({}, this.state.order))
       console.log("available::", this.available_item_left_right(currentRow, currentCol))
       let value_to_right = []
-      this.get_item_between_back(currentRow, currentCol).forEach((value, key_y) => {
-        console.log("value::", value)
-        this.move_item_right(value, 1)
-        count_change += 1
-        value_to_right.push(value)
-      })
+      if(!this.available_item_on_old_order(currentRow, currentCol)){
+        this.get_item_between_back(currentRow, currentCol).forEach((value, key_y) => {
+          console.log("value::", value)
+          this.move_item_right(value, 1)
+          count_change += 1
+          value_to_right.push(value)
+        })
+      }
       if(this.available_item_left_right(currentRow, currentCol)){
         this.move_item_on_current_row_col(currentRow, currentCol)
         count_change += 1
