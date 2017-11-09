@@ -179,8 +179,8 @@ class App extends Component {
             <div className="group">
               <label>Mode sortable</label>
               <select onChange={this.onMode.bind(this)}>
-                <option>default</option>
-                <option>left_right</option>
+                <option value="default">swipe</option>
+                <option value="left_right">left_right</option>
               </select>
             </div>
             <div className="group">
