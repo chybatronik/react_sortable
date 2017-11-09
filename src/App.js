@@ -112,12 +112,12 @@ class App extends Component {
 
   onAllowEmpty(event){
     console.log("onAllowEmpty::", event.target.value)
+    this.sortable = new Sortable(this.state.step_x, step_y, this.state.delta, this.state.mode, this.state.order, !this.state.allow_use_empty);
+    this.setState(this.sortable.get_state());
     this.setState({
       allow_use_empty: !this.state.allow_use_empty,
     });
 
-    this.sortable = new Sortable(this.state.step_x, step_y, this.state.delta, this.state.mode, this.state.order, !this.state.allow_use_empty);
-    this.setState(this.sortable.get_state());
 
   }
 

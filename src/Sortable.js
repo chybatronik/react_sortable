@@ -1,3 +1,5 @@
+import './utils'
+
 const default_order = [
   {id: 1, w:1, h:1, col:1, row:1},
   {id: 2, w:1, h:1, col:2, row:1},
@@ -33,6 +35,7 @@ class Sortable{
       currentRow:null,
       currentCol:null,
       order: order,
+      old_order: order.clone(),
       init_size: this.get_init_size(order),
       allow_use_empty: allow_use_empty ? allow_use_empty : false
     };
@@ -267,9 +270,37 @@ class Sortable{
     })
   }
 
+  available_item_on_old_order(row, col){
+    console.log("------------------")
+    console.log("available_item", col, row,  this.state.old_order, this.state.order)
+    const {lastPress} = this.state;
+    let item_cur = this.get_item_id(lastPress.id)
+    let copy = Object.assign({}, this.state);
+    let count = 0;
+    copy.old_order.forEach((value, key_y) => {
+      if(
+        // item_cur.id !== value.id &&
+        (value.col) <= col &&
+        (value.col + value.w) > col &&
+        (value.row) <= row &&
+        (value.row + value.h) > row
+      ){
+        console.log("available_item:::value::", value)
+        count+= 1;
+      }
+    })
+    console.log("count::::", count)
+    if(count > 0 ){
+      return false
+    }else{
+
+      return true
+    }
+  }
+
   available_item(row, col){
     console.log("------------------")
-    console.log("available_item", col, row)
+    console.log("available_item", col, row,  this.state.old_order, this.state.order)
     const {lastPress} = this.state;
     let item_cur = this.get_item_id(lastPress.id)
     let copy = Object.assign({}, this.state);
@@ -290,7 +321,16 @@ class Sortable{
     if(count > 0 ){
       return false
     }else{
-      return true
+      console.log("available_item_on_old_order:::", this.available_item_on_old_order(row, col), this.state.allow_use_empty)
+      if(!this.state.allow_use_empty){
+        if(!this.available_item_on_old_order(row, col)){
+          return true
+        }else{
+          return false
+        }
+      }else{
+        return true
+      }
     }
   }
 
@@ -794,12 +834,13 @@ class Sortable{
       if(currentCol < this.state.currentCol){
         console.log("currentCol", currentCol)
         this.get_item_left(currentRow, currentCol).forEach((value, key_y) => {
-          console.log("this.available_item_right(value, this.state.w)", this.available_item_right(value, this.state.w))
+
           if(this.available_item_right(value, this.state.w)){
             console.log("move right:::", value)
             this.move_item_right(value, this.state.w)
           }
         })
+        console.log("this.available_item(currentRow, currentCol)", this.available_item(currentRow, currentCol))
         if(this.available_item(currentRow, currentCol)){
           this.move_item_on_current_row_col(currentRow, currentCol)
         }
@@ -812,8 +853,8 @@ class Sortable{
             this.move_item_left(value, this.state.w)
           }
         })
+        console.log("this.available_item(currentRow, currentCol)", this.available_item(currentRow, currentCol))
         if(this.available_item(currentRow, currentCol)){
-          console.log("this.available_item(currentRow, currentCol)", this.available_item(currentRow, currentCol))
           this.move_item_on_current_row_col(currentRow, currentCol)
         }
       }
@@ -826,6 +867,7 @@ class Sortable{
             this.move_item_bottom(value, this.state.w)
           }
         })
+        console.log("this.available_item(currentRow, currentCol)", this.available_item(currentRow, currentCol))
         if(this.available_item(currentRow, currentCol)){
           this.move_item_on_current_row_col(currentRow, currentCol)
         }
@@ -837,6 +879,7 @@ class Sortable{
             this.move_item_top(value, this.state.w)
           }
         })
+        console.log("this.available_item(currentRow, currentCol)", this.available_item(currentRow, currentCol))
         if(this.available_item(currentRow, currentCol)){
           this.move_item_on_current_row_col(currentRow, currentCol)
         }
@@ -942,7 +985,9 @@ class Sortable{
     this.state.isPressed = true
     this.state.mouseY = pressY
     this.state.mouseX = pressX
-    this.state.old_order = this.state.order
+    // let copy = Object.assign({}, this.state);
+    // this.state.old_order = copy.order;
+    // console.log("this.state.old_order:::", this.state.old_order)
     this.state.topDeltaY = pageY - pressY
     this.state.topDeltaX = pageX - pressX
   }
