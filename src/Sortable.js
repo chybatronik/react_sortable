@@ -273,8 +273,8 @@ class Sortable{
   available_item_on_old_order(row, col){
     console.log("------------------")
     console.log("available_item", col, row,  this.state.old_order, this.state.order)
-    const {lastPress} = this.state;
-    let item_cur = this.get_item_id(lastPress.id)
+    // const {lastPress} = this.state;
+    // let item_cur = this.get_item_id(lastPress.id)
     let copy = Object.assign({}, this.state);
     let count = 0;
     copy.old_order.forEach((value, key_y) => {
