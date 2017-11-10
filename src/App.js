@@ -14,7 +14,6 @@ class App extends Component {
     super(props);
     this.sortable = new Sortable(step_x, step_y, delta, "default");
     this.state = this.sortable.get_state();
-
   };
 
   componentDidMount() {
@@ -104,6 +103,7 @@ class App extends Component {
 
   onAddItemRight(){
     console.log("onItemRight")
+    this.sortable.add_item_right()
   }
 
   onAddItemEnd(){

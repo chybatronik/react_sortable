@@ -41,6 +41,11 @@ class Sortable{
     };
   }
 
+  add_item_right(){
+    const col = this.get_right_column_average(1)
+    this.state.order.push({id: 50, w:1, h:1, col:col+1, row:1})
+  }
+
   get_init_size(order){
     let result = {}
     const copy_order = Object.assign([], order);
