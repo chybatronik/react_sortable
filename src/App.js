@@ -103,11 +103,12 @@ class App extends Component {
 
   onAddItemRight(){
     console.log("onItemRight")
-    this.sortable.add_item_right()
+    this.sortable.add_item_right_col()
   }
 
   onAddItemEnd(){
     console.log("onAddItemEnd")
+    this.sortable.add_item_end_row()
   }
 
   onAllowEmpty(event){
@@ -157,9 +158,9 @@ class App extends Component {
                 boxShadow: `rgba(0, 0, 0, 0.2) 0px ${shadow}px ${2 * shadow}px 0px`,
                 transform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
                 WebkitTransform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
-                zIndex: lastPress && value.id === lastPress.id ? 99 : value.id
+                zIndex: lastPress && value.id === lastPress.id ? 99 : 50
               }}>
-              {value.id}
+              {value.con}
             </div>
           }
         </Motion>
