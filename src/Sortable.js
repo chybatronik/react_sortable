@@ -34,7 +34,7 @@ class Sortable{
       isPressed: false,
       currentRow:null,
       currentCol:null,
-      order: order,
+      order: order.clone(),
       old_order: order.clone(),
       init_size: this.get_init_size(order),
       allow_use_empty: allow_use_empty ? allow_use_empty : false

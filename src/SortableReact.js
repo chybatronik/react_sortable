@@ -5,15 +5,16 @@ import Sortable from './Sortable';
 
 const springConfig = {stiffness: 300, damping: 50};
 
-let step_y = 90
-let step_x = 90
 let delta = 10
 
 class SortableReact extends Component {
   constructor(props) {
     super(props);
     let mode = props.sortable_mode ? props.sortable_mode : "swipe"
-    this.sortable = new Sortable(step_x, step_y, delta, mode);
+    let order = props.order ? props.order : null
+    const width = props.width ? props.width : 90
+    const height = props.height ? props.height : 90
+    this.sortable = new Sortable(width, height, delta, mode, order);
     this.state = this.sortable.get_state();
   };
 
@@ -23,6 +24,15 @@ class SortableReact extends Component {
     window.addEventListener('mousemove', this.handleMouseMove);
     window.addEventListener('mouseup', this.handleMouseUp);
   };
+
+  componentWillReceiveProps(nextProps){
+    const step_x = nextProps.width ? nextProps.width : this.state.step_x
+    const step_y = nextProps.height ? nextProps.height : this.state.step_y
+    const sortable_mode = nextProps.sortable_mode ? nextProps.sortable_mode : this.state.mode
+    const delta = nextProps.delta ? nextProps.delta : this.state.delta
+    this.sortable = new Sortable(step_x, step_y, delta, sortable_mode, this.state.order, this.state.allow_use_empty);
+    this.setState(this.sortable.get_state());
+  }
 
   handleTouchStart = (key, pressLocation, e) => {
     console.log("handleTouchStart", key, pressLocation, e.touches[0])
