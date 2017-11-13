@@ -38,7 +38,7 @@ setOptions({
    * show horizontal addons panel as a vertical panel on the right
    * @type {Boolean}
    */
-  downPanelInRight: false,
+  downPanelInRight: true,
   /**
    * sorts stories
    * @type {Boolean}

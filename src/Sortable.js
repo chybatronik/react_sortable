@@ -23,8 +23,8 @@ class Sortable{
   constructor(step_x, step_y, delta, sortable_mode, order, allow_use_empty){
     order = order ? order : default_order
     this.state = {
-      sortable_mode: sortable_mode ? sortable_mode: "default", // default, left_right
-      size_mode: "default", // default, stick
+      sortable_mode: sortable_mode ? sortable_mode: "swipe", // default, left_right
+      size_mode: "swipe", // default, stick
       delta: delta ? delta: 5,
       step_x: step_x ? step_x: 90,
       step_y: step_y ? step_y: 90,
@@ -997,7 +997,7 @@ class Sortable{
       let new_row = []
       new_row = copy.order
 
-      if(this.state.sortable_mode === "default"){
+      if(this.state.sortable_mode === "swipe"){
         this.state.count_change = this.default_Sortable(currentRow, currentCol)
       }
       if(this.state.sortable_mode === "left_right"){
