@@ -6,7 +6,7 @@
   user-select: none;
 }
 
-.demo-outer {
+.demo-outer2 {
   /*background-color: #EEE;*/
   color: #FFF;
   position: absolute;
@@ -21,11 +21,12 @@
   -webkit-align-items: center;
 }
 
-.demo {
+.demo2 {
   width: 60%;
   /*width: 620px;*/
   height: 400px;
 }
+
 .demo-item {
   position: absolute;
   overflow: visible;

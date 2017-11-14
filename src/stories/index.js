@@ -49,8 +49,8 @@ storiesOf('diferent size item', module)
 storiesOf('change width, height items', module)
   .addDecorator(withKnobs)
   .add('swipe', () => {
-    const width = number("width", 150)
-    const height = number("height", 150)
+    const width = number("width", 80)
+    const height = number("height", 40)
     return (<SortableReact width={width} height={height} sortable_mode="swipe" order={default_order_diff}/>)
   })
   .add('left right', () => {
@@ -61,10 +61,24 @@ storiesOf('change width, height items', module)
 
 storiesOf('change delta between items', module)
   .addDecorator(withKnobs)
-  .add('swipe', () => <SortableReact sortable_mode="swipe" order={default_order_diff}/>)
-  .add('left right', () => <SortableReact sortable_mode="left_right"  order={default_order_diff}/>);
+  .add('swipe', () => {
+    const delta = number("delta", 30)
+    return (<SortableReact sortable_mode="swipe" delta={delta} order={default_order_diff}/>)
+  })
+  .add('left right', () =>{
+    const delta = number("delta", 30)
+    return (<SortableReact sortable_mode="left_right" delta={delta}  order={default_order_diff}/>)
+  });
 
 storiesOf('change animation', module)
   .addDecorator(withKnobs)
-  .add('swipe', () => <SortableReact sortable_mode="swipe" order={default_order_diff}/>)
-  .add('left right', () => <SortableReact sortable_mode="left_right"  order={default_order_diff}/>);
+  .add('swipe', () =>{
+    const stiffness = number("stiffness", 400)
+    const damping = number("damping", 15)
+    return (<SortableReact sortable_mode="swipe" damping={damping} stiffness={stiffness} order={default_order_diff}/>)
+  })
+  .add('left right', () =>{
+    const stiffness = number("stiffness", 75)
+    const damping = number("damping", 5)
+    return (<SortableReact sortable_mode="left_right"  damping={damping} stiffness={stiffness}  order={default_order_diff}/>)
+  });

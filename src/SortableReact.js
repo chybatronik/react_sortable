@@ -3,9 +3,9 @@ import {Motion, spring} from 'react-motion';
 import './App.css';
 import Sortable from './Sortable';
 
-const springConfig = {stiffness: 300, damping: 50};
+// const springConfig = {stiffness: 300, damping: 50};
 
-let delta = 10
+// let delta = 10
 
 class SortableReact extends Component {
   constructor(props) {
@@ -14,8 +14,14 @@ class SortableReact extends Component {
     let order = props.order ? props.order : null
     const width = props.width ? props.width : 90
     const height = props.height ? props.height : 90
+    const delta = props.delta ? props.delta : 10
+    // const stiffness = props.stiffness ? props.stiffness : 300
+    // const damping = props.damping ? props.damping : 50
     this.sortable = new Sortable(width, height, delta, mode, order);
     this.state = this.sortable.get_state();
+    // this.state["springConfig"] = {stiffness: stiffness, damping: damping};
+    // this.state["scale_active"] = 1.2
+    // this.state["shadow_active"] = 1.2
   };
 
   componentDidMount() {
@@ -30,8 +36,12 @@ class SortableReact extends Component {
     const step_y = nextProps.height ? nextProps.height : this.state.step_y
     const sortable_mode = nextProps.sortable_mode ? nextProps.sortable_mode : this.state.mode
     const delta = nextProps.delta ? nextProps.delta : this.state.delta
+    // const stiffness = nextProps.stiffness ? nextProps.stiffness : this.state.springConfig.stiffness
+    // const damping = nextProps.damping ? nextProps.damping : this.state.springConfig.damping
+
     this.sortable = new Sortable(step_x, step_y, delta, sortable_mode, this.state.order, this.state.allow_use_empty);
     this.setState(this.sortable.get_state());
+    // this.setState({"springConfig.damping": damping, "springConfig.stiffness":stiffness})
   }
 
   handleTouchStart = (key, pressLocation, e) => {
@@ -76,13 +86,16 @@ class SortableReact extends Component {
     // console.log("lastPress", lastPress)
     let result = []
     // let st = this.sortable.get_state()
+    const springConfig = {stiffness: this.props.stiffness ? this.props.stiffness : 300 , damping: this.props.damping ? this.props.damping : 50}
+    const scale_active = this.props.scale_active ? this.props.scale_active: 1.2
+    const shadow_active = this.props.shadow_active ? this.props.shadow_active: 1.2
     order.forEach((value, key) => {
       // order[key_y].forEach((currentValue, key) => {
       let style;
       if (lastPress && value.id === lastPress.id && isPressed) {
         style = {
-          scale: spring(1.2, springConfig),
-          shadow: spring(1.2, springConfig),
+          scale: spring(scale_active, springConfig),
+          shadow: spring(shadow_active, springConfig),
           y: mouseY,
           x: mouseX,
         }
