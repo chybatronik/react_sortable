@@ -39,4 +39,4 @@ MIT
 
 [//]: #
 
-[Demo and usage]: <https://chybatronik.github.io/react_sortable/build>
+[Demo and usage]: <https://chybatronik.github.io/react_sortable/storybook-static>
