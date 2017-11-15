@@ -1,6 +1,7 @@
 # SortableReact
 
 Sortable component for React.js.
+### [Demo]
 
 **Supports:**
 
@@ -49,11 +50,7 @@ SortableReact.propTypes = {
 }
 ```
 
-### [Demo]
-
-
-**To run demo locally:**
-
+## To run demo locally
 
 ```sh
 $ git clone https://github.com/chybatronik/react_sortable.git
