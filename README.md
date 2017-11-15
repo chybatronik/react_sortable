@@ -13,7 +13,12 @@ Sortable component for React.js.
 ## Usage
 
 ```javascript
-<SortableReact width=90 height=90 delta=10 sortable_mode="swipe" order=[{id: 1, w:1, h:1, col:1, row:1, con: "1"}]/>
+<SortableReact 
+  width=90 
+  height=90 
+  delta=10 
+  sortable_mode="swipe" order=[{id: 1, w:1, h:1, col:1, row:1, con: "1"}]
+/>
 ```
 
 ## Options
