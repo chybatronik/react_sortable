@@ -61,7 +61,7 @@ $ npm install
 ```
 Then
 ```sh
-$ npm start
+$ npm run storybook
 ```
 
 Then open http://localhost:9009 as local file in your browser.
