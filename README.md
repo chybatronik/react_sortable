@@ -49,7 +49,7 @@ SortableReact.propTypes = {
 }
 ```
 
-#### [Demo]
+### [Demo]
 
 
 **To run demo locally:**
