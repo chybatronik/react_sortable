@@ -1,6 +1,14 @@
 import { configure } from '@storybook/react';
-
+import { setDefaults} from '@storybook/addon-info';
 import { setOptions } from '@storybook/addon-options';
+
+
+
+//addon-info
+setDefaults({
+  header: false,
+  maxPropArrayLength:1
+})
 
 // Option defaults:
 setOptions({
@@ -8,7 +16,7 @@ setOptions({
    * name to display in the top left corner
    * @type {String}
    */
-  name: 'Develexe.react_sortable',
+  name: 'Develexe.SortableReact',
   /**
    * URL for name in top left corner to link to
    * @type {String}
