@@ -82,8 +82,14 @@ storiesOf('width, height items', module)
       ${JSON.stringify(default_order_diff, "", 6)}
     `)(
       () => {
-        const width = number("width", 80)
-        const height = number("height", 40)
+        const options = {
+           range: true,
+           min: 20,
+           max: 300,
+           step: 1,
+        };
+        const width = number("width", 80, options)
+        const height = number("height", 40, options)
         return (<SortableReact width={width} height={height} sortable_mode="swipe" order={default_order_diff}/>)
       })
   )
@@ -93,8 +99,14 @@ storiesOf('width, height items', module)
       ${JSON.stringify(default_order_diff, "", 6)}
     `)(
       () => {
-        const width = number("width", 120)
-        const height = number("height", 120)
+        const options = {
+           range: true,
+           min: 20,
+           max: 300,
+           step: 1,
+        };
+        const width = number("width", 120, options)
+        const height = number("height", 120, options)
         return (<SortableReact sortable_mode="left_right"  width={width} height={height}  order={default_order_diff}/>)
       }
     )
@@ -108,7 +120,13 @@ storiesOf('distance between items', module)
       ${JSON.stringify(default_order_diff, "", 6)}
     `)(
       () => {
-        const delta = number("delta", 30)
+        const options = {
+           range: true,
+           min: 1,
+           max: 100,
+           step: 1,
+        };
+        const delta = number("delta", 30, options)
         return (<SortableReact sortable_mode="swipe" delta={delta} order={default_order_diff}/>)
       }
     )
@@ -119,7 +137,13 @@ storiesOf('distance between items', module)
       ${JSON.stringify(default_order_diff, "", 6)}
     `)(
       () =>{
-        const delta = number("delta", 30)
+        const options = {
+           range: true,
+           min: 1,
+           max: 100,
+           step: 1,
+        };
+        const delta = number("delta", 30, options)
         return (<SortableReact sortable_mode="left_right" delta={delta}  order={default_order_diff}/>)
       }
     )
