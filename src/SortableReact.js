@@ -156,8 +156,15 @@ SortableReact.defaultProps = {
 }
 
 SortableReact.propTypes = {
-  sortable_mode: PropTypes.oneOf(["swipe", "left_right"]),
-  order: PropTypes.array,
+  sortable_mode: PropTypes.oneOf(["swipe", "left_right"]).isRequired,
+  order: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    w: PropTypes.number.isRequired,
+    h: PropTypes.number.isRequired,
+    col: PropTypes.number.isRequired,
+    row: PropTypes.number.isRequired,
+    con: PropTypes.string.isRequired,
+   })).isRequired,
   width: PropTypes.number,
   height: PropTypes.number,
   delta: PropTypes.number,

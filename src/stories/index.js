@@ -36,32 +36,21 @@ const default_order_diff = [
   {id: 22, w:1, h:1, col:2, row:3, con: "22"},
   {id: 23, w:1, h:1, col:3, row:3, con: "23"},
   {id: 24, w:1, h:1, col:4, row:3, con: "24"},
-  // {id: 25, w:1, h:1, col:5, row:3, con: "25"}
 ]
 
 storiesOf('different mode', module)
   .add('swipe',
     withInfo(`
-      description of documents
-      ~~~js
-      <SortableReact \n
-        sortable_mode="swipe" \n
-        order={default_order}
-      />
-      ~~~
+      Content order:\n
+      ${JSON.stringify(default_order, "", 6)}
     `)(
       () => <SortableReact sortable_mode="swipe" order={default_order}/>
     )
   )
   .add('left right',
     withInfo(`
-      description of documents
-      ~~~js
-      <SortableReact \n
-        sortable_mode="left_right" \n
-        order={default_order}
-      />
-      ~~~
+      Content order:\n
+      ${JSON.stringify(default_order, "", 6)}
     `)(
       () => <SortableReact sortable_mode="left_right"  order={default_order}/>
     )
@@ -70,39 +59,27 @@ storiesOf('different mode', module)
 storiesOf('diferent size item', module)
   .add('swipe',
     withInfo(`
-      description of documents
-      ~~~js
-      <SortableReact \n
-        sortable_mode="swipe" \n
-        order={default_order}
-      />
-      ~~~
+      Content order:\n
+      ${JSON.stringify(default_order_diff, "", 6)}
     `)(
       () => <SortableReact sortable_mode="swipe" order={default_order_diff}/>
     )
   )
   .add('left right',
     withInfo(`
-      description of documents
-      ~~~js
-      <SortableReact \n
-        sortable_mode="left_right" \n
-        order={default_order}
-      />
-      ~~~
+      Content order:\n
+      ${JSON.stringify(default_order_diff, "", 6)}
     `)(
       () => <SortableReact sortable_mode="left_right"  order={default_order_diff}/>
     )
   );
 
-storiesOf('change width, height items', module)
+storiesOf('width, height items', module)
   .addDecorator(withKnobs)
   .add('swipe',
     withInfo(`
-      description of documents
-      ~~~js
-      <SortableReact width={width} height={height} sortable_mode="swipe" order={default_order_diff}/>
-      ~~~
+      Content order:\n
+      ${JSON.stringify(default_order_diff, "", 6)}
     `)(
       () => {
         const width = number("width", 80)
@@ -112,10 +89,8 @@ storiesOf('change width, height items', module)
   )
   .add('left right',
     withInfo(`
-      description of documents
-      ~~~js
-      <SortableReact sortable_mode="left_right"  width={width} height={height}  order={default_order_diff}/>
-      ~~~
+      Content order:\n
+      ${JSON.stringify(default_order_diff, "", 6)}
     `)(
       () => {
         const width = number("width", 120)
@@ -125,14 +100,12 @@ storiesOf('change width, height items', module)
     )
   );
 
-storiesOf('change delta between items', module)
+storiesOf('distance between items', module)
   .addDecorator(withKnobs)
   .add('swipe',
     withInfo(`
-      description of documents
-      ~~~js
-      <SortableReact sortable_mode="swipe" delta={delta} order={default_order_diff}/>
-      ~~~
+      Content order:\n
+      ${JSON.stringify(default_order_diff, "", 6)}
     `)(
       () => {
         const delta = number("delta", 30)
@@ -142,10 +115,8 @@ storiesOf('change delta between items', module)
   )
   .add('left right',
     withInfo(`
-      description of documents
-      ~~~js
-      <SortableReact sortable_mode="left_right" delta={delta}  order={default_order_diff}/>
-      ~~~
+      Content order:\n
+      ${JSON.stringify(default_order_diff, "", 6)}
     `)(
       () =>{
         const delta = number("delta", 30)
@@ -154,33 +125,33 @@ storiesOf('change delta between items', module)
     )
   );
 
-storiesOf('change animation', module)
+storiesOf('animation', module)
   .addDecorator(withKnobs)
   .add('swipe',
     withInfo(`
-      description of documents
-      ~~~js
-      <SortableReact sortable_mode="swipe" damping={damping} stiffness={stiffness} order={default_order_diff}/>
-      ~~~
+      Content order:\n
+      ${JSON.stringify(default_order_diff, "", 6)}
     `)(
       () =>{
         const stiffness = number("stiffness", 400)
         const damping = number("damping", 15)
-        return (<SortableReact sortable_mode="swipe" damping={damping} stiffness={stiffness} order={default_order_diff}/>)
+        const scale_active = number("scale_active", 1.2)
+        const shadow_active = number("shadow_active", 1.2)
+        return (<SortableReact sortable_mode="swipe" damping={damping} stiffness={stiffness} order={default_order_diff} shadow_active={shadow_active} scale_active={scale_active} />)
       }
     )
   )
   .add('left right',
     withInfo(`
-      description of documents
-      ~~~js
-      <SortableReact sortable_mode="left_right"  damping={damping} stiffness={stiffness}  order={default_order_diff}/>
-      ~~~
+      Content order:\n
+      ${JSON.stringify(default_order_diff, "", 6)}
     `)(
       () =>{
         const stiffness = number("stiffness", 75)
         const damping = number("damping", 5)
-        return (<SortableReact sortable_mode="left_right"  damping={damping} stiffness={stiffness}  order={default_order_diff}/>)
+        const scale_active = number("scale_active", 1.2)
+        const shadow_active = number("shadow_active", 1.2)
+        return (<SortableReact sortable_mode="left_right"  damping={damping} stiffness={stiffness}  order={default_order_diff} shadow_active={shadow_active} scale_active={scale_active} />)
       }
     )
   );

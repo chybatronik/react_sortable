@@ -26,6 +26,7 @@
     "@storybook/addon-links": "^3.2.15",
     "@storybook/addon-options": "^3.2.15",
     "@storybook/react": "^3.2.15",
-    "@storybook/storybook-deployer": "^2.0.0"
+    "raw-loader": "^0.5.1",
+    "react-markdown": "^2.5.1"
   }
 }
