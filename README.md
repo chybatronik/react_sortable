@@ -3,6 +3,10 @@
 Sortable component for React.js.
 ### [Demo]
 
+Swipe mode                 |  Left right mode
+:-------------------------:|:-------------------------:
+![](https://chybatronik.github.io/react_sortable/ice_video_20171117-184047.gif)  |  ![](https://chybatronik.github.io/react_sortable/ice_video_20171117-184550.gif)
+
 **Supports:**
 
 - Multi rows and cols,
@@ -118,3 +122,4 @@ MIT
 [//]: #
 
 [Demo]: <https://chybatronik.github.io/react_sortable/storybook-static>
+
