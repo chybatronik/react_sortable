@@ -79,7 +79,7 @@ storiesOf('diferent size item', module)
 
 storiesOf('options item', module)
   .addDecorator(withKnobs)
-  .add('swipe',
+  .add('width and height',
     withInfo(`
       Content order:\n
       ${JSON.stringify(default_order_diff, "", 6)}
@@ -93,20 +93,18 @@ storiesOf('options item', module)
         };
         const width = number("width", 80, options)
         const height = number("height", 60, options)
-        const delta = number("delta", 10, options)
-        const allow_use_empty = boolean("allow_use_empty", false)
+        // const delta = number("delta", 10, options)
+        // const allow_use_empty = boolean("allow_use_empty", false)
         // console.log("allow_use_empty::", allow_use_empty)
         return (<SortableReact
           sortable_mode="swipe"
           width={width}
           height={height}
-          delta={delta}
-          allow_use_empty={allow_use_empty}
           order={default_order_diff}
         />)
       })
   )
-  .add('left right',
+  .add('delta between items',
     withInfo(`
       Content order:\n
       ${JSON.stringify(default_order_diff, "", 6)}
@@ -118,25 +116,43 @@ storiesOf('options item', module)
            max: 300,
            step: 1,
         };
-        const width = number("width", 120, options)
-        const height = number("height", 120, options)
+        // const width = number("width", 120, options)
+        // const height = number("height", 120, options)
         const delta = number("delta", 30, options)
+        // const allow_use_empty = boolean("allow_use_empty", false)
+
+        return (<SortableReact
+          sortable_mode="left_right"
+          delta={delta}
+          order={default_order_diff}/>)
+      }
+    )
+  )
+  .add('allow to drop on empty cells',
+    withInfo(`
+      Content order:\n
+      ${JSON.stringify(default_order_diff, "", 6)}
+    `)(
+      () => {
+        const options = {
+           range: true,
+           min: 1,
+           max: 300,
+           step: 1,
+        };
+        // const width = number("width", 120, options)
+        // const height = number("height", 120, options)
+        // const delta = number("delta", 30, options)
         const allow_use_empty = boolean("allow_use_empty", false)
 
         return (<SortableReact
           sortable_mode="left_right"
-          width={width}
-          height={height}
-          delta={delta}
           allow_use_empty={allow_use_empty}
           order={default_order_diff}/>)
       }
     )
-  );
-
-storiesOf('animation', module)
-  .addDecorator(withKnobs)
-  .add('swipe',
+  )
+  .add('animation',
     withInfo(`
       Content order:\n
       ${JSON.stringify(default_order_diff, "", 6)}
@@ -156,23 +172,40 @@ storiesOf('animation', module)
       }
     )
   )
-  .add('left right',
+
+storiesOf('callbacks', module)
+  .addDecorator(withKnobs)
+  .add('finished sort',
     withInfo(`
       Content order:\n
       ${JSON.stringify(default_order_diff, "", 6)}
     `)(
       () =>{
-        const stiffness = number("stiffness", 75)
-        const damping = number("damping", 5)
-        const scale_active = number("scale_active", 1.2)
-        const shadow_active = number("shadow_active", 1.2)
+        const my_alert = function(srt){
+          alert(JSON.stringify(srt, "", 4))
+        }
         return (<SortableReact
-          sortable_mode="left_right"
-          damping={damping}
-          stiffness={stiffness}
+          sortable_mode="swipe"
+          finished={my_alert}
           order={default_order_diff}
-          shadow_active={shadow_active}
-          scale_active={scale_active} />)
+        />)
       }
     )
-  );
+  )
+  .add('start sort',
+    withInfo(`
+      Content order:\n
+      ${JSON.stringify(default_order_diff, "", 6)}
+    `)(
+      () =>{
+        const my_alert_start = function(srt){
+          console.log(srt)
+        }
+        return (<SortableReact
+          sortable_mode="swipe"
+          start={my_alert_start}
+          order={default_order_diff}
+        />)
+      }
+    )
+  )

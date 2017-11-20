@@ -430,6 +430,7 @@ pre code, pre tt {
   -webkit-box-sizing: border-box;
   background-color: #EEE;
   color: gray;
+  user-select: none;
 }
 
 .navigate{

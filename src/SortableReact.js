@@ -61,6 +61,9 @@ class SortableReact extends Component {
     this.sortable.handleMouseDown(pos, [pressX, pressY], {pageX, pageY})
     let st = this.sortable.get_state()
     console.log("pos", pos, st)
+    if(this.props.start){
+      this.props.start(pos)
+    }
     this.setState({
       lastPress: pos,
       isPressed: st.isPressed,
@@ -70,8 +73,26 @@ class SortableReact extends Component {
   };
 
   handleMouseUp = () => {
+    let is_call_callback = false
+    if(
+      this.props.finished &&
+      JSON.stringify(this.sortable.state.order) !== JSON.stringify(this.sortable.state.old_order)
+    ){
+      is_call_callback = true
+    }
+
     this.sortable.handleMouseUp()
     let st = this.sortable.get_state()
+
+    if(is_call_callback){
+      this.props.finished(st)
+      console.log("sortable.get_state()", st)
+    }
+
+
+    // console.log("JSON.stringify(this.sortable.order) ", JSON.stringify(this.sortable.state.order) )
+    // console.log("JSON.stringify(this.sortable.old_order) ", JSON.stringify(this.sortable.state.old_order) )
+
     this.setState({
       isPressed: st.isPressed,
     });
@@ -80,16 +101,19 @@ class SortableReact extends Component {
   render() {
     const {order, lastPress, isPressed, mouseX, mouseY} = this.state;
     let result = []
-    const springConfig = {stiffness: this.props.stiffness ? this.props.stiffness : 300 , damping: this.props.damping ? this.props.damping : 50}
-    const scale_active = this.props.scale_active ? this.props.scale_active: 1.2
-    const shadow_active = this.props.shadow_active ? this.props.shadow_active: 1.2
+    const springConfig = {
+      stiffness: this.props.stiffness,
+      damping: this.props.damping
+    }
+    // const scale_active = this.props.scale_active ? this.props.scale_active: 1.2
+    // const shadow_active = this.props.shadow_active ? this.props.shadow_active: 1.2
     let count = 0;
     order.forEach((value, key) => {
       let style;
       if (lastPress && value.id === lastPress.id && isPressed) {
         style = {
-          scale: spring(scale_active, springConfig),
-          shadow: spring(shadow_active, springConfig),
+          scale: spring(this.props.scale_active, springConfig),
+          shadow: spring(this.props.shadow_active, springConfig),
           y: mouseY,
           x: mouseX,
         }
@@ -181,6 +205,8 @@ SortableReact.propTypes = {
   scale_active: PropTypes.number,
   shadow_active: PropTypes.number,
   allow_use_empty: PropTypes.bool,
+  finished: PropTypes.func,
+  start: PropTypes.func,
 }
 
 export default SortableReact;

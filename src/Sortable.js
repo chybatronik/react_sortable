@@ -1039,6 +1039,7 @@ class Sortable{
     this.state.topDeltaX = 0
     this.state.currentCol = null
     this.state.currentRow = null
+    this.state.old_order = this.state.order.clone()
   }
 }
 
