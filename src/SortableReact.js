@@ -8,13 +8,14 @@ class SortableReact extends Component {
   constructor(props) {
     super(props);
 
-    let mode = props.sortable_mode ? props.sortable_mode : "swipe"
-    let order = props.order ? props.order : null
-    const width = props.width ? props.width : 90
-    const height = props.height ? props.height : 90
-    const delta = props.delta ? props.delta : 10
+    // let mode = props.sortable_mode ? props.sortable_mode : "swipe"
+    // let order = props.order ? props.order : []
+    // const width = props.width ? props.width : 90
+    // const height = props.height ? props.height : 90
+    // const delta = props.delta ? props.delta : 10
+    // const allow_use_empty = props.allow_use_empty ? props.allow_use_empty : false
 
-    this.sortable = new Sortable(width, height, delta, mode, order);
+    this.sortable = new Sortable(props.width, props.height, props.delta, props.sortable_mode, props.order, props.allow_use_empty);
     this.state = this.sortable.get_state();
   };
 
@@ -30,8 +31,12 @@ class SortableReact extends Component {
     const step_y = nextProps.height ? nextProps.height : this.state.step_y
     const sortable_mode = nextProps.sortable_mode ? nextProps.sortable_mode : this.state.mode
     const delta = nextProps.delta ? nextProps.delta : this.state.delta
+    const allow_use_empty = nextProps.allow_use_empty
 
-    this.sortable = new Sortable(step_x, step_y, delta, sortable_mode, this.state.order, this.state.allow_use_empty);
+    // console.log("allow_use_empty::", allow_use_empty)
+
+    this.sortable = new Sortable(step_x, step_y, delta, sortable_mode, this.state.order, allow_use_empty);
+    console.log("this.sortable.get_state()::", this.sortable.get_state())
     this.setState(this.sortable.get_state());
   }
 
@@ -78,6 +83,7 @@ class SortableReact extends Component {
     const springConfig = {stiffness: this.props.stiffness ? this.props.stiffness : 300 , damping: this.props.damping ? this.props.damping : 50}
     const scale_active = this.props.scale_active ? this.props.scale_active: 1.2
     const shadow_active = this.props.shadow_active ? this.props.shadow_active: 1.2
+    let count = 0;
     order.forEach((value, key) => {
       let style;
       if (lastPress && value.id === lastPress.id && isPressed) {
@@ -95,8 +101,9 @@ class SortableReact extends Component {
           x: spring(value.x, springConfig),
         }
       }
+      count += 1
       result.push((
-        <Motion key={value.id} style={style}>
+        <Motion key={count} style={style}>
           {({scale, shadow, y, x}) =>
             <div
               onMouseDown={this.handleMouseDown.bind(null, value, [x, y])}
@@ -129,18 +136,18 @@ class SortableReact extends Component {
   }
 }
 const default_order = [
-  {id: 1, w:1, h:1, col:1, row:1, con: "1"},
-  {id: 2, w:1, h:1, col:2, row:1, con: "2"},
-  {id: 3, w:1, h:1, col:3, row:1, con: "3"},
-  {id: 4, w:1, h:1, col:4, row:1, con: "4"},
-  {id: 11, w:1, h:1, col:1, row:2, con: "11"},
-  {id: 12, w:1, h:1, col:2, row:2, con: "12"},
-  {id: 13, w:1, h:1, col:3, row:2, con: "13"},
-  {id: 14, w:1, h:1, col:4, row:2, con: "14"},
-  {id: 21, w:1, h:1, col:1, row:3, con: "21"},
-  {id: 22, w:1, h:1, col:2, row:3, con: "22"},
-  {id: 23, w:1, h:1, col:3, row:3, con: "23"},
-  {id: 24, w:1, h:1, col:4, row:3, con: "24"}
+  {id: "1", w:1, h:1, col:1, row:1, con: "1"},
+  {id: "2", w:1, h:1, col:2, row:1, con: "2"},
+  {id: "3", w:1, h:1, col:3, row:1, con: "3"},
+  {id: "4", w:1, h:1, col:4, row:1, con: "4"},
+  {id: "11", w:1, h:1, col:1, row:2, con: "11"},
+  {id: "12", w:1, h:1, col:2, row:2, con: "12"},
+  {id: "13", w:1, h:1, col:3, row:2, con: "13"},
+  {id: "14", w:1, h:1, col:4, row:2, con: "14"},
+  {id: "21", w:1, h:1, col:1, row:3, con: "21"},
+  {id: "22", w:1, h:1, col:2, row:3, con: "22"},
+  {id: "23", w:1, h:1, col:3, row:3, con: "23"},
+  {id: "24", w:1, h:1, col:4, row:3, con: "24"}
 ]
 
 SortableReact.defaultProps = {
@@ -152,7 +159,8 @@ SortableReact.defaultProps = {
   stiffness: 300,
   damping: 50,
   scale_active:1.2,
-  shadow_active:1.2
+  shadow_active:1.2,
+  allow_use_empty: false
 }
 
 SortableReact.propTypes = {
@@ -164,7 +172,7 @@ SortableReact.propTypes = {
     col: PropTypes.number.isRequired,
     row: PropTypes.number.isRequired,
     con: PropTypes.string.isRequired,
-   })).isRequired,
+  })).isRequired,
   width: PropTypes.number,
   height: PropTypes.number,
   delta: PropTypes.number,
@@ -172,6 +180,7 @@ SortableReact.propTypes = {
   damping: PropTypes.number,
   scale_active: PropTypes.number,
   shadow_active: PropTypes.number,
+  allow_use_empty: PropTypes.bool,
 }
 
 export default SortableReact;
