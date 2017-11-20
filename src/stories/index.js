@@ -74,7 +74,7 @@ storiesOf('diferent size item', module)
     )
   );
 
-storiesOf('width, height items', module)
+storiesOf('options item', module)
   .addDecorator(withKnobs)
   .add('swipe',
     withInfo(`
@@ -84,13 +84,14 @@ storiesOf('width, height items', module)
       () => {
         const options = {
            range: true,
-           min: 20,
+           min: 1,
            max: 300,
            step: 1,
         };
         const width = number("width", 80, options)
-        const height = number("height", 40, options)
-        return (<SortableReact width={width} height={height} sortable_mode="swipe" order={default_order_diff}/>)
+        const height = number("height", 60, options)
+        const delta = number("delta", 10, options)
+        return (<SortableReact width={width} height={height}  delta={delta}  sortable_mode="swipe" order={default_order_diff}/>)
       })
   )
   .add('left right',
@@ -101,50 +102,14 @@ storiesOf('width, height items', module)
       () => {
         const options = {
            range: true,
-           min: 20,
+           min: 1,
            max: 300,
            step: 1,
         };
         const width = number("width", 120, options)
         const height = number("height", 120, options)
-        return (<SortableReact sortable_mode="left_right"  width={width} height={height}  order={default_order_diff}/>)
-      }
-    )
-  );
-
-storiesOf('distance between items', module)
-  .addDecorator(withKnobs)
-  .add('swipe',
-    withInfo(`
-      Content order:\n
-      ${JSON.stringify(default_order_diff, "", 6)}
-    `)(
-      () => {
-        const options = {
-           range: true,
-           min: 1,
-           max: 100,
-           step: 1,
-        };
         const delta = number("delta", 30, options)
-        return (<SortableReact sortable_mode="swipe" delta={delta} order={default_order_diff}/>)
-      }
-    )
-  )
-  .add('left right',
-    withInfo(`
-      Content order:\n
-      ${JSON.stringify(default_order_diff, "", 6)}
-    `)(
-      () =>{
-        const options = {
-           range: true,
-           min: 1,
-           max: 100,
-           step: 1,
-        };
-        const delta = number("delta", 30, options)
-        return (<SortableReact sortable_mode="left_right" delta={delta}  order={default_order_diff}/>)
+        return (<SortableReact sortable_mode="left_right"  width={width} height={height}  delta={delta}  order={default_order_diff}/>)
       }
     )
   );
@@ -161,7 +126,13 @@ storiesOf('animation', module)
         const damping = number("damping", 15)
         const scale_active = number("scale_active", 1.2)
         const shadow_active = number("shadow_active", 1.2)
-        return (<SortableReact sortable_mode="swipe" damping={damping} stiffness={stiffness} order={default_order_diff} shadow_active={shadow_active} scale_active={scale_active} />)
+        return (<SortableReact
+          sortable_mode="swipe"
+          damping={damping}
+          stiffness={stiffness}
+          order={default_order_diff}
+          shadow_active={shadow_active}
+          scale_active={scale_active} />)
       }
     )
   )
@@ -175,7 +146,13 @@ storiesOf('animation', module)
         const damping = number("damping", 5)
         const scale_active = number("scale_active", 1.2)
         const shadow_active = number("shadow_active", 1.2)
-        return (<SortableReact sortable_mode="left_right"  damping={damping} stiffness={stiffness}  order={default_order_diff} shadow_active={shadow_active} scale_active={scale_active} />)
+        return (<SortableReact
+          sortable_mode="left_right"
+          damping={damping}
+          stiffness={stiffness}
+          order={default_order_diff}
+          shadow_active={shadow_active}
+          scale_active={scale_active} />)
       }
     )
   );

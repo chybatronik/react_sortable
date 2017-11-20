@@ -4,11 +4,11 @@ Sortable component for React.js.
 ### [Demo]
 
 ###  Swipe mode
-![](https://chybatronik.github.io/react_sortable/ice_video_20171117-184047.gif) 
+![](https://chybatronik.github.io/react_sortable/img/ice_video_20171117-184047.gif)
 
 ### Left right mode
- ![](https://chybatronik.github.io/react_sortable/ice_video_20171117-184550.gif)
- 
+ ![](https://chybatronik.github.io/react_sortable/img/ice_video_20171117-184550.gif)
+
 **Supports:**
 
 - Multi rows and cols,
@@ -25,7 +25,7 @@ Install packages in your project:
 $ npm i --save react react-motion
 ```
 
-Add files to your folder ./src/Sortable.js, ./src/SortableReact.js, ./src/utils.js, ./src/App.css.
+Add files to your folder ./src/Sortable.js, ./src/SortableReact.js, ./src/utils.js, ./src/SortableReact.css.
 
 Import SortableReact component:
 
@@ -124,4 +124,3 @@ MIT
 [//]: #
 
 [Demo]: <https://chybatronik.github.io/react_sortable/storybook-static>
-
