@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Motion, spring} from 'react-motion';
-import './App.css';
+// import './App.css';
 import Sortable from './Sortable';
 import SortableReact from './SortableReact';
 

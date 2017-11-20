@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Motion, spring} from 'react-motion';
-import './App.css';
+import './SortableReact.css';
 import Sortable from './Sortable';
 import PropTypes from "prop-types"
 

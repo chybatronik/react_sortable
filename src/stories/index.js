@@ -5,7 +5,7 @@ import { withInfo } from '@storybook/addon-info';
 import { linkTo } from '@storybook/addon-links';
 import { withKnobs, text, boolean, number } from '@storybook/addon-knobs';
 
-import Readme from '../Readme';
+import Readme from '../import_readme';
 import SortableReact from '../SortableReact';
 
 storiesOf('Welcome', module)
