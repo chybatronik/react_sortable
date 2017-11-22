@@ -1,4 +1,4 @@
-import { configure } from '@storybook/react';
+import { configure, addDecorator } from '@storybook/react';
 import { setDefaults} from '@storybook/addon-info';
 import { setOptions } from '@storybook/addon-options';
 //addon-info
@@ -7,6 +7,10 @@ setDefaults({
   maxPropArrayLength:1
 })
 
+addDecorator((story)=>{
+  document.title = "My document"
+  return story()
+})
 // Option defaults:
 setOptions({
   /**

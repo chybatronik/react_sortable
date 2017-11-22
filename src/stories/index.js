@@ -140,9 +140,7 @@ storiesOf('options item', module)
            max: 300,
            step: 1,
         };
-        // const width = number("width", 120, options)
-        // const height = number("height", 120, options)
-        // const delta = number("delta", 30, options)
+
         const allow_use_empty = boolean("allow_use_empty", false)
 
         return (<SortableReact
@@ -169,6 +167,20 @@ storiesOf('options item', module)
           order={default_order_diff}
           shadow_active={shadow_active}
           scale_active={scale_active} />)
+      }
+    )
+  )
+  .add('read only',
+    withInfo(`
+      Content order:\n
+      ${JSON.stringify(default_order_diff, "", 6)}
+    `)(
+      () => {
+        const disable_drag = boolean("disable_drag", true)
+        return (<SortableReact
+          sortable_mode="left_right"
+          disable_drag={disable_drag}
+          order={default_order_diff}/>)
       }
     )
   )

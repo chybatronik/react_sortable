@@ -8,13 +8,6 @@ class SortableReact extends Component {
   constructor(props) {
     super(props);
 
-    // let mode = props.sortable_mode ? props.sortable_mode : "swipe"
-    // let order = props.order ? props.order : []
-    // const width = props.width ? props.width : 90
-    // const height = props.height ? props.height : 90
-    // const delta = props.delta ? props.delta : 10
-    // const allow_use_empty = props.allow_use_empty ? props.allow_use_empty : false
-
     this.sortable = new Sortable(props.width, props.height, props.delta, props.sortable_mode, props.order, props.allow_use_empty);
     this.state = this.sortable.get_state();
   };
@@ -33,69 +26,73 @@ class SortableReact extends Component {
     const delta = nextProps.delta ? nextProps.delta : this.state.delta
     const allow_use_empty = nextProps.allow_use_empty
 
-    // console.log("allow_use_empty::", allow_use_empty)
-
     this.sortable = new Sortable(step_x, step_y, delta, sortable_mode, this.state.order, allow_use_empty);
     console.log("this.sortable.get_state()::", this.sortable.get_state())
     this.setState(this.sortable.get_state());
   }
 
   handleTouchStart = (key, pressLocation, e) => {
-    console.log("handleTouchStart", key, pressLocation, e.touches[0])
-    this.handleMouseDown(key, pressLocation, e.touches[0]);
+    if(!this.props.disable_drag){
+      console.log("handleTouchStart", key, pressLocation, e.touches[0])
+      this.handleMouseDown(key, pressLocation, e.touches[0]);
+    }
   };
 
   handleTouchMove = (e) => {
-    e.preventswipe();
-    this.handleMouseMove(e.touches[0]);
+    if(!this.props.disable_drag){
+      e.preventswipe();
+      this.handleMouseMove(e.touches[0]);
+    }
   };
 
   handleMouseMove = ({pageX, pageY}) => {
     // console.log("handleMouseMove", pageX, pageY)
-    this.sortable.handleMouseMove({pageX, pageY})
-    let st = this.sortable.get_state()
-    this.setState({mouseY: st.mouseY, mouseX: st.mouseX, order: st.order });
+    if(!this.props.disable_drag){
+      this.sortable.handleMouseMove({pageX, pageY})
+      let st = this.sortable.get_state()
+      this.setState({mouseY: st.mouseY, mouseX: st.mouseX, order: st.order });
+    }
   };
 
   handleMouseDown = (pos, [pressX, pressY], {pageX, pageY}) => {
-    this.sortable.handleMouseDown(pos, [pressX, pressY], {pageX, pageY})
-    let st = this.sortable.get_state()
-    console.log("pos", pos, st)
-    if(this.props.start){
-      this.props.start(pos)
+    if(!this.props.disable_drag){
+      this.sortable.handleMouseDown(pos, [pressX, pressY], {pageX, pageY})
+      let st = this.sortable.get_state()
+      console.log("pos", pos, st)
+      if(this.props.start){
+        this.props.start(pos)
+      }
+      this.setState({
+        lastPress: pos,
+        isPressed: st.isPressed,
+        mouseY: st.mouseY,
+        mouseX: st.mouseX
+      });
     }
-    this.setState({
-      lastPress: pos,
-      isPressed: st.isPressed,
-      mouseY: st.mouseY,
-      mouseX: st.mouseX
-    });
   };
 
   handleMouseUp = () => {
-    let is_call_callback = false
-    if(
-      this.props.finished &&
-      JSON.stringify(this.sortable.state.order) !== JSON.stringify(this.sortable.state.old_order)
-    ){
-      is_call_callback = true
+    if(!this.props.disable_drag){
+      let is_call_callback = false
+      if(
+        this.props.finished &&
+        JSON.stringify(this.sortable.state.order) !== JSON.stringify(this.sortable.state.old_order)
+      ){
+        is_call_callback = true
+      }
+
+      this.sortable.handleMouseUp()
+      let st = this.sortable.get_state()
+
+      if(is_call_callback){
+        this.props.finished(st)
+        console.log("sortable.get_state()", st)
+      }
+
+      this.setState({
+        isPressed: st.isPressed,
+      });
     }
-
-    this.sortable.handleMouseUp()
-    let st = this.sortable.get_state()
-
-    if(is_call_callback){
-      this.props.finished(st)
-      console.log("sortable.get_state()", st)
-    }
-
-
-    // console.log("JSON.stringify(this.sortable.order) ", JSON.stringify(this.sortable.state.order) )
-    // console.log("JSON.stringify(this.sortable.old_order) ", JSON.stringify(this.sortable.state.old_order) )
-
-    this.setState({
-      isPressed: st.isPressed,
-    });
   };
 
   render() {
@@ -105,8 +102,7 @@ class SortableReact extends Component {
       stiffness: this.props.stiffness,
       damping: this.props.damping
     }
-    // const scale_active = this.props.scale_active ? this.props.scale_active: 1.2
-    // const shadow_active = this.props.shadow_active ? this.props.shadow_active: 1.2
+
     let count = 0;
     order.forEach((value, key) => {
       let style;
@@ -159,6 +155,7 @@ class SortableReact extends Component {
     );
   }
 }
+
 const default_order = [
   {id: "1", w:1, h:1, col:1, row:1, con: "1"},
   {id: "2", w:1, h:1, col:2, row:1, con: "2"},
@@ -184,7 +181,8 @@ SortableReact.defaultProps = {
   damping: 50,
   scale_active:1.2,
   shadow_active:1.2,
-  allow_use_empty: false
+  allow_use_empty: false,
+  disable_drag: false
 }
 
 SortableReact.propTypes = {
@@ -207,6 +205,7 @@ SortableReact.propTypes = {
   allow_use_empty: PropTypes.bool,
   finished: PropTypes.func,
   start: PropTypes.func,
+  disable_drag: PropTypes.bool
 }
 
 export default SortableReact;
