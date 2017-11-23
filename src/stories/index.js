@@ -3,13 +3,13 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 import { linkTo } from '@storybook/addon-links';
-import { withKnobs, text, boolean, number } from '@storybook/addon-knobs';
+import { withKnobs, text, boolean, number, select, object } from '@storybook/addon-knobs';
 
 import Readme from '../import_readme';
 import SortableReact from '../SortableReact';
 
 storiesOf('Welcome', module)
-  .add('default', ()=> (<Readme></Readme>));
+  .add('guide', ()=> (<Readme></Readme>));
 
 const default_order = [
   {id: "1", w:1, h:1, col:1, row:1, con: "1"},
@@ -38,44 +38,70 @@ const default_order_diff = [
   {id: "24", w:1, h:1, col:4, row:3, con: "24"},
 ]
 
-storiesOf('different mode', module)
-  .add('swap',
+storiesOf('features', module)
+  .addDecorator(withKnobs)
+  .add('sortable mode',
     withInfo(`
       Content order:\n
       ${JSON.stringify(default_order, "", 6)}
     `)(
-      () => <SortableReact
-        sortable_mode="swap"
-        order={default_order}
-      />
+      () =>{
+        const mode = select("mode", ["swap", "left_right"], "left_right")
+        // const mode = text("mode", "swap")
+        return (
+          <SortableReact
+            sortable_mode={mode}
+            order={default_order}
+          />
+        )
+      }
     )
   )
-  .add('left right',
+  .add('diferent size',
     withInfo(`
       Content order:\n
       ${JSON.stringify(default_order, "", 6)}
     `)(
-      () => <SortableReact sortable_mode="left_right"  order={default_order}/>
+      () => {
+        // const order = object("order", default_order_diff)
+        return (<SortableReact sortable_mode="swap"  order={default_order_diff}/>)
+      }
+    )
+  )
+  .add('item with image',
+    withInfo(`
+      Content order:\n
+      ${JSON.stringify(default_order, "", 6)}
+    `)(
+      () => {
+        // const order = object("order", default_order_diff)
+        let new_order = []
+        default_order_diff.forEach((item)=>{
+          item.con = (<div style={{"background-color":"#c0c0c6", "z-index":130}}></div>)
+          new_order.push(item)
+        })
+        return (<SortableReact sortable_mode="swap"  order={new_order}/>)
+      }
     )
   );
 
-storiesOf('diferent size item', module)
-  .add('swap',
-    withInfo(`
-      Content order:\n
-      ${JSON.stringify(default_order_diff, "", 6)}
-    `)(
-      () => <SortableReact sortable_mode="swap" order={default_order_diff}/>
-    )
-  )
-  .add('left right',
-    withInfo(`
-      Content order:\n
-      ${JSON.stringify(default_order_diff, "", 6)}
-    `)(
-      () => <SortableReact sortable_mode="left_right"  order={default_order_diff}/>
-    )
-  );
+// storiesOf('diferent size item', module)
+//   .add('swap',
+//     withInfo(`
+//       Content order:\n
+//       ${JSON.stringify(default_order_diff, "", 6)}
+//     `)(
+//       () => <SortableReact sortable_mode="swap" order={default_order_diff}/>
+//     )
+//   )
+//   .add('left right',
+//     withInfo(`
+//       Content order:\n
+//       ${JSON.stringify(default_order_diff, "", 6)}
+//     `)(
+//       () => <SortableReact sortable_mode="left_right"  order={default_order_diff}/>
+//     )
+//   );
 
 storiesOf('options item', module)
   .addDecorator(withKnobs)

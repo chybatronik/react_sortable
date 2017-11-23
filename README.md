@@ -3,7 +3,7 @@
 Sortable component for React.js.
 ### [Demo]
 
-###  Swipe mode
+###  Swap mode
 ![](https://chybatronik.github.io/react_sortable/img/ice_video_20171117-184047.gif)
 
 ### Left right mode
@@ -40,7 +40,7 @@ Use SortableReact component:
   width=90
   height=90
   delta=10
-  sortable_mode="swipe"
+  sortable_mode="swap"
   order=[{id: 1, w:1, h:1, col:1, row:1, con: "1"}]
 />
 ```
@@ -65,7 +65,7 @@ Default props:
 
 ```javascript
 SortableReact.defaultProps = {
-  sortable_mode: "swipe", //set sortable mode: "swipe" or "left_right"
+  sortable_mode: "swap", //set sortable mode: "swap" or "left_right"
   width: 90,              // set width item
   height: 90,             // set height item
   delta: 10,              // set distance between items
@@ -81,7 +81,7 @@ Types of props:
 
 ```javascript
 SortableReact.propTypes = {
-  sortable_mode: PropTypes.oneOf(["swipe", "left_right"]),
+  sortable_mode: PropTypes.oneOf(["swap", "left_right"]),
   order: PropTypes.arrayOf(PropTypes.shape({
      id: PropTypes.string.isRequired,
      w: PropTypes.number.isRequired,
