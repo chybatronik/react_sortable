@@ -39,13 +39,13 @@ const default_order_diff = [
 ]
 
 storiesOf('different mode', module)
-  .add('swipe',
+  .add('swap',
     withInfo(`
       Content order:\n
       ${JSON.stringify(default_order, "", 6)}
     `)(
       () => <SortableReact
-        sortable_mode="swipe"
+        sortable_mode="swap"
         order={default_order}
       />
     )
@@ -60,12 +60,12 @@ storiesOf('different mode', module)
   );
 
 storiesOf('diferent size item', module)
-  .add('swipe',
+  .add('swap',
     withInfo(`
       Content order:\n
       ${JSON.stringify(default_order_diff, "", 6)}
     `)(
-      () => <SortableReact sortable_mode="swipe" order={default_order_diff}/>
+      () => <SortableReact sortable_mode="swap" order={default_order_diff}/>
     )
   )
   .add('left right',
@@ -97,7 +97,7 @@ storiesOf('options item', module)
         // const allow_use_empty = boolean("allow_use_empty", false)
         // console.log("allow_use_empty::", allow_use_empty)
         return (<SortableReact
-          sortable_mode="swipe"
+          sortable_mode="swap"
           width={width}
           height={height}
           order={default_order_diff}
@@ -161,7 +161,7 @@ storiesOf('options item', module)
         const scale_active = number("scale_active", 1.2)
         const shadow_active = number("shadow_active", 1.2)
         return (<SortableReact
-          sortable_mode="swipe"
+          sortable_mode="swap"
           damping={damping}
           stiffness={stiffness}
           order={default_order_diff}
@@ -197,7 +197,7 @@ storiesOf('callbacks', module)
           alert(JSON.stringify(srt, "", 4))
         }
         return (<SortableReact
-          sortable_mode="swipe"
+          sortable_mode="swap"
           finished={my_alert}
           order={default_order_diff}
         />)
@@ -214,7 +214,7 @@ storiesOf('callbacks', module)
           console.log(srt)
         }
         return (<SortableReact
-          sortable_mode="swipe"
+          sortable_mode="swap"
           start={my_alert_start}
           order={default_order_diff}
         />)
