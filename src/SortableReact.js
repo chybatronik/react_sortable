@@ -58,7 +58,7 @@ class SortableReact extends Component {
     if(!this.props.disable_drag){
       this.sortable.handleMouseDown(pos, [pressX, pressY], {pageX, pageY})
       let st = this.sortable.get_state()
-      console.log("pos", pos, st)
+      // console.log("pos", pos, st)
       if(this.props.start){
         this.props.start(pos)
       }
@@ -121,6 +121,11 @@ class SortableReact extends Component {
           x: spring(value.x, springConfig),
         }
       }
+      let value_style = {}
+      if(value.style){
+        value_style = value.style
+      }
+
       count += 1
       result.push((
         <Motion key={count} style={style}>
@@ -129,14 +134,14 @@ class SortableReact extends Component {
               onMouseDown={this.handleMouseDown.bind(null, value, [x, y])}
               onTouchStart={this.handleTouchStart.bind(null, value, [x, y])}
               className="demo-item"
-              style={{
+              style={{...value_style, ...{
                 width: value.width,
                 height: value.height,
                 boxShadow: `rgba(0, 0, 0, 0.2) 0px ${shadow}px ${2 * shadow}px 0px`,
                 transform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
                 WebkitTransform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
                 zIndex: lastPress && value.id === lastPress.id ? 99 : 50
-              }}>
+              }}}>
               {value.con}
             </div>
           }
@@ -194,6 +199,7 @@ SortableReact.propTypes = {
     col: PropTypes.number.isRequired,
     row: PropTypes.number.isRequired,
     con: PropTypes.string.isRequired,
+    style: PropTypes.object,
   })).isRequired,
   width: PropTypes.number,
   height: PropTypes.number,
