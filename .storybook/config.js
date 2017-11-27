@@ -37,7 +37,7 @@ setOptions({
    * display horizontal panel that displays addon configurations
    * @type {Boolean}
    */
-  showDownPanel: true,
+  showDownPanel: false,
   /**
    * display floating search box to search through stories
    * @type {Boolean}
@@ -47,7 +47,7 @@ setOptions({
    * show horizontal addons panel as a vertical panel on the right
    * @type {Boolean}
    */
-  downPanelInRight: true,
+  downPanelInRight: false,
   /**
    * sorts stories
    * @type {Boolean}
