@@ -80,9 +80,9 @@ setOptions({
 
 function loadStories() {
   require('../src/stories/welcome/welcome');
-  require('../src/stories/features/features');
-  require('../src/stories/options_items/options_items');
-  require('../src/stories/callbacks/callbacks');
+  require('../src/stories/features/index');
+  require('../src/stories/options_items/index');
+  require('../src/stories/callbacks/index');
   // require('../src/stories');
 }
 

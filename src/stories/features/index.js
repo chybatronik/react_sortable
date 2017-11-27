@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { storiesOf } from '@storybook/react';
-import { withKnobs, text, boolean, number, select, object } from '@storybook/addon-knobs';
+// import { withKnobs, text, boolean, number, select, object } from '@storybook/addon-knobs';
 import { withInfo } from '@storybook/addon-info';
-import Markdown from 'react-markdown';
-import SortableReact from '../../SortableReact';
+// import Markdown from 'react-markdown';
+// import SortableReact from '../../SortableReact';
 import {default_order, default_order_diff} from "../demo_data";
 import StoreSortableMode from "./sortable_mode"
 import StoreDiferentSize from "./diferent_size"
