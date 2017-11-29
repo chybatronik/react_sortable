@@ -437,6 +437,7 @@ class Sortable{
     let item_cur = this.get_item_id(lastPress.id)
     let copy = Object.assign({}, this.state);
     let count = 0;
+    let search_value = null;
     copy.order.forEach((value, key_y) => {
       if(
         item_cur.id !== value.id &&
@@ -447,8 +448,14 @@ class Sortable{
       ){
         count+= 1;
         console.log("value::value::", value)
+        search_value = value
       }
     })
+    if(count == 1){
+      return search_value
+    }else{
+      return null
+    }
 
   }
 
