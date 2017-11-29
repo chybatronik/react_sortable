@@ -964,6 +964,11 @@ class Sortable{
       // console.log("available::", this.available_item_left_right(currentRow, currentCol))
       let value_to_left = []
       if(!this.available_item_on_old_order(currentRow, currentCol)){
+        const search_value = this.when_available_item_left_right(currentRow, currentCol)
+        if(search_value){
+          currentRow = search_value.row
+          currentCol= search_value.col
+        }
         this.get_item_between_forward(currentRow, currentCol).forEach((value, key_y) => {
           //console.log("value::", value)
           this.move_item_left(value, 1)
@@ -989,6 +994,11 @@ class Sortable{
       let value_to_right = []
       if(!this.available_item_on_old_order(currentRow, currentCol)){
         console.log("return col row for need item", this.when_available_item_left_right(currentRow, currentCol))
+        const search_value = this.when_available_item_left_right(currentRow, currentCol)
+        if(search_value){
+          currentRow = search_value.row
+          currentCol= search_value.col
+        }
         this.get_item_between_back(currentRow, currentCol).forEach((value, key_y) => {
           console.log("value::", value)
           this.move_item_right(value, 1)
