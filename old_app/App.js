@@ -13,7 +13,7 @@ import SortableReact from './SortableReact';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.sortable = new Sortable(step_x, step_y, delta, "swipe");
+    this.sortable = new Sortable(step_x, step_y, delta, "swap");
     this.state = this.sortable.get_state();
   };
 
@@ -40,7 +40,7 @@ class App extends Component {
   }
 
   onHeight(event){
-    const step_y = parseInt(event.target.value, 10);
+    const step_swaparseInt(event.target.value, 10);
     this.setState({step_y: step_y});
     this.sortable = new Sortable(this.state.step_x, step_y, this.state.delta, this.state.mode, this.state.order, this.state.allow_use_empty);
     this.setState(this.sortable.get_state());
@@ -94,7 +94,7 @@ class App extends Component {
             <div className="group">
               <label>Mode sortable</label>
               <select onChange={this.onMode.bind(this)}>
-                <option value="swipe">swipe</option>
+                <option value="swap">swap</option>
                 <option value="left_right">left_right</option>
               </select>
             </div>

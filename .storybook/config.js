@@ -37,7 +37,7 @@ setOptions({
    * display horizontal panel that displays addon configurations
    * @type {Boolean}
    */
-  showDownPanel: true,
+  showDownPanel: false,
   /**
    * display floating search box to search through stories
    * @type {Boolean}
@@ -47,7 +47,7 @@ setOptions({
    * show horizontal addons panel as a vertical panel on the right
    * @type {Boolean}
    */
-  downPanelInRight: true,
+  downPanelInRight: false,
   /**
    * sorts stories
    * @type {Boolean}
@@ -74,12 +74,17 @@ setOptions({
    * id to select an addon panel
    * @type {String}
    */
-  selectedAddonPanel: "KNOBS", // The order of addons in the "Addons Panel" is the same as you import them in 'addons.js'. The first panel will be opened by default as you run Storybook
+  selectedAddonPanel: "Knobs", // The order of addons in the "Addons Panel" is the same as you import them in 'addons.js'. The first panel will be opened by default as you run Storybook
 });
 
 
 function loadStories() {
-  require('../src/stories');
+  require('../src/stories/welcome/welcome');
+  require('../src/stories/features/index');
+  require('../src/stories/options_items/index');
+  require('../src/stories/callbacks/index');
+  // require('../src/stories');
 }
+
 
 configure(loadStories, module);

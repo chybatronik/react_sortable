@@ -27,7 +27,7 @@ class SortableReact extends Component {
     const allow_use_empty = nextProps.allow_use_empty
 
     this.sortable = new Sortable(step_x, step_y, delta, sortable_mode, this.state.order, allow_use_empty);
-    console.log("this.sortable.get_state()::", this.sortable.get_state())
+    // console.log("this.sortable.get_state()::", this.sortable.get_state())
     this.setState(this.sortable.get_state());
   }
 
@@ -58,7 +58,7 @@ class SortableReact extends Component {
     if(!this.props.disable_drag){
       this.sortable.handleMouseDown(pos, [pressX, pressY], {pageX, pageY})
       let st = this.sortable.get_state()
-      console.log("pos", pos, st)
+      // console.log("pos", pos, st)
       if(this.props.start){
         this.props.start(pos)
       }
@@ -121,6 +121,11 @@ class SortableReact extends Component {
           x: spring(value.x, springConfig),
         }
       }
+      let value_style = {}
+      if(value.style){
+        value_style = value.style
+      }
+
       count += 1
       result.push((
         <Motion key={count} style={style}>
@@ -129,14 +134,14 @@ class SortableReact extends Component {
               onMouseDown={this.handleMouseDown.bind(null, value, [x, y])}
               onTouchStart={this.handleTouchStart.bind(null, value, [x, y])}
               className="demo-item"
-              style={{
+              style={{...value_style, ...{
                 width: value.width,
                 height: value.height,
                 boxShadow: `rgba(0, 0, 0, 0.2) 0px ${shadow}px ${2 * shadow}px 0px`,
                 transform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
                 WebkitTransform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
                 zIndex: lastPress && value.id === lastPress.id ? 99 : 50
-              }}>
+              }}}>
               {value.con}
             </div>
           }
@@ -156,27 +161,27 @@ class SortableReact extends Component {
   }
 }
 
-const default_order = [
-  {id: "1", w:1, h:1, col:1, row:1, con: "1"},
-  {id: "2", w:1, h:1, col:2, row:1, con: "2"},
-  {id: "3", w:1, h:1, col:3, row:1, con: "3"},
-  {id: "4", w:1, h:1, col:4, row:1, con: "4"},
-  {id: "11", w:1, h:1, col:1, row:2, con: "11"},
-  {id: "12", w:1, h:1, col:2, row:2, con: "12"},
-  {id: "13", w:1, h:1, col:3, row:2, con: "13"},
-  {id: "14", w:1, h:1, col:4, row:2, con: "14"},
-  {id: "21", w:1, h:1, col:1, row:3, con: "21"},
-  {id: "22", w:1, h:1, col:2, row:3, con: "22"},
-  {id: "23", w:1, h:1, col:3, row:3, con: "23"},
-  {id: "24", w:1, h:1, col:4, row:3, con: "24"}
-]
+// const default_order = [
+//   {id: "1", w:1, h:1, col:1, row:1, con: "1"},
+//   {id: "2", w:1, h:1, col:2, row:1, con: "2"},
+//   {id: "3", w:1, h:1, col:3, row:1, con: "3"},
+//   {id: "4", w:1, h:1, col:4, row:1, con: "4"},
+//   {id: "11", w:1, h:1, col:1, row:2, con: "11"},
+//   {id: "12", w:1, h:1, col:2, row:2, con: "12"},
+//   {id: "13", w:1, h:1, col:3, row:2, con: "13"},
+//   {id: "14", w:1, h:1, col:4, row:2, con: "14"},
+//   {id: "21", w:1, h:1, col:1, row:3, con: "21"},
+//   {id: "22", w:1, h:1, col:2, row:3, con: "22"},
+//   {id: "23", w:1, h:1, col:3, row:3, con: "23"},
+//   {id: "24", w:1, h:1, col:4, row:3, con: "24"}
+// ]
 
 SortableReact.defaultProps = {
-  sortable_mode: "swipe",
+  sortable_mode: "swap",
   width: 90,
   height: 90,
   delta: 10,
-  order: default_order,
+  // order: default_order,
   stiffness: 300,
   damping: 50,
   scale_active:1.2,
@@ -186,7 +191,7 @@ SortableReact.defaultProps = {
 }
 
 SortableReact.propTypes = {
-  sortable_mode: PropTypes.oneOf(["swipe", "left_right"]).isRequired,
+  sortable_mode: PropTypes.oneOf(["swap", "left_right"]).isRequired,
   order: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     w: PropTypes.number.isRequired,
@@ -194,6 +199,7 @@ SortableReact.propTypes = {
     col: PropTypes.number.isRequired,
     row: PropTypes.number.isRequired,
     con: PropTypes.string.isRequired,
+    style: PropTypes.object,
   })).isRequired,
   width: PropTypes.number,
   height: PropTypes.number,
