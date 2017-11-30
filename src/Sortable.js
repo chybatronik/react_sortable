@@ -335,23 +335,26 @@ class Sortable{
     }
   }
 
-  cur_item_myself(row, col){
-    const {lastPress} = this.state;
-    let item_cur = this.get_item_id(lastPress.id)
-    let res_is_owner = false
-    if(
-      row >= item_cur.row &&
-      row < (item_cur.row + item_cur.h)
-    ){
-      if(
-        col >= item_cur.col &&
-        col < (item_cur.col + item_cur.w)
-      ){
-        res_is_owner = true;
-      }
-    }
-    return res_is_owner
-  }
+  // cur_item_myself(row, col){
+  //   const {lastPress} = this.state;
+  //   const item_cur = this.get_item_id(lastPress.id)
+  //   console.log("cur_item_myself::item_cur::::", item_cur.col, item_cur.row, row, col)
+  //   let res_is_owner = false
+  //   if(
+  //     row >= item_cur.row &&
+  //     row < (item_cur.row + item_cur.h)
+  //   ){
+  //     console.log("row:ok")
+  //     if(
+  //       col > item_cur.col &&
+  //       col < (item_cur.col + item_cur.w)
+  //     ){
+  //       console.log("col:ok")
+  //       res_is_owner = true;
+  //     }
+  //   }
+  //   return res_is_owner
+  // }
 
   available_item(row, col){
     console.log("------------÷------")
@@ -381,11 +384,18 @@ class Sortable{
 
         if(!this.available_item_on_old_order(row, col)){
           console.log("return true")
-          if(this.cur_item_myself(row, col)){
-            return false
-          }else{
+          const max_right_col = this.get_right_column_average(row)
+          if((col + item_cur.w-1) <= max_right_col){
             return true
+          }else{
+            return false
           }
+          // if(this.cur_item_myself(row, col)){
+          //   return false
+          // }else{
+          //   return true
+          // }
+          // return true
         }else{
           return false
         }
@@ -966,6 +976,7 @@ class Sortable{
             this.move_item_left(value, this.state.w)
           }
         })
+        console.log("_______________")
         console.log("this.available_item(currentRow, currentCol)", this.available_item(currentRow, currentCol))
         if(this.available_item(currentRow, currentCol)){
           this.move_item_on_current_row_col(currentRow, currentCol)
