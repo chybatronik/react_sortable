@@ -1,23 +1,5 @@
 import './utils'
 
-// const default_order = [
-//   {id: 1, w:1, h:1, col:1, row:1, con: "1"},
-//   {id: 2, w:1, h:1, col:2, row:1, con: "2"},
-//   {id: 3, w:2, h:2, col:3, row:1, con: "3"},
-//   // {id: 4, w:2, h:2, col:5, row:1},
-//   // {id: 5, w:1, h:1, col:6, row:1},
-//
-//   {id: 11, w:1, h:1, col:1, row:2, con: "11"},
-//   {id: 12, w:1, h:1, col:2, row:2, con: "12"},
-//   // {id: 13, w:1, h:1, col:5, row:2},
-//   // {id: 14, w:1, h:1, col:6, row:2},
-//
-//   {id: 21, w:1, h:1, col:1, row:3, con: "21"},
-//   {id: 22, w:1, h:1, col:2, row:3, con: "22"},
-//   {id: 23, w:1, h:1, col:3, row:3, con: "23"},
-//   {id: 24, w:1, h:1, col:4, row:3, con: "24"},
-//   {id: 25, w:1, h:1, col:5, row:3, con: "25"}
-// ]
 
 class Sortable{
   constructor(step_x, step_y, delta, sortable_mode, order, allow_use_empty){
@@ -315,18 +297,7 @@ class Sortable{
         count+= 1;
       }
     })
-    // console.log("count::::", count)
-    // if(
-    //   col >= item_cur.col &&
-    //   col <= (item_cur.col + item_cur.w-1) &&
-    //   row >= item_cur.row &&
-    //   row < (item_cur.row + item_cur.h) &&
-    //   count === 1
-    // ){
-    //   console.log("available_item_on_old_order:", item_cur)
-    //   console.log("")
-    //   return true
-    // }
+
     if(count > 0 ){
       return false
     }else{
@@ -334,27 +305,6 @@ class Sortable{
       return true
     }
   }
-
-  // cur_item_myself(row, col){
-  //   const {lastPress} = this.state;
-  //   const item_cur = this.get_item_id(lastPress.id)
-  //   console.log("cur_item_myself::item_cur::::", item_cur.col, item_cur.row, row, col)
-  //   let res_is_owner = false
-  //   if(
-  //     row >= item_cur.row &&
-  //     row < (item_cur.row + item_cur.h)
-  //   ){
-  //     console.log("row:ok")
-  //     if(
-  //       col > item_cur.col &&
-  //       col < (item_cur.col + item_cur.w)
-  //     ){
-  //       console.log("col:ok")
-  //       res_is_owner = true;
-  //     }
-  //   }
-  //   return res_is_owner
-  // }
 
   available_item(row, col){
     console.log("------------÷------")
@@ -759,18 +709,6 @@ class Sortable{
     return result
 
   }
-
-  // get_item_id_from_old(id){
-  //   let copy = Object.assign({}, this.state);
-  //   let result = null
-  //   copy.old_order.forEach((value, key_y) => {
-  //     if(value.id===id){
-  //       result = Object.assign({}, value);
-  //     }
-  //   })
-  //   return result
-  //
-  // }
 
   get_item_between_forward(currentRow, currentCol){
     // console.log("get_item_between_forward", currentRow, currentCol)
