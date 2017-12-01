@@ -123,4 +123,4 @@ MIT
 
 [//]: #
 
-[Demo]: <https://chybatronik.github.io/react_sortable/storybook-static>
+[Demo]: <https://chybatronik.github.io/react_sortable/storybook-static/?selectedKind=Welcome&selectedStory=guide&full=0&down=0&left=1&panelRight=0&downPanel=storybooks%2Fstorybook-addon-knobs>
