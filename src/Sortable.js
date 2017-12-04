@@ -82,19 +82,40 @@ class Sortable{
   }
 
   get_right_column_without_cur(row){
+    console.log("row_______:::", row)
     let max_column = 0;
     const {lastPress} = this.state;
     let copy = Object.assign({}, this.state);
     copy.order.forEach((value, key_y) => {
-      if(row === value.row ){
+      //|| row === (value.row + value.h - 1)
+      if(row === value.row){
         if(value.col >= max_column){
           if(lastPress.id !== value.id){
+            console.log("get_right_column_without_cur:::", value)
             max_column = value.col + (value.w-1)
           }
         }
       }
     })
-    // console.log("get_right_column_without_cur::::", max_column)
+    let max_right_col = this.get_right_column_average(row)
+    console.log("max_right_col", max_right_col)
+    Object.keys(this.state.init_size).forEach((str_key, key) => {
+      let value = this.state.init_size[str_key]
+      if(
+        row > value.row &&
+        row < (value.row+value.h)
+      ){
+        console.log("max_right_col::", max_right_col)
+        console.log("(value.col+value.w)::", (value.col+value.w))
+        if(
+          max_column < (value.col+value.w) &&
+          (value.col+value.w) <= max_right_col
+        ){
+          max_column =  (value.col+value.w-1)
+        }
+      }
+    })
+    console.log("get_right_column_without_cur::@@@@@::", max_column)
     return max_column
   }
 
@@ -216,17 +237,55 @@ class Sortable{
     })
   }
 
+  is_left_nothing(row, search_col){
+    let res = false
+    console.log("this.state.init_size::", this.state.init_size, row, search_col)
+    Object.keys(this.state.init_size).forEach((value, key) => {
+      console.log("value:", value)
+      console.log("key:", key)
+      let res_is_owner = false
+      const lastPress = this.state.init_size[value]
+      if(
+        row >= lastPress.row &&
+        row < (lastPress.row + lastPress.h)
+      ){
+        if(
+          search_col >= lastPress.col &&
+          search_col < (lastPress.col + lastPress.w + 1)
+        ){
+          res_is_owner = true;
+        }
+      }
+      if(res_is_owner && (row !== lastPress.row && search_col !== lastPress.col)){
+        console.log("res_is_owner:", res_is_owner, search_col, lastPress, (search_col - lastPress.w ))
+        if((search_col - lastPress.w)==1){
+          res =  true
+        }
+      }
+    })
+    if((res || (search_col ===1))){
+      return true
+    }else {
+      return false
+    }
+  }
+
   move_item_left(item, width){
-    //console.log("move_item_left", item, ">>>", width)
+    console.log("move_item_left::", item.col, "__", item.row, ">>>", width)
     let check_ava;
     this.state.order.forEach((value, key) => {
       if(item.id === value.id){
         if(this.state.sortable_mode === "left_right"){
-          if(value.col === 1){
+          console.log("is_left_nothing::::", this.is_left_nothing(value.row, value.col))
+          // if(value.col === 1){
+          if(this.is_left_nothing(value.row, value.col)){
+            console.log("this.get_right_column_without_cur(value.row)!!!", value.row, " ! ", this.get_right_column_without_cur(value.row-1))
+            value.col = (this.get_right_column_without_cur(value.row-1)+1)
             value.row -= 1
-            value.col = (this.get_right_column_without_cur(value.row) + 1)
+            // value.col = (this.get_right_column_without_cur(value.row)+1)
           }else{
             check_ava = this.item_in_init_size_left(value)
+            console.log("check_ava::", check_ava)
             if(check_ava){
               value.col -= check_ava.w + 1
             }else{
@@ -244,16 +303,19 @@ class Sortable{
             size = this.state.init_size[`${value.row}_${value.col}`]
             is_not_move = true
           }
+
           if(size){
             value.h = size.h
             value.w = size.w
             value.width = value.w * this.state.step_x + (value.w-1)*this.state.delta
             value.height = value.h * this.state.step_y + (value.h-1)*this.state.delta
             if(!is_not_move){
+              console.log("move_item_left............")
               this.move_item_left(value, 1)
             }
           }
-        }else{
+        }
+        else{
           value.col -= width
         }
       }
@@ -957,7 +1019,7 @@ class Sortable{
 
     if(currentCol > this.state.currentCol || currentRow > this.state.currentRow){
       console.log("COl:>>>>>>>>>>>>>>>>", Object.assign({}, this.state.order))
-      // console.log("available::", this.available_item_left_right(currentRow, currentCol))
+      console.log("available::", this.available_item_left_right(currentRow, currentCol))
       let value_to_left = []
       if(!this.available_item_on_old_order(currentRow, currentCol)){
         const search_value = this.when_available_item_left_right(currentRow, currentCol)
@@ -966,12 +1028,13 @@ class Sortable{
           currentCol= search_value.col
         }
         this.get_item_between_forward(currentRow, currentCol).forEach((value, key_y) => {
-          //console.log("value::", value)
+          console.log("get_item_between_forward ;; move_item_left :VALUE:", value)
           this.move_item_left(value, 1)
           count_change += 1
           value_to_left.push(value)
         })
       }
+      console.log("available_item_left_right")
       if(this.available_item_left_right(currentRow, currentCol)){
         this.move_item_on_current_row_col(currentRow, currentCol)
         count_change += 1
@@ -986,7 +1049,7 @@ class Sortable{
     }
     if(currentCol < this.state.currentCol || currentRow < this.state.currentRow){
       console.log("back:<<<<<<<<<<<<<<<", Object.assign({}, this.state.order))
-      //console.log("available::", this.available_item_left_right(currentRow, currentCol))
+      console.log("available::", this.available_item_left_right(currentRow, currentCol))
       let value_to_right = []
       if(!this.available_item_on_old_order(currentRow, currentCol)){
         console.log("return col row for need item", this.when_available_item_left_right(currentRow, currentCol))
@@ -1029,8 +1092,8 @@ class Sortable{
       const mouseX = pageX - topDeltaX;
       const currentCol = this.clamp(Math.round(mouseX / (this.state.step_x+this.state.delta)), 1, this.get_right_column_average(currentRow));
 
-      console.log("currentRow::", currentRow)
-      console.log("currentCol::", currentCol)
+      // console.log("currentRow::", currentRow)
+      // console.log("currentCol::", currentCol)
 
       let new_row = []
       new_row = copy.order
