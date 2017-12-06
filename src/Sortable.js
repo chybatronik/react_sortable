@@ -81,6 +81,54 @@ class Sortable{
     return copy
   }
 
+  get_left_column_without_cur(row){
+    console.log("row_______:::", row)
+    let max_column = 0;
+    const {lastPress} = this.state;
+    // let copy = Object.assign({}, this.state);
+    // copy.order.forEach((value, key_y) => {
+    //   //|| row === (value.row + value.h - 1)
+    //   if(row === value.row){
+    //     if(value.col >= max_column){
+    //       if(lastPress.id !== value.id){
+    //         console.log("get_right_column_without_cur:::", value)
+    //         max_column = value.col + (value.w-1)
+    //       }
+    //     }
+    //   }
+    // })
+    // max_column = this.get_right_column_average(row)
+    // console.log("max_right_col", max_right_col)
+    let min_col = 0
+    Object.keys(this.state.init_size).forEach((str_key, key) => {
+      let value = this.state.init_size[str_key]
+      if(
+        row > value.row &&
+        row < (value.row+value.h)
+      ){
+        if(min_col > value.col){
+          min_col = value.col
+        }
+        // console.log("max_right_col::", max_right_col)
+        console.log("(value.col+value.w)::", (value.col+value.w))
+        if(
+          max_column < (value.col+value.w) &&
+          value.col == 1
+          // (value.col+value.w) <= max_right_col
+        ){
+          max_column =  value.col+value.w - 1
+        }
+      }
+    })
+    if(min_col > 1){
+      return 0
+    }else{
+      return max_column
+    }
+    // console.log("get_right_column_without_cur::@@@@@::", max_column)
+
+  }
+
   get_right_column_without_cur(row){
     console.log("row_______:::", row)
     let max_column = 0;
@@ -193,10 +241,13 @@ class Sortable{
       if(item.id === value.id){
         if(this.state.sortable_mode === "left_right"){
           const max_column = this.get_right_column(value.row)
-          // console.log("..........................................")
-          // console.log("max_column::::::::::::::::::::", max_column)
+          console.log("..........................................")
+          console.log("max_column::::::::::::::::::::", max_column)
           if(max_column === value.col){
-            value.col = 1
+            console.log("this.get_left_column_without_cur(value.row)!!!", value.row, " ! ", this.get_left_column_without_cur(value.row+1))
+
+            // value.col = 1
+            value.col = this.get_left_column_without_cur(value.row+1)+1
             value.row += 1
           }else{
             check_ava = this.item_in_init_size_right(value)
