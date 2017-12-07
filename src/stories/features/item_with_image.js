@@ -13,8 +13,11 @@ const code = `
   scale_active={0.8}
   shadow_active={1.4}
   order=[
-    {id: "1", w:2, h:2, col:1, row:1, con: "1",
-    style:{background:"url(im1.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:10}},
+    {
+      id: "1", w:2, h:2, col:1, row:1,
+      con: (<div><a id="im1" onClick={this.onClick.bind(this)} style={style_item}>x</a></div>),
+      style:{background:"url(im1.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:10}
+    },
     ...]
 />
 \`\`\`
@@ -24,6 +27,8 @@ const text = `
   # Item with image
   ${code}
 `
+
+const style_item = { cursor:"pointer", lineHeight:1.5, "float": "right", paddingRight:10, color:"black"}
 
 class  StoreItemWithImage extends Component {
   constructor(props) {
@@ -37,17 +42,22 @@ class  StoreItemWithImage extends Component {
     //   new_order.push(item)
     // })
     this.new_order = [
-      {id: "1", w:2, h:2, col:1, row:1, con: "1", style:{background:"url(im1.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:10}},
-      {id: "2", w:1, h:1, col:3, row:1, con: "2", style:{background:"url(im2.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:10}},
+      {id: "1", w:2, h:2, col:1, row:1, con: (<div><a id="im1" onClick={this.onClick.bind(this)} style={style_item}>x</a></div>), style:{overflow:"hidden", background:"url(im1.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:15}},
+      {id: "2", w:1, h:1, col:3, row:1, con: (<div><a id="im2" onClick={this.onClick.bind(this)}  style={style_item}>x</a></div>), style:{background:"url(im2.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:15}},
       // {id: "3", w:2, h:2, col:3, row:1, con: "3"},
-      {id: "11", w:1, h:1, col:3, row:2, con: "11", style:{background:"url(im3.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:10}},
+      {id: "11", w:1, h:1, col:3, row:2, con: (<div><a id="im3" onClick={this.onClick.bind(this)}  style={style_item}>x</a></div>), style:{background:"url(im3.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:15}},
       // {id: "12", w:1, h:1, col:2, row:2, con: "12"},
-      {id: "21", w:1, h:1, col:1, row:3, con: "21", style:{background:"url(im4.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:10}},
-      {id: "22", w:1, h:1, col:2, row:3, con: "22", style:{background:"url(im5.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:10}},
-      {id: "23", w:1, h:1, col:3, row:3, con: "23", style:{background:"url(im6.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:10}},
+      {id: "21", w:1, h:1, col:1, row:3, con: (<div><a id="im4" onClick={this.onClick.bind(this)}  style={style_item}>x</a></div>), style:{background:"url(im4.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:15}},
+      {id: "22", w:1, h:1, col:2, row:3, con: (<div><a id="im5" onClick={this.onClick.bind(this)}  style={style_item}>x</a></div>), style:{background:"url(im5.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:15}},
+      {id: "23", w:1, h:1, col:3, row:3, con: (<div><a id="im6" onClick={this.onClick.bind(this)}  style={style_item}>x</a></div>), style:{background:"url(im6.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:15}},
       // {id: "24", w:1, h:1, col:4, row:3, con: "24"},
     ]
 
+  }
+
+  onClick(e){
+    console.log("e",String(e.target.id))
+    alert("click: "+ String(e.target.id))
   }
 
   onState(e){
