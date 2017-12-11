@@ -4,11 +4,11 @@ Sortable component for React.js.
 ### [Demo]
 
 ###  Swap mode
-![](https://chybatronik.github.io/react_sortable/img/simple.gif)
+![Swap mode](https://chybatronik.github.io/react_sortable/img/simple.gif)
 
 
 ### Left right mode
-![](https://chybatronik.github.io/react_sortable/img/with_images.gif)
+![Left right mode](https://chybatronik.github.io/react_sortable/img/with_images.gif)
 
 ## Supports:
 
