@@ -45,7 +45,7 @@ class  StoreAllowDropReadOnly extends Component {
     // console.log("this.props.mode;;", this.props)
     const mode = this.state.mode
     return (
-      <div>
+      <div style={{marginBottom:550}}>
         <Markdown source={text}/>
         <label>sortable_mode:</label>
         <select

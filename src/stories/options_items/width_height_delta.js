@@ -49,7 +49,7 @@ class  StoreWidthHeightDelta extends Component {
     // console.log("this.props.mode;;", this.props)
     const mode = this.state.mode
     return (
-      <div>
+      <div style={{marginBottom:550}}>
         <Markdown source={text}/>
         <label>sortable_mode:</label>
         <select style={{width:200, "marginLeft":20}} onChange={this.onState.bind(this)}>
