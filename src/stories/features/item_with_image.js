@@ -7,15 +7,21 @@ const code = `
 \`\`\`js
 <SortableReact
   sortable_mode={sortable_mode}
-  stiffness={95}
-  damping={20}
-  delta={30}
-  scale_active={0.8}
-  shadow_active={1.4}
+  stiffness={95}      //  stiffness animation option
+  damping={20}        //  damping animation option
+  delta={30}          //  space between items
+  scale_active={0.8}  // scale item when drag
+  shadow_active={1.4} // shadow item when drag
   order=[
     {
       id: "1", w:2, h:2, col:1, row:1,
-      con: (<div><a id="im1" onClick={this.onClick.bind(this)} style={style_item}>x</a></div>),
+      con: (
+        <div>
+          <a id="im1" onClick={this.onClick.bind(this)} style={style_item}>
+            x
+          </a>
+        </div>
+      ),
       style:{background:"url(im1.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:10}
     },
     ...]
@@ -25,6 +31,7 @@ const code = `
 
 const text = `
   # Item with image
+  Set content of item in "con" and "style" for each items. Add callback "this.onClick.bind(this)", when click on close button.
   ${code}
 `
 
@@ -35,12 +42,7 @@ class  StoreItemWithImage extends Component {
     super(props)
     this.state = {mode: "left_right"};
     console.log("state::::", this.state)
-    // let new_order = []
-    // const default_order_diff2 = default_order_diff.clone()
-    // default_order_diff2.forEach((item)=>{
-    //   item.style = {background:"url(favicon.ico) no-repeat", backgroundSize:"100%", color: "white", fontSize:40}
-    //   new_order.push(item)
-    // })
+
     this.new_order = [
       {id: "1", w:2, h:2, col:1, row:1, con: (<div><a id="im1" onClick={this.onClick.bind(this)} style={style_item}>x</a></div>), style:{overflow:"hidden", background:"url(im1.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:15}},
       {id: "2", w:1, h:1, col:3, row:1, con: (<div><a id="im2" onClick={this.onClick.bind(this)}  style={style_item}>x</a></div>), style:{background:"url(im2.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:15}},
@@ -69,7 +71,7 @@ class  StoreItemWithImage extends Component {
     // console.log("this.props.mode;;", this.props)
     const mode = this.state.mode
     return (
-      <div>
+      <div style={{marginBottom:550}}>
         <Markdown source={text}/>
         <label>sortable_mode:</label>
         <select style={{width:200, "marginLeft":20}} onChange={this.onState.bind(this)}>

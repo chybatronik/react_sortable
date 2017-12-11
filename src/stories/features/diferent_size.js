@@ -17,6 +17,11 @@ const code = `
 
 const text = `
   # Different size
+  Size of item set in order array.
+  ###### w - width of item, width of item eq w*width.
+  ###### h - height of item, height of item eq h*height.
+  ###### col -  column.
+  ###### row -  row.
   ${code}
 `
 
@@ -36,7 +41,7 @@ class  StoreDiferentSize extends Component {
     // console.log("this.props.mode;;", this.props)
     const mode = this.state.mode
     return (
-      <div>
+      <div style={{marginBottom:550}}>
         <Markdown source={text}/>
         <label>sortable_mode:</label>
         <select style={{width:200, "margin-left":20}} onChange={this.onState.bind(this)}>

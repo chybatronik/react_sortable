@@ -4,18 +4,21 @@ Sortable component for React.js.
 ### [Demo]
 
 ###  Swap mode
-![](https://chybatronik.github.io/react_sortable/img/ice_video_20171117-184047.gif)
+![](https://chybatronik.github.io/react_sortable/img/simple.gif)
+
 
 ### Left right mode
- ![](https://chybatronik.github.io/react_sortable/img/ice_video_20171117-184550.gif)
+![](https://chybatronik.github.io/react_sortable/img/with_images.gif)
 
-**Supports:**
+## Supports:
 
-- Multi rows and cols,
+- multi rows and cols,
+- size of item,
+- two sortable mode,
 - drag and drop with touching,
-- animations with drap,
-- settings of cols and rows,
-- resize items (comming soon),
+- different content and style of item
+- animations,
+- dynamic resize items (comming soon)
 
 ## Usage
 
@@ -41,7 +44,7 @@ Use SortableReact component:
   height=90
   delta=10
   sortable_mode="swap"
-  order=[{id: 1, w:1, h:1, col:1, row:1, con: "1"}]
+  order=[{id: 1, w:1, h:1, col:1, row:1, con: (<h1>Hello</h1>), style:{backgroundColor:"green"}}]
 />
 ```
 
@@ -56,7 +59,8 @@ order=[
     h:1,     // height of item, height of item eq h*height
     col:1,   // column
     row:1,   // row
-    con: "1" // content  of item
+    con: (<h1>Hello World</h1>), // content  of item
+    style: {{backgroundColor:"red"}} //style of item
   }
 ]
 ```
