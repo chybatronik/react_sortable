@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Motion, spring} from 'react-motion';
+// import Sortable from '../../develexe-sortable/index.js';
 import Sortable from 'develexe-sortable';
 import PropTypes from "prop-types"
 
@@ -27,7 +28,6 @@ class SortableReact extends Component {
     const allow_use_empty = nextProps.allow_use_empty
 
     this.sortable = new Sortable(step_x, step_y, delta, sortable_mode, this.props.order, allow_use_empty);
-    // console.log("this.sortable.get_state()::", this.sortable.get_state())
     this.setState(this.sortable.get_state());
   }
 
@@ -46,7 +46,6 @@ class SortableReact extends Component {
   };
 
   handleMouseMove = ({pageX, pageY}) => {
-    // console.log("handleMouseMove", pageX, pageY)
     if(!this.props.disable_drag){
       this.sortable.handleMouseMove({pageX, pageY})
       let st = this.sortable.get_state()
@@ -58,7 +57,6 @@ class SortableReact extends Component {
     if(!this.props.disable_drag){
       this.sortable.handleMouseDown(pos, [pressX, pressY], {pageX, pageY})
       let st = this.sortable.get_state()
-      // console.log("pos", pos, st)
       if(this.props.start){
         this.props.start(pos)
       }
@@ -177,15 +175,7 @@ SortableReact.defaultProps = {
 
 SortableReact.propTypes = {
   sortable_mode: PropTypes.oneOf(["swap", "left_right"]).isRequired,
-  order: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    w: PropTypes.number.isRequired,
-    h: PropTypes.number.isRequired,
-    col: PropTypes.number.isRequired,
-    row: PropTypes.number.isRequired,
-    con: PropTypes.string.isRequired,
-    style: PropTypes.object,
-  })).isRequired,
+  order: PropTypes.arrayOf(PropTypes.object),
   width: PropTypes.number,
   height: PropTypes.number,
   delta: PropTypes.number,

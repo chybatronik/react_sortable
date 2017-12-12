@@ -1,8 +1,6 @@
 import React from 'react';
 
 import { storiesOf } from '@storybook/react';
-import SortableReact from '../../SortableReact';
-
 import {default_order, default_order_diff} from "../demo_data";
 import StoreStart from "./start"
 import StoreFinish from "./finish"
