@@ -1,10 +1,6 @@
 import React from 'react';
 
 import { storiesOf } from '@storybook/react';
-// import { withKnobs, text, boolean, number, select, object } from '@storybook/addon-knobs';
-// import { withInfo } from '@storybook/addon-info';
-// import SortableReact from '../../SortableReact';
-//
 import {default_order, default_order_diff} from "../demo_data";
 
 import StoreWidthHeightDelta from "./width_height_delta"

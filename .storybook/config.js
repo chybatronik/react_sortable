@@ -1,6 +1,8 @@
 import { configure, addDecorator } from '@storybook/react';
 // import { setDefaults} from '@storybook/addon-info';
 import { setOptions } from '@storybook/addon-options';
+import './SortableReact.css';
+import './Markdown.css';
 //addon-info
 // setDefaults({
 //   header: false,

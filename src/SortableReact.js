@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Motion, spring} from 'react-motion';
-import './SortableReact.css';
-import Sortable from './Sortable';
+import Sortable from 'develexe-sortable';
 import PropTypes from "prop-types"
 
 class SortableReact extends Component {
