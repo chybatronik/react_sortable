@@ -27,13 +27,23 @@ class SortableReact extends Component {
     const delta = nextProps.delta ? nextProps.delta : this.state.delta
     const allow_use_empty = nextProps.allow_use_empty
 
-    this.sortable = new Sortable(step_x, step_y, delta, sortable_mode, this.props.order, allow_use_empty);
-    this.setState(this.sortable.get_state());
+    let order = []
+    if(this.props.not_update_order){
+      order = this.state.order
+    }else{
+      order = this.props.order
+    }
+    if(this.props.start && this.props.not_update_order){
+      
+    }else{
+      this.sortable = new Sortable(step_x, step_y, delta, sortable_mode, order, allow_use_empty);
+      this.setState(this.sortable.get_state());
+    }
   }
 
   handleTouchStart = (key, pressLocation, e) => {
     if(!this.props.disable_drag){
-      console.log("handleTouchStart", key, pressLocation, e.touches[0])
+      // console.log("handleTouchStart", key, pressLocation, e.touches[0])
       this.handleMouseDown(key, pressLocation, e.touches[0]);
     }
   };
@@ -47,17 +57,22 @@ class SortableReact extends Component {
 
   handleMouseMove = ({pageX, pageY}) => {
     if(!this.props.disable_drag){
-      this.sortable.handleMouseMove({pageX, pageY})
-      let st = this.sortable.get_state()
-      this.setState({mouseY: st.mouseY, mouseX: st.mouseX, order: st.order });
+      if(this.state.isPressed){
+        // console.log("handleMouseMove pageX, pageY", pageX, pageY)
+        this.sortable.handleMouseMove({pageX, pageY})
+        let st = this.sortable.get_state()
+        this.setState({mouseY: st.mouseY, mouseX: st.mouseX, order: st.order });
+      }
     }
   };
 
   handleMouseDown = (pos, [pressX, pressY], {pageX, pageY}) => {
     if(!this.props.disable_drag){
+      console.log("handleMouseDown:::", pos)
       this.sortable.handleMouseDown(pos, [pressX, pressY], {pageX, pageY})
       let st = this.sortable.get_state()
       if(this.props.start){
+        console.log("start:::")
         this.props.start(pos)
       }
       this.setState({
@@ -71,10 +86,11 @@ class SortableReact extends Component {
 
   handleMouseUp = () => {
     if(!this.props.disable_drag){
+      console.log("handleMouseUp:::")
       let is_call_callback = false
       if(
-        this.props.finished &&
-        JSON.stringify(this.sortable.state.order) !== JSON.stringify(this.sortable.state.old_order)
+        this.props.finished //&&
+        //JSON.stringify(this.sortable.state.order) !== JSON.stringify(this.sortable.state.old_order)
       ){
         is_call_callback = true
       }
@@ -84,7 +100,7 @@ class SortableReact extends Component {
 
       if(is_call_callback){
         this.props.finished(st)
-        console.log("sortable.get_state()", st)
+        // console.log("sortable.get_state()", st)
       }
 
       this.setState({
@@ -170,7 +186,8 @@ SortableReact.defaultProps = {
   scale_active:1.2,
   shadow_active:1.2,
   allow_use_empty: false,
-  disable_drag: false
+  disable_drag: false,
+  not_update_order:false //update order after update component
 }
 
 SortableReact.propTypes = {
@@ -186,7 +203,8 @@ SortableReact.propTypes = {
   allow_use_empty: PropTypes.bool,
   finished: PropTypes.func,
   start: PropTypes.func,
-  disable_drag: PropTypes.bool
+  disable_drag: PropTypes.bool,
+  not_update_order: PropTypes.bool
 }
 
 export default SortableReact;

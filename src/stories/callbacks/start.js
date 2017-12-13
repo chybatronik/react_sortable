@@ -22,20 +22,18 @@ const text = `
   ${code}
 `
 
+const style_label = {backgroundColor:"#f1e2e7", borderRadius: 5, padding:3}
+
 class  StoreStart extends Component {
   constructor(props) {
     super(props)
-    this.state = {mode: "swap"};
+    this.state = {mode: "swap", lastPress:"none", not_update_order: true};
     console.log("state::::", this.state)
   }
 
   onState(e){
     console.log("onState:", e.target.value)
-    this.setState({"mode": e.target.value})
-  }
-
-  my_alert(srt){
-    alert(JSON.stringify(srt, "", 4))
+    this.setState({"mode": e.target.value, not_update_order: false})
   }
 
   render(){
@@ -44,17 +42,19 @@ class  StoreStart extends Component {
     return (
       <div  style={{marginBottom:550}}>
         <Markdown source={text}/>
-        <label>sortable_mode:</label>
-        <select style={{width:200, "margin-left":20}} onChange={this.onState.bind(this)}>
-          <option value="swap">swap</option>
-          <option value="left_right">left_right</option>
-        </select>
+        <h2 style={{marginTop:20}}>Drag: <span style={style_label}>{this.state.lastPress}</span>.</h2>
         <SortableReact
           sortable_mode={mode}
-          start={function(srt){
-            console.log(JSON.stringify(srt, "", 4))
+          start={(item)=>{
+            console.log("ITEM::", item)
+            let lastPress = "none"
+            if(item){
+              lastPress = item.con
+            }
+            this.setState({lastPress: lastPress, not_update_order:true})
           }}
           order={default_order_diff}
+          not_update_order={this.state.not_update_order}
         />
       </div>
     )
