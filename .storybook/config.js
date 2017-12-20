@@ -24,7 +24,7 @@ setOptions({
    * URL for name in top left corner to link to
    * @type {String}
    */
-  url: 'https://develexe.com',
+  url: 'https://github.com/chybatronik/react_sortable',
   /**
    * show story component as full screen
    * @type {Boolean}
@@ -81,10 +81,10 @@ setOptions({
 
 
 function loadStories() {
-  require('../src/stories/welcome/welcome');
-  require('../src/stories/features/index');
-  require('../src/stories/options_items/index');
-  require('../src/stories/callbacks/index');
+  require('../source/demo/stories/welcome/welcome');
+  require('../source/demo/stories/features/index');
+  require('../source/demo/stories/options_items/index');
+  require('../source/demo/stories/callbacks/index');
   // require('../src/stories');
 }
 

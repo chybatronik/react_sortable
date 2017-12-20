@@ -1,6 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {default_order, default_order_diff} from "../demo_data";
-import SortableReact from '../../SortableReact';
+import SortableReact from '../../../lib/SortableReact';
+
+// import SortableReact from '../../../source/SortableReact';
+// import SortableReact from '../../../../build/index.js';
+
+// var SortableReact = require('../../../../build/index.js');
 import Markdown from 'react-markdown';
 
 const code = `
@@ -21,7 +26,7 @@ const text = `
 `
 
 
-class  StoreWidthHeightDelta extends Component {
+class  StoreWidthHeightDelta extends React.Component {
   constructor(props) {
     super(props)
     this.state = {mode: "swap", height:90, width: 90, delta: 5};

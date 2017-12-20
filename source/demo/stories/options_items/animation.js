@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import {default_order, default_order_diff} from "../demo_data";
-import SortableReact from '../../SortableReact';
+// const LibSortableReact = require('../../../../build/index.js');
+import SortableReact from '../../../lib/SortableReact';
+
+
 import Markdown from 'react-markdown';
 
 const code = `

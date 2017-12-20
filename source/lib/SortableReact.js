@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
+// var React = require('react')
 import {Motion, spring} from 'react-motion';
-// import Sortable from '../../develexe-sortable/index.js';
+// import Sortable from '../../develexe-sortable/distribution/index.js';
 import Sortable from 'develexe-sortable';
 import PropTypes from "prop-types"
 
-class SortableReact extends Component {
+class SortableReact extends React.Component {
   constructor(props) {
     super(props);
 
@@ -34,12 +35,12 @@ class SortableReact extends Component {
       order = this.props.order
     }
     if(this.props.start && this.props.not_update_order){
-      
+
     }else{
       this.sortable = new Sortable(step_x, step_y, delta, sortable_mode, order, allow_use_empty);
       this.setState(this.sortable.get_state());
     }
-  }
+  };
 
   handleTouchStart = (key, pressLocation, e) => {
     if(!this.props.disable_drag){
@@ -207,4 +208,6 @@ SortableReact.propTypes = {
   not_update_order: PropTypes.bool
 }
 
+
+// exports.default = SortableReact;
 export default SortableReact;

@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import {default_order, default_order_diff} from "../demo_data";
-import SortableReact from '../../SortableReact';
+import SortableReact from '../../../lib/SortableReact';
 import Markdown from 'react-markdown';
 
 const code = `
 \`\`\`js
 <SortableReact
-  sortable_mode={sortable_mode}
-  start={function(srt){
-    console.log(JSON.stringify(srt, "", 4))
+  sortable_mode={mode}
+  start={(item)=>{
+    console.log("ITEM::", item)
+    let lastPress = "none"
+    if(item){
+      lastPress = item.con
+    }
+    this.setState({lastPress: lastPress, not_update_order:true})
   }}
+  not_update_order={this.state.not_update_order}
   order=[
     {id: "1", w:1, h:1, col:1, row:1, con: "1"},
     ...]
