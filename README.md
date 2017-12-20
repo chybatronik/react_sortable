@@ -8,7 +8,7 @@ Sortable component for React.js.
 
 
 ### Left right mode
-![Left right mode](https://chybatronik.github.io/react_sortable/img/with_images.gif)
+![Left right mode](https://chybatronik.github.io/react_sortable/img/ezgif.com-optimize.gif	)
 
 ## Supports:
 
