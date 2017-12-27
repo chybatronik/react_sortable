@@ -1,8 +1,8 @@
 import React from 'react';
 // var React = require('react')
 import {Motion, spring} from 'react-motion';
-import Sortable from './index.js';
-// import Sortable from 'develexe-sortable';
+// import Sortable from './index.js';
+import Sortable from 'develexe-sortable';
 import PropTypes from "prop-types"
 
 class SortableReact extends React.Component {
