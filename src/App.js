@@ -38,7 +38,7 @@ class App extends Component {
             <Route path="/start" component={StoreStart}/>
           </div>
           <div className="sidebar">
-
+            <a href="https://github.com/chybatronik/react_sortable" className="main_title">SortableReact</a>
             <p className="title">Features</p>
             <ul>
               <li><Link to="/">sortable mode</Link></li>
@@ -48,7 +48,7 @@ class App extends Component {
             <p className="title">Options</p>
             <ul>
               <li><Link to="/width_height">width and height</Link></li>
-              <li><Link to="/allow">allow to drop on empty</Link></li>
+              <li><Link to="/allow">allow to drop on empty, locked grid</Link></li>
               <li><Link to="/animation">animation</Link></li>
             </ul>
             <p className="title">Callbacks</p>

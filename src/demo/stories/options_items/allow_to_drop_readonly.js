@@ -15,7 +15,7 @@ const code = `
 `
 
 const text = `
-  # Allow to drop empty cell. Readonly
+  # Allow to drop empty cell. Locked grid.
   ${code}
 `
 
@@ -53,11 +53,11 @@ class  StoreAllowDropReadOnly extends Component {
           <option value="SORT">SORT</option>
           <option value="SWAP">SWAP</option>
         </select>
-        <label style={{marginLeft:20}}>isDropOnEmptyAreaAllowed= {String(this.state.isDropOnEmptyAreaAllowed)}:
-          <input type="checkbox" onChange={this.onAllowToEmpty.bind(this)} checked={this.state.isDropOnEmptyAreaAllowed}/>
+        <label style={{marginLeft:40}}>isDropOnEmptyAreaAllowed:
+          <input type="checkbox"  style={{marginLeft:5}} onChange={this.onAllowToEmpty.bind(this)} checked={this.state.isDropOnEmptyAreaAllowed}/>
         </label>
-        <label style={{marginLeft:20}}>isGridLocked= {String(this.state.isGridLocked)}:
-          <input type="checkbox" onChange={this.onDisableDrag.bind(this)} checked={this.state.isGridLocked}/>
+        <label style={{marginLeft:40}}>isGridLocked:
+          <input type="checkbox" style={{marginLeft:5}} onChange={this.onDisableDrag.bind(this)} checked={this.state.isGridLocked}/>
         </label>
         <SortableReact
           mode={mode}

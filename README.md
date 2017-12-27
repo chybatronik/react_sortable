@@ -3,12 +3,12 @@
 Sortable component for React.js.
 ### [Demo]
 
-###  Swap mode
+### SORT mode
+![](https://chybatronik.github.io/react_sortable/img/ezgif.com-optimize.gif)
+
+###  SWAP mode
 ![](https://chybatronik.github.io/react_sortable/img/simple.gif)
 
-
-### Left right mode
-![](https://chybatronik.github.io/react_sortable/img/with_images.gif)
 
 ## Supports:
 
@@ -25,10 +25,10 @@ Sortable component for React.js.
 Install packages in your project:
 
 ```sh
-$ npm i --save react react-motion
+$ npm i --save react react-motion develexe-sortable
 ```
 
-Add files to your folder ./src/Sortable.js, ./src/SortableReact.js, ./src/utils.js, ./src/SortableReact.css.
+Add files to your folder ./src/SortableReact.js, ./src/SortableReact.css.
 
 Import SortableReact component:
 
@@ -40,11 +40,11 @@ Use SortableReact component:
 
 ```javascript
 <SortableReact
-  width=90
-  height=90
-  delta=10
-  sortable_mode="swap"
-  order=[{id: 1, w:1, h:1, col:1, row:1, con: (<h1>Hello</h1>), style:{backgroundColor:"green"}}]
+  cellWidth=90
+  cellHeight=90
+  cellSpacing=10
+  mode="SWAP"
+  cells=[{id: 1, colspan:1, rowspan:1, defaultColumn:1, defaultRow:1, content: (<h1>Hello</h1>), style:{backgroundColor:"green"}}]
 />
 ```
 
@@ -55,11 +55,11 @@ SortableReact has option order. It's array of dictionaries.
 order=[
   {
     id: 1,   // identifier of item unique
-    w:1,     // width of item, width of item eq w*width
-    h:1,     // height of item, height of item eq h*height
-    col:1,   // column
-    row:1,   // row
-    con: (<h1>Hello World</h1>), // content  of item
+    colspan:1,     // width of item, width of item eq w*width
+    rowspan:1,     // height of item, height of item eq h*height
+    defaultColumn:1,   // column
+    defaultRow:1,   // row
+    content: (<h1>Hello World</h1>), // content  of item
     style: {{backgroundColor:"red"}} //style of item
   }
 ]
@@ -69,15 +69,15 @@ Default props:
 
 ```javascript
 SortableReact.defaultProps = {
-  sortable_mode: "swap", //set sortable mode: "swap" or "left_right"
-  width: 90,              // set width item
-  height: 90,             // set height item
-  delta: 10,              // set distance between items
-  order: default_order,   // array of items with options
+  mode: "SWAP", //set sortable mode: "swap" or "left_right"
+  cellWidth: 90,              // set width item
+  cellHeight: 90,             // set height item
+  cellSpacing: 10,              // set distance between items
+  cells: default_order,   // array of items with options
   stiffness: 300,         // set stiffness for animations
   damping: 50,            // set damping for animations
-  scale_active:1.2,       //when drag item to scale
-  shadow_active:1.2       //when drag item to shadow
+  scaleActiveCell:1.2,       //when drag item to scale
+  shadowActiveCell:1.2       //when drag item to shadow
 }
 ```
 
@@ -85,22 +85,23 @@ Types of props:
 
 ```javascript
 SortableReact.propTypes = {
-  sortable_mode: PropTypes.oneOf(["swap", "left_right"]),
-  order: PropTypes.arrayOf(PropTypes.shape({
+  mode: PropTypes.oneOf(["SWAP", "SORT"]),
+  cells: PropTypes.arrayOf(PropTypes.shape({
      id: PropTypes.string.isRequired,
-     w: PropTypes.number.isRequired,
-     h: PropTypes.number.isRequired,
-     col: PropTypes.number.isRequired,
-     row: PropTypes.number.isRequired,
-     con: PropTypes.string.isRequired,
+     colspan: PropTypes.number.isRequired,
+     rowspan: PropTypes.number.isRequired,
+     defaultColumn: PropTypes.number.isRequired,
+     defaultRow: PropTypes.number.isRequired,
+     content: PropTypes.string.isRequired,
+     styles: PropTypes.string.isRequired,
    })).isRequired,
-  width: PropTypes.number,
-  height: PropTypes.number,
-  delta: PropTypes.number,
+  cellWidth: PropTypes.number,
+  cellHeight: PropTypes.number,
+  cellSpacing: PropTypes.number,
   stiffness: PropTypes.number,
   damping: PropTypes.number,
-  scale_active: PropTypes.number,
-  shadow_active: PropTypes.number,
+  scaleActiveCell: PropTypes.number,
+  shadowActiveCell: PropTypes.number,
 }
 ```
 
@@ -127,4 +128,4 @@ MIT
 
 [//]: #
 
-[Demo]: <https://chybatronik.github.io/react_sortable/storybook-static/?selectedKind=Welcome&selectedStory=guide&full=0&down=0&left=1&panelRight=0&downPanel=storybooks%2Fstorybook-addon-knobs>
+[Demo]: <https://chybatronik.github.io/react_sortable/build/>

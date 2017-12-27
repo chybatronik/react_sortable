@@ -3,6 +3,7 @@
 .wrapper {
   /* max-width: 940px; */
   margin: 0 auto;
+  background-color: rgb(247, 247, 247);
 }
 
 .wrapper > div {
@@ -19,19 +20,32 @@
 .content {
   grid-column: 2 / 8;
   grid-row: 1 / 5;
+  background-color: white;
   /* border-left: 1px solid gray; */
   /* border-radius: 5px; */
 }
 .sidebar {
+  position: fixed;
   grid-row: 1 / 5;
   grid-column: 1;
-  background-color: rgb(247, 247, 247);
+
 }
 
 .title{
+  margin:0;
   margin-top: 15px;
   margin-bottom: 5px;
   margin-left: 20px;
+  color: #525252;
+}
+
+.main_title{
+  margin-left: 10px;
+  color: black;
+  padding:5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border: 1px solid #525252;
 }
 
 ul{
@@ -40,7 +54,9 @@ ul{
 }
 
 ul li{
+  margin: 0;
   padding: 3px;
+  max-width: 200px;
 }
 
 ul li a{
