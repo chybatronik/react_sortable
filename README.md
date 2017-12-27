@@ -1,4 +1,4 @@
-# react-sortable
+# react_sortable
 
 Sortable component for React.js.
 ### [Demo]
