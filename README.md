@@ -115,10 +115,10 @@ $ npm install
 ```
 Then
 ```sh
-$ npm run storybook
+$ npm run-script start
 ```
 
-Then open http://localhost:9009 as local file in your browser.
+Then open http://localhost:3000 as local file in your browser.
 
 License
 ----
