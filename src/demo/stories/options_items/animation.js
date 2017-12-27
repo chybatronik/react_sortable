@@ -26,7 +26,7 @@ const text = `
 class  StoreAnimation extends Component {
   constructor(props) {
     super(props)
-    this.state = {mode: "SWAP", stiffness:88, damping:10};
+    this.state = {mode: "SORT", stiffness:88, damping:10};
   }
 
   onState(e){
@@ -50,8 +50,8 @@ class  StoreAnimation extends Component {
         <Markdown source={text}/>
         <label>mode:</label>
         <select style={{width:200, "marginLeft":20}} onChange={this.onState.bind(this)}>
-          <option value="SWAP">SWAP</option>
           <option value="SORT">SORT</option>
+          <option value="SWAP">SWAP</option>
         </select>
         <label style={{marginLeft:20}}>stiffness {this.state.stiffness}:
           <input value={this.state.stiffness} type="range" min={1} max={500} step={1} style={{ marginLeft:10}} onChange={this.onStiffness.bind(this)}/>

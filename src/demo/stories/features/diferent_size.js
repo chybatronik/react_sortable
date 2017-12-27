@@ -28,7 +28,7 @@ const text = `
 class  StoreDiferentSize extends Component {
   constructor(props) {
     super(props)
-    this.state = {mode: "SWAP"};
+    this.state = {mode: "SORT"};
     console.log("state::::", this.state)
   }
 
@@ -44,9 +44,9 @@ class  StoreDiferentSize extends Component {
       <div style={{marginBottom:550}}>
         <Markdown source={text}/>
         <label>mode:</label>
-        <select style={{width:200, "margin-left":20}} onChange={this.onState.bind(this)}>
-          <option value="SWAP">SWAP</option>
+        <select style={{width:200, "marginLeft":20}} onChange={this.onState.bind(this)}>
           <option value="SORT">SORT</option>
+          <option value="SWAP">SWAP</option>
         </select>
         <SortableReact
           mode={mode}

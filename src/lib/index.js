@@ -4,7 +4,7 @@ class Sortable{
     // console.log("sortable new")
     cells = cells ? cells : [] //default_order
     this.state = {
-      mode: mode ? mode: "SWAP", // default, SORT
+      mode: mode ? mode: "SORT", // default, SORT
       // size_mode: "SWAP", // default, stick
       cellSpacing: cellSpacing ? cellSpacing: 5,
       cellWidth: cellWidth ? cellWidth: 90,

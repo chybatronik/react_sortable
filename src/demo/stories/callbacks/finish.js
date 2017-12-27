@@ -35,7 +35,7 @@ const style_label = {backgroundColor:"#f1e2e7", borderRadius: 5, padding:3}
 class  StoreFinish extends Component {
   constructor(props) {
     super(props)
-    this.state = {mode: "SWAP", lastPress:"none", move: "none"};
+    this.state = {mode: "SORT", lastPress:"none", move: "none"};
     // console.log("state::::", this.state)
   }
 
@@ -52,8 +52,8 @@ class  StoreFinish extends Component {
         <Markdown source={text}/>
         <label>mode:</label>
         <select style={{"width":200, "marginLeft":20}} onChange={this.onState.bind(this)}>
-          <option value="SWAP">SWAP</option>
           <option value="SORT">SORT</option>
+          <option value="SWAP">SWAP</option>
         </select>
         <h2 style={{marginTop:20}}>Drag: <span style={style_label}>{this.state.lastPress}</span>. Move to: <span style={style_label}>{this.state.move}</span></h2>
         <SortableReact

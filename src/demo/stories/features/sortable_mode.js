@@ -22,7 +22,7 @@ ${code}
 class  StoreSortableMode extends Component {
   constructor(props) {
     super(props)
-    this.state = {mode: "SWAP"};
+    this.state = {mode: "SORT"};
 
   }
 
@@ -39,8 +39,8 @@ class  StoreSortableMode extends Component {
         <Markdown source={text}/>
         <label>mode:</label>
         <select style={{width:200, "marginLeft":20}} onChange={this.onState.bind(this)}>
-          <option value="SWAP">SWAP</option>
           <option value="SORT">SORT</option>
+          <option value="SWAP">SWAP</option>
         </select>
         <SortableReact
           mode={mode}

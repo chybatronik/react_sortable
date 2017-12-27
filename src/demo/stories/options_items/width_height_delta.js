@@ -29,7 +29,7 @@ const text = `
 class  StoreWidthHeightDelta extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {mode: "SWAP", cellHeight:90, cellWidth: 90, cellSpacing: 5};
+    this.state = {mode: "SORT", cellHeight:90, cellWidth: 90, cellSpacing: 5};
 
   }
 
@@ -58,8 +58,8 @@ class  StoreWidthHeightDelta extends React.Component {
         <Markdown source={text}/>
         <label>mode:</label>
         <select style={{width:200, "marginLeft":20}} onChange={this.onState.bind(this)}>
-          <option value="SWAP">SWAP</option>
           <option value="SORT">SORT</option>
+          <option value="SWAP">SWAP</option>
         </select>
         <label style={{marginLeft:20}}>cellWidth {this.state.cellWidth}:
           <input value={this.state.cellWidth} type="range" min={10} max={200} step={1} style={{ marginLeft:10}} onChange={this.onWidth.bind(this)}/>

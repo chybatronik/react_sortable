@@ -23,7 +23,7 @@ const text = `
 class  StoreAllowDropReadOnly extends Component {
   constructor(props) {
     super(props)
-    this.state = {mode: "SWAP", isDropOnEmptyAreaAllowed:false, isGridLocked:false};
+    this.state = {mode: "SORT", isDropOnEmptyAreaAllowed:false, isGridLocked:false};
 
   }
 
@@ -50,8 +50,8 @@ class  StoreAllowDropReadOnly extends Component {
         <label>mode:</label>
         <select
           style={{width:200, "marginLeft":20}} onChange={this.onState.bind(this)}>
-          <option value="SWAP">SWAP</option>
           <option value="SORT">SORT</option>
+          <option value="SWAP">SWAP</option>
         </select>
         <label style={{marginLeft:20}}>isDropOnEmptyAreaAllowed= {String(this.state.isDropOnEmptyAreaAllowed)}:
           <input type="checkbox" onChange={this.onAllowToEmpty.bind(this)} checked={this.state.isDropOnEmptyAreaAllowed}/>
