@@ -119,6 +119,10 @@ Then
 $ npm start
 ```
 
+For build
+```sh
+$ npm build
+```
 Then open http://localhost:3000 as local file in your browser.
 
 License
