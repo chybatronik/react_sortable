@@ -7,7 +7,7 @@ Sortable component for React.js.
 ![](https://chybatronik.github.io/react_sortable/img/ezgif.com-optimize.gif)
 
 ###  SWAP mode
-![](https://chybatronik.github.io/react_sortable/img/simple.gif)
+![](https://chybatronik.github.io/react_sortable/img/screencast 2018-01-16 08-59-02.gif)
 
 
 ## Supports:
@@ -116,7 +116,7 @@ $ npm install
 ```
 Then
 ```sh
-$ npm run-script start
+$ npm start
 ```
 
 Then open http://localhost:3000 as local file in your browser.

@@ -3,6 +3,19 @@
   "version": "0.1.0",
   "homepage": "http://chybatronik.github.io/react_sortable/build",
   "private": true,
+  "main": "./src/lib/SortableReact.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chybatronik/react_sortable.git"
+  },
+  "keywords": [
+    "sortable react"
+  ],
+  "author": "Yuri K.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chybatronik/react_sortable/issues"
+  },
   "dependencies": {
     "develexe-sortable": "^1.0.7",
     "react": "^16.2.0",
