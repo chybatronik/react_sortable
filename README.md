@@ -7,7 +7,7 @@ Sortable component for React.js.
 ![](https://chybatronik.github.io/react_sortable/img/ezgif.com-optimize.gif)
 
 ###  SWAP mode
-![](https://chybatronik.github.io/react_sortable/img/screencast 2018-01-16 08-59-02.gif)
+![](https://chybatronik.github.io/react_sortable/img/screencast.gif)
 
 
 ## Supports:
