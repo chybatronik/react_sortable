@@ -1,9 +1,8 @@
 {
-  "name": "react-sortable",
+  "name": "@chybatronik/react_sortable",
   "version": "0.1.0",
   "homepage": "http://chybatronik.github.io/react_sortable/build",
-  "private": true,
-  "main": "./src/lib/SortableReact.js",
+  "main": "./distribute/app.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/chybatronik/react_sortable.git"
@@ -28,10 +27,20 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "build:lib": "webpack",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "html-webpack-plugin": "^2.30.1",
+    "jshint": "^2.9.5",
+    "jshint-loader": "^0.8.4",
     "raw-loader": "^0.5.1",
-    "react-markdown": "^3.1.3"
+    "react-markdown": "^3.1.3",
+    "webpack": "^3.10.0"
   }
 }

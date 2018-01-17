@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {default_order} from "../demo_data";
 import SortableReact from '../../../lib/SortableReact';
+// import SortableReact from '../../../distribute0/app.js';
 import Markdown from 'react-markdown';
 
 const code = `
