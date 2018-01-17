@@ -17,8 +17,7 @@ Sortable component for React.js.
 - two sortable mode,
 - drag and drop with touching,
 - different content and style of item
-- animations,
-- dynamic resize items (comming soon)
+- animations
 
 ## Usage
 
@@ -69,13 +68,13 @@ Default props:
 
 ```javascript
 SortableReact.defaultProps = {
-  mode: "SWAP", //set sortable mode: "swap" or "left_right"
+  mode: "SWAP",               //set sortable mode: "SWAP" or "SORT"
   cellWidth: 90,              // set width item
   cellHeight: 90,             // set height item
-  cellSpacing: 10,              // set distance between items
-  cells: default_order,   // array of items with options
-  stiffness: 300,         // set stiffness for animations
-  damping: 50,            // set damping for animations
+  cellSpacing: 10,            // set distance between items
+  cells: default_order,       // array of items with options
+  stiffness: 300,             // set stiffness for animations
+  damping: 50,                // set damping for animations
   scaleActiveCell:1.2,       //when drag item to scale
   shadowActiveCell:1.2       //when drag item to shadow
 }
