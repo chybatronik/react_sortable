@@ -1,6 +1,5 @@
 
-.demo-outer2 {
-  /*background-color: #EEE;*/
+/* .demo-outer2 {
   color: #FFF;
   position: absolute;
   width: 100%;
@@ -12,26 +11,24 @@
   display: -webkit-flex;
   -webkit-justify-content: center;
   -webkit-align-items: center;
+} */
+.demo-outer{
+  position:  relative;
+  margin:20px;
 }
 
-.demo2 {
-  width: 60%;
-  /*width: 620px;*/
-  height: 400px;
-}
-
-.demo-item {
+.sortable-item {
   position: absolute;
-  overflow: visible;
+  /* overflow: visible; */
   /*pointer-events: auto;*/
-  transform-origin: 50% 50% 0px;
+  /* transform-origin: 50% 50% 0px; */
   border-radius: 4px;
   color: rgb(153, 153, 153);
   line-height: 45px;
   padding-left: 20px;
   font-size: 24px;
   font-weight: 400;
-  background-color: rgb(255, 255, 255);
+  /* background-color: rgb(255, 255, 255); */
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   background-color: #EEE;

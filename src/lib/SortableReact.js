@@ -117,7 +117,6 @@ class SortableReact extends React.Component {
       stiffness: this.props.stiffness,
       damping: this.props.damping
     }
-
     let count = 0;
     cells.forEach((value, key) => {
       let style;
@@ -148,13 +147,13 @@ class SortableReact extends React.Component {
             <div
               onMouseDown={this.handleMouseDown.bind(null, value, [x, y])}
               onTouchStart={this.handleTouchStart.bind(null, value, [x, y])}
-              className="demo-item"
+              className="sortable-item"
               style={{...value_style, ...{
                 width: value.width,
                 height: value.height,
                 boxShadow: `rgba(0, 0, 0, 0.2) 0px ${shadow}px ${2 * shadow}px 0px`,
                 transform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
-                WebkitTransform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
+                WebkitTransform: `translate3d(${x-this.props.cellWidth}px, ${y-this.props.cellHeight}px, 0) scale(${scale})`,
                 zIndex: lastPress && value.id === lastPress.id ? 99 : 50
               }}}>
               {value.content}

@@ -16,7 +16,7 @@ import StoreAnimation from './demo/stories/options_items/animation';
 import StoreFinish from './demo/stories/callbacks/finish';
 import StoreStart from './demo/stories/callbacks/start';
 
-import './SortableReact.css';
+import './lib/SortableReact.css';
 import './Markdown.css';
 import './App.css';
 
