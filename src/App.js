@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  NavLink as Link
 } from 'react-router-dom'
 
 import StoreSortableMode from './demo/stories/features/sortable_mode';
@@ -41,7 +41,7 @@ class App extends Component {
             <a href="https://github.com/chybatronik/react_sortable" className="main_title">react_sortable</a>
             <p className="title">Features</p>
             <ul>
-              <li><Link to="/">sortable mode</Link></li>
+              <li><Link exact to="/">sortable mode</Link></li>
               <li><Link to="/size">diferent size</Link></li>
               <li><Link to="/image">item with image</Link></li>
             </ul>
