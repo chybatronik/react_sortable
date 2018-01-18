@@ -38,7 +38,7 @@ class App extends Component {
             <Route path="/start" component={StoreStart}/>
           </div>
           <div className="sidebar">
-            <a href="https://github.com/chybatronik/react_sortable" className="main_title">SortableReact</a>
+            <a href="https://github.com/chybatronik/react_sortable" className="main_title">react_sortable</a>
             <p className="title">Features</p>
             <ul>
               <li><Link to="/">sortable mode</Link></li>
