@@ -4,6 +4,8 @@ import SortableReact from '../../../lib/SortableReact';
 import Markdown from 'react-markdown';
 
 const code = `
+Param onCellDragStart is function with one parameter. This parameter is active item.
+
 \`\`\`js
 <SortableReact
   mode={mode}

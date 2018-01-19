@@ -77,6 +77,8 @@ SortableReact.defaultProps = {
   damping: 50,                // set damping for animations
   scaleActiveCell:1.2,       //when drag item to scale
   shadowActiveCell:1.2       //when drag item to shadow
+  isGridLocked: false,       //grid is locked
+  not_update_order:false    //update cells after update component
 }
 ```
 
@@ -101,6 +103,11 @@ SortableReact.propTypes = {
   damping: PropTypes.number,
   scaleActiveCell: PropTypes.number,
   shadowActiveCell: PropTypes.number,
+  isDropOnEmptyAreaAllowed: PropTypes.bool,
+  onCellDrop: PropTypes.func,      // onCellDrop is function with one parameter. This parameter is active item.
+  onCellDragStart: PropTypes.func, // onCellDragStart is function with one parameter. This parameter is active item.
+  isGridLocked: PropTypes.bool,
+  not_update_order: PropTypes.bool
 }
 ```
 
