@@ -1,23 +1,41 @@
 import React from 'react';
 // var React = require('react')
 import {Motion, spring} from 'react-motion';
-// import Sortable from './index.js';
-import Sortable from 'develexe-sortable';
+import Sortable from './index.js';
+// import Sortable from 'develexe-sortable';
 import PropTypes from "prop-types"
 
 class SortableReact extends React.Component {
   constructor(props) {
     super(props);
+    const config = {
+      cellWidth: props.cellWidth,
+      cellHeight: props.cellHeight,
+      cellSpacing: props.cellSpacing,
+      mode: props.mode,
+      cells: props.cells,
 
-    this.sortable = new Sortable(props.cellWidth, props.cellHeight, props.cellSpacing, props.mode, props.cells, props.isDropOnEmptyAreaAllowed);
+      isDropOnEmptyAreaAllowed: props.isDropOnEmptyAreaAllowed,
+
+      handleTouchMove: this.handleTouchMove,
+      handleMouseUp: this.handleMouseUp,
+      handleMouseMove: this.handleMouseMove,
+      handleMouseDown: this.handleMouseDown,
+
+      onCellDragStart: this.props.onCellDragStart,
+      onCellDrop: this.props.onCellDrop,
+      isGridLocked: this.props.isGridLocked
+    }
+
+    this.sortable = new Sortable(config);
     this.state = this.sortable.get_state();
   };
 
   componentDidMount() {
-    window.addEventListener('touchmove', this.handleTouchMove);
-    window.addEventListener('touchend', this.handleMouseUp);
-    window.addEventListener('mousemove', this.handleMouseMove);
-    window.addEventListener('mouseup', this.handleMouseUp);
+  //   window.addEventListener('touchmove', this.handleTouchMove);
+  //   window.addEventListener('touchend', this.handleMouseUp);
+  //   window.addEventListener('mousemove', this.handleMouseMove);
+  //   window.addEventListener('mouseup', this.handleMouseUp);
   };
 
   componentWillReceiveProps(nextProps){
@@ -37,7 +55,24 @@ class SortableReact extends React.Component {
     if(this.props.onCellDragStart && this.props.not_update_order){
 
     }else{
-      this.sortable = new Sortable(step_x, step_y, cellSpacing, mode, cells, isDropOnEmptyAreaAllowed);
+      const config = {
+        cellWidth: step_x,
+        cellHeight: step_y,
+        cellSpacing: cellSpacing,
+        mode: mode,
+        cells: cells,
+        isDropOnEmptyAreaAllowed: isDropOnEmptyAreaAllowed,
+
+        handleTouchMove: this.handleTouchMove,
+        handleMouseUp: this.handleMouseUp,
+        handleMouseMove: this.handleMouseMove,
+        handleMouseDown: this.handleMouseDown,
+
+        onCellDragStart: this.props.onCellDragStart,
+        onCellDrop: this.props.onCellDrop,
+        isGridLocked: this.props.isGridLocked
+      }
+      this.sortable = new Sortable(config);
       this.setState(this.sortable.get_state());
     }
   };
@@ -57,57 +92,57 @@ class SortableReact extends React.Component {
   };
 
   handleMouseMove = ({pageX, pageY}) => {
-    if(!this.props.isGridLocked){
-      if(this.state.isPressed){
+    // if(!this.props.isGridLocked){
+    //   if(this.state.isPressed){
         // console.log("handleMouseMove pageX, pageY", pageX, pageY)
-        this.sortable.handleMouseMove({pageX, pageY})
-        let st = this.sortable.get_state()
-        this.setState({mouseY: st.mouseY, mouseX: st.mouseX, cells: st.cells });
-      }
-    }
+        // this.sortable.handleMouseMove({pageX, pageY})
+    let st = this.sortable.get_state()
+    this.setState({mouseY: st.mouseY, mouseX: st.mouseX, cells: st.cells });
+    //   }
+    // }
   };
 
   handleMouseDown = (pos, [pressX, pressY], {pageX, pageY}) => {
-    if(!this.props.isGridLocked){
+    // if(!this.props.isGridLocked){
       // console.log("handleMouseDown:::", pos)
-      this.sortable.handleMouseDown(pos, [pressX, pressY], {pageX, pageY})
-      let st = this.sortable.get_state()
-      if(this.props.onCellDragStart){
-        // console.log("onCellDragStart:::")
-        this.props.onCellDragStart(pos)
-      }
-      this.setState({
-        lastPress: pos,
-        isPressed: st.isPressed,
-        mouseY: st.mouseY,
-        mouseX: st.mouseX
-      });
-    }
+      // this.sortable.handleMouseDown(pos, [pressX, pressY], {pageX, pageY})
+    let st = this.sortable.get_state()
+      // if(this.props.onCellDragStart){
+      //   // console.log("onCellDragStart:::")
+      //   this.props.onCellDragStart(pos)
+      // }
+    this.setState({
+      lastPress: pos,
+      isPressed: st.isPressed,
+      mouseY: st.mouseY,
+      mouseX: st.mouseX
+    });
+    // }
   };
 
   handleMouseUp = () => {
-    if(!this.props.isGridLocked){
+    // if(!this.props.isGridLocked){
       // console.log("handleMouseUp:::")
-      let is_call_callback = false
-      if(
-        this.props.onCellDrop //&&
-        //JSON.stringify(this.sortable.state.cells) !== JSON.stringify(this.sortable.state.old_order)
-      ){
-        is_call_callback = true
-      }
+      // let is_call_callback = false
+      // if(
+      //   this.props.onCellDrop //&&
+      //   //JSON.stringify(this.sortable.state.cells) !== JSON.stringify(this.sortable.state.old_order)
+      // ){
+      //   is_call_callback = true
+      // }
 
-      this.sortable.handleMouseUp()
-      let st = this.sortable.get_state()
+      // this.sortable.handleMouseUp()
+    let st = this.sortable.get_state()
 
-      if(is_call_callback){
-        this.props.onCellDrop(st)
-        // console.log("sortable.get_state()", st)
-      }
+      // if(is_call_callback){
+      //   this.props.onCellDrop(st)
+      //   // console.log("sortable.get_state()", st)
+      // }
 
-      this.setState({
-        isPressed: st.isPressed,
-      });
-    }
+    this.setState({
+      isPressed: st.isPressed,
+    });
+    // }
   };
 
   render() {
@@ -145,8 +180,8 @@ class SortableReact extends React.Component {
         <Motion key={count} style={style}>
           {({scale, shadow, y, x}) =>
             <div
-              onMouseDown={this.handleMouseDown.bind(null, value, [x, y])}
-              onTouchStart={this.handleTouchStart.bind(null, value, [x, y])}
+              onMouseDown={this.sortable.onHandleMouseDown.bind(null, value, [x, y])}
+              onTouchStart={this.sortable.onHandleTouchMove.bind(null, value, [x, y])}
               className="sortable-item"
               style={{...value_style, ...{
                 width: value.width,
