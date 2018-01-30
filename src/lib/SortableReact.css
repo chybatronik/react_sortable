@@ -1,4 +1,9 @@
+/* REVIEW: filename should be lowercase and use dash as words separator */
+/* REVIEW: most of defined classes here are not even used in corresponding javascript file and
+this file was not even imported in SortableReact.js. Recommended to delete this file or move it.*/
 
+/* REVIEW:  commented out code block missing reason why it is commented out.
+            Please provide reason or remove it. */
 /* .demo-outer2 {
   color: #FFF;
   position: absolute;
