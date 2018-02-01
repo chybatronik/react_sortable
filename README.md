@@ -3,8 +3,8 @@
 Sortable component for React.js.
 ### [Demo]
 
-###  Swap mode
-![Swap mode](https://chybatronik.github.io/react_sortable/img/simple.gif)
+### SORT mode
+![](https://chybatronik.github.io/react_sortable/img/ezgif.com-optimize.gif)
 
 ###  SWAP mode
 ![](https://chybatronik.github.io/react_sortable/img/screencast2.gif)
