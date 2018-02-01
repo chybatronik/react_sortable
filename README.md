@@ -3,12 +3,11 @@
 Sortable component for React.js.
 ### [Demo]
 
-### SORT mode
-![](https://chybatronik.github.io/react_sortable/img/ezgif.com-optimize.gif)
+###  Swap mode
+![Swap mode](https://chybatronik.github.io/react_sortable/img/simple.gif)
 
 ###  SWAP mode
 ![](https://chybatronik.github.io/react_sortable/img/screencast2.gif)
-
 
 ## Supports:
 
@@ -124,12 +123,13 @@ Then
 ```sh
 $ npm start
 ```
+Then open http://localhost:3000 as local file in your browser.
+
 
 For build
 ```sh
-$ npm build
+$ npm run build
 ```
-Then open http://localhost:3000 as local file in your browser.
 
 License
 ----
