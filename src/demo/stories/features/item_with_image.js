@@ -11,12 +11,12 @@ const code = `
 <SortableReact
   mode={mode}
   cells=[
-    {id: "1", colspan:2, rowspan:2, defaultColumn:1, defaultRow:1, content: (<div><a id="im1" onClick={this.onClick.bind(this)} style={style_item}>x</a></div>), style:{overflow:"hidden", background:"url(im1.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:15}},
-    {id: "2", colspan:1, rowspan:1, defaultColumn:3, defaultRow:1, content: (<div><a id="im2" onClick={this.onClick.bind(this)}  style={style_item}>x</a></div>), style:{background:"url(im2.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:15}},
-    {id: "11", colspan:1, rowspan:1, defaultColumn:3, defaultRow:2, content: (<div><a id="im3" onClick={this.onClick.bind(this)}  style={style_item}>x</a></div>), style:{background:"url(im3.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:15}},
-    {id: "21", colspan:1, rowspan:1, defaultColumn:1, defaultRow:3, content: (<div><a id="im4" onClick={this.onClick.bind(this)}  style={style_item}>x</a></div>), style:{background:"url(im4.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:15}},
-    {id: "22", colspan:1, rowspan:1, defaultColumn:2, defaultRow:3, content: (<div><a id="im5" onClick={this.onClick.bind(this)}  style={style_item}>x</a></div>), style:{background:"url(im5.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:15}},
-    {id: "23", colspan:1, rowspan:1, defaultColumn:3, defaultRow:3, content: (<div><a id="im6" onClick={this.onClick.bind(this)}  style={style_item}>x</a></div>), style:{background:"url(im6.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:15}},
+    {id: "1", colspan:2, rowspan:2, defaultColumn:1, defaultRow:1, content: (<div><a id="im1" onClick={this.onClick.bind(this)} style={style_item}>x</a></div>), style:{overflow:"hidden", background:"url(/react_sortable/build/im1.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:15}},
+    {id: "2", colspan:1, rowspan:1, defaultColumn:3, defaultRow:1, content: (<div><a id="im2" onClick={this.onClick.bind(this)}  style={style_item}>x</a></div>), style:{background:"url(/react_sortable/build/im2.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:15}},
+    {id: "11", colspan:1, rowspan:1, defaultColumn:3, defaultRow:2, content: (<div><a id="im3" onClick={this.onClick.bind(this)}  style={style_item}>x</a></div>), style:{background:"url(/react_sortable/build/im3.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:15}},
+    {id: "21", colspan:1, rowspan:1, defaultColumn:1, defaultRow:3, content: (<div><a id="im4" onClick={this.onClick.bind(this)}  style={style_item}>x</a></div>), style:{background:"url(/react_sortable/build/im4.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:15}},
+    {id: "22", colspan:1, rowspan:1, defaultColumn:2, defaultRow:3, content: (<div><a id="im5" onClick={this.onClick.bind(this)}  style={style_item}>x</a></div>), style:{background:"url(/react_sortable/build/im5.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:15}},
+    {id: "23", colspan:1, rowspan:1, defaultColumn:3, defaultRow:3, content: (<div><a id="im6" onClick={this.onClick.bind(this)}  style={style_item}>x</a></div>), style:{background:"url(/react_sortable/build/im6.jpg) no-repeat", backgroundSize:"cover", color: "white", fontSize:15}},
   ]
   stiffness={95}      //  stiffness animation option (more about this param in animation section)
   damping={20}        //  damping animation option (more about this param in animation section)

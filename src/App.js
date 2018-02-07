@@ -26,41 +26,42 @@ class App extends Component {
       <Router>
         <div  className="wrapper">
           <div className="content">
-            <Route exact path="/" component={StoreSortableMode}/>
-            <Route path="/size" component={StoreDiferentSize}/>
-            <Route path="/image" component={StoreItemWithImage}/>
+            <Route exact path='/react_sortable/build/' component={StoreSortableMode}/>
+            <Route path='/react_sortable/build/size'  component={StoreDiferentSize}/>
+            <Route path='/react_sortable/build/image'  component={StoreItemWithImage}/>
 
-            <Route path="/width_height" component={StoreWidthHeightDelta}/>
-            <Route path="/allow" component={StoreAllowDropReadOnly}/>
-            <Route path="/animation" component={StoreAnimation}/>
+            <Route path="/react_sortable/build/width_height" component={StoreWidthHeightDelta}/>
+            <Route path="/react_sortable/build/allow" component={StoreAllowDropReadOnly}/>
+            <Route path="/react_sortable/build/animation" component={StoreAnimation}/>
 
-            <Route path="/finish" component={StoreFinish}/>
-            <Route path="/start" component={StoreStart}/>
+            <Route path="/react_sortable/build/finish" component={StoreFinish}/>
+            <Route path="/react_sortable/build/start" component={StoreStart}/>
           </div>
           <div className="sidebar">
             <a href="https://github.com/chybatronik/react_sortable" className="main_title">react_sortable</a>
             <p className="title">Features</p>
             <ul>
-              <li><Link exact to="/">sortable mode</Link></li>
-              <li><Link to="/size">diferent size</Link></li>
-              <li><Link to="/image">item with image</Link></li>
+              <li><Link exact to="/react_sortable/build/">sortable mode</Link></li>
+              <li><Link to="/react_sortable/build/size">diferent size</Link></li>
+              <li><Link to="/react_sortable/build/image">item with image</Link></li>
             </ul>
             <p className="title">Options</p>
             <ul>
-              <li><Link to="/width_height">width and height</Link></li>
-              <li><Link to="/allow">allow to drop on empty, locked grid</Link></li>
-              <li><Link to="/animation">animation</Link></li>
+              <li><Link to="/react_sortable/build/width_height">width and height</Link></li>
+              <li><Link to="/react_sortable/build/allow">allow to drop on empty, locked grid</Link></li>
+              <li><Link to="/react_sortable/build/animation">animation</Link></li>
             </ul>
             <p className="title">Callbacks</p>
             <ul>
-              <li><Link to="/finish">finish drop</Link></li>
-              <li><Link to="/start">start drag</Link></li>
+              <li><Link to="/react_sortable/build/finish">finish drop</Link></li>
+              <li><Link to="/react_sortable/build/start">start drag</Link></li>
             </ul>
           </div>
         </div>
       </Router>
-    );
-  }
+  )
 }
+}
+
 
 export default App;
